@@ -13,26 +13,29 @@ import {
   postLikeHandler,
   postBookMarkHandler,
 } from "../slices/userfeed/actions";
+import { useNavigate } from "react-router-dom";
 
-export const Posts = () => {
+export const Posts = ({ data }) => {
   const dispatch = useDispatch();
-  const allPosts = useSelector((state) => state.userfeed.allPosts);
+  const navigate = useNavigate();
   const postDetails = useSelector((state) => state.userfeed.post);
   const bookmarks = useSelector((state) => state.userfeed.bookmarks);
   const loggedInUser = localStorage.getItem("username");
-  console.log(allPosts, loggedInUser, "allposts");
 
   return (
     <div>
-      {allPosts?.map((post) => {
+      {data?.map((post) => {
         return (
           <div
             key={post._id}
-            className="post flex flex-col border border-slate-400 rounded-lg m-4 sm:w-2/5 md:w-2/5"
+            className="post flex flex-col border border-slate-400 rounded-lg m-4 sm:w-2/5 md:w-2/5 lg:w-1/2"
           >
             <div className="post-header">
               <div className="header-row flex  justify-between items-center ">
-                <div className="icon-username flex items-center m-2 ">
+                <div
+                  className="icon-username flex items-center m-2 "
+                  onClick={() => navigate(`/users/${post.user._id}/profile`)}
+                >
                   <div className="user-icon border border-slate-600 w-10 h-11 rounded-md"></div>
                   <div className="ml-2">
                     <p>{`${post.user.firstname} ${post.user.lastname}`}</p>

@@ -25,7 +25,7 @@ export const userfeedSlice = createSlice({
     comment: {
       enabled: false,
     },
-    status: "",
+    loading: false,
     error: "",
   },
   reducers: {
@@ -53,39 +53,28 @@ export const userfeedSlice = createSlice({
     builder
 
       .addCase(fetchAllPosts.pending, (state) => {
-        state.status = "loading";
+        state.loading = true;
       })
       .addCase(fetchAllPosts.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.loading = false;
         state.allPosts = action.payload.posts;
       })
       .addCase(fetchAllPosts.rejected, (state, action) => {
-        state.status = "failed";
         state.error = action.error.message;
       })
       //delete
-      .addCase(deletePost.pending, (state) => {
-        state.status = "loading";
-        console.log("1");
-      })
+      .addCase(deletePost.pending, (state) => {})
       .addCase(deletePost.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.allPosts = state.allPosts.filter(
           (post) => post._id !== action.payload
         );
-        console.log("2");
       })
       .addCase(deletePost.rejected, (state, action) => {
-        state.status = "failed";
         state.error = action.error.message;
-        console.log("3");
       })
       //like/dislike
-      .addCase(postLikeHandler.pending, (state) => {
-        state.status = "loading";
-      })
+      .addCase(postLikeHandler.pending, (state) => {})
       .addCase(postLikeHandler.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.allPosts = state.allPosts.map((post) => {
           if (post._id === action.payload.postId) {
             if (post.likedBy.includes(action.payload.likedBy)) {
@@ -106,21 +95,16 @@ export const userfeedSlice = createSlice({
         });
       })
       .addCase(postLikeHandler.rejected, (state, action) => {
-        state.status = "failed";
         state.error = action.error.message;
       })
       //bookmark
-      .addCase(postBookMarkHandler.pending, (state) => {
-        state.status = "loading";
-      })
+      .addCase(postBookMarkHandler.pending, (state) => {})
       .addCase(postBookMarkHandler.fulfilled, (state, action) => {
-        state.status = "succeeded";
         state.bookmarks = state.allPosts.filter((post) =>
           action.payload?.includes(post._id)
         );
       })
       .addCase(postBookMarkHandler.rejected, (state, action) => {
-        state.status = "failed";
         state.error = action.error.message;
       });
   },
