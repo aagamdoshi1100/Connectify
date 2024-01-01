@@ -10,7 +10,7 @@ export default function UserProfile() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserProfile(userId));
-  }, []);
+  }, [dispatch]);
   const {
     user,
     stat: { loading },

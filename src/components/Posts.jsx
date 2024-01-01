@@ -80,7 +80,7 @@ export const Posts = ({ data }) => {
                   className="max-h-96"
                   width="100%"
                   height="100%"
-                  alt="Post-image"
+                  alt="Post"
                 />
               )}
             </div>

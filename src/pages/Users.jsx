@@ -6,7 +6,7 @@ export default function Users() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUsers());
-  }, []);
+  }, [dispatch]);
   const users = useSelector((store) => store.users.users);
   return (
     <div className="users-container overflow-auto flex lg:flex-col">
@@ -20,7 +20,11 @@ export default function Users() {
             <div className="profileIcon-user-details flex flex-col justify-center lg:flex lg:flex-row">
               <div className="profileIcon flex justify-center">
                 <div className="profileIcon-border w-16 h-16 rounded-lg bg-green-400 overflow-hidden lg:w-20">
-                  <img src={profileIcon} className="profileImg w-full h-full" />
+                  <img
+                    src={profileIcon}
+                    className="profileImg w-full h-full"
+                    alt="profile"
+                  />
                 </div>
               </div>
               <div className="user-details lg:m-2 text-center lg:text-left">

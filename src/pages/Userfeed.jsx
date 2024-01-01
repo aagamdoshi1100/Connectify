@@ -9,7 +9,7 @@ export default function Userfeed() {
   const { allPosts, loading } = useSelector((store) => store.userfeed);
   useEffect(() => {
     dispatch(fetchAllPosts());
-  }, []);
+  }, [dispatch]);
 
   return <div>{loading ? <ReactLoader /> : <Posts data={allPosts} />}</div>;
 }

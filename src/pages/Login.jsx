@@ -21,7 +21,7 @@ export default function Login() {
     setTimeout(() => {
       dispatch(disableError());
     }, 3000);
-  }, [error.message]);
+  }, [dispatch, error.message]);
 
   return (
     <div className="login-container fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12 h-4/6 border border-slate-500 rounded-lg">
