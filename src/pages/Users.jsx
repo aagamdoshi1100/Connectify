@@ -9,13 +9,13 @@ export default function Users() {
   }, [dispatch]);
   const users = useSelector((store) => store.users.users);
   return (
-    <div className="users-container overflow-auto flex lg:flex-col">
+    <div className="users-secondary-container overflow-auto flex lg:flex-col lg:overflow-auto lg:h-[100vh] no-scrollbar">
       {users.map((user) => {
         const { _id, username, firstname, lastname, profileIcon } = user;
         return (
           <div
             key={_id}
-            className="user-card border m-2 border-slate-400 w-[35%] flex flex-col justify-center items-center flex-shrink-0 p-2 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink"
+            className="user-card border m-2 border-slate-400 w-[35%] flex flex-col justify-center items-center flex-shrink-0 p-2 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[90%]"
           >
             <div className="profileIcon-user-details flex flex-col justify-center lg:flex lg:flex-row">
               <div className="profileIcon flex justify-center">

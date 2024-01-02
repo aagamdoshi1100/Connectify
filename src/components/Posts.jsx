@@ -23,12 +23,12 @@ export const Posts = ({ data }) => {
   const loggedInUser = localStorage.getItem("username");
 
   return (
-    <div>
+    <>
       {data?.map((post) => {
         return (
           <div
             key={post._id}
-            className="post flex flex-col border border-slate-400 rounded-lg m-4 sm:w-2/5 md:w-2/5 lg:w-1/2"
+            className="posts-secondary-container flex flex-col border border-slate-400 rounded-lg m-4 lg:flex-grow-1"
           >
             <div className="post-header">
               <div className="header-row flex  justify-between items-center ">
@@ -126,6 +126,6 @@ export const Posts = ({ data }) => {
           </div>
         );
       })}
-    </div>
+    </>
   );
 };
