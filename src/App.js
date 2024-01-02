@@ -5,6 +5,7 @@ import Userfeed from "./pages/Userfeed";
 import Login from "./pages/Login";
 import UserProfile from "./pages/UserProfile";
 import Users from "./pages/Users";
+import Footer from "./pages/Footer";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:userId/profile" element={<UserProfile />} />
+        <Route path="/footer" element={<Footer />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
