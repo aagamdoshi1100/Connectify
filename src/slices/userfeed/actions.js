@@ -48,6 +48,33 @@ export const createNewPost = createAsyncThunk(
   }
 );
 
+export const editPostContent = createAsyncThunk(
+  "userfeed/editPostContent",
+  async (postDetails) => {
+    try {
+      const editPostContentResponse = await fetch(
+        `${API_URL}/posts/edit/${postDetails.postId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+          body: JSON.stringify(postDetails.body),
+        }
+      );
+      if (!editPostContentResponse.ok) {
+        throw editPostContentResponse;
+      }
+      const edited = await editPostContentResponse.json();
+      return edited;
+    } catch (e) {
+      console.error("Error while editing post:", e);
+      throw e;
+    }
+  }
+);
+
 export const deletePost = createAsyncThunk(
   "userfeed/deletePost",
   async (postId) => {
