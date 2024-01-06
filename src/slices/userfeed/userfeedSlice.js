@@ -6,6 +6,7 @@ import {
   postBookMarkHandler,
   createNewPost,
   editPostContent,
+  getBookmarks,
 } from "./actions";
 
 const resetUserfeedState = {
@@ -153,6 +154,20 @@ export const userfeedSlice = createSlice({
       })
       .addCase(postBookMarkHandler.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      // All bookmarks
+      .addCase(getBookmarks.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getBookmarks.fulfilled, (state, action) => {
+        state.bookmarks = state.allPosts.filter((post) =>
+          action.payload.bookmarks.includes(post._id)
+        );
+        state.loading = false;
+        state.error = "";
+      })
+      .addCase(getBookmarks.rejected, (state, action) => {
+        state.error = action.payload.error.message;
       });
   },
 });

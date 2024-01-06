@@ -111,11 +111,28 @@ export const postLikeHandler = createAsyncThunk(
 export const postBookMarkHandler = createAsyncThunk(
   "userfeed/postBookMarkHandler",
   async (postId) => {
-    const response = await fetch(`${API_URL}/bookmark/${postId}/${userId}`, {
+    const response = await fetch(`${API_URL}/bookmarks/${postId}/${userId}`, {
       method: "POST",
       headers: { authorization: token },
     });
     const responseData = await response.json();
     return responseData.bookmarks;
+  }
+);
+
+export const getBookmarks = createAsyncThunk(
+  "userfeed/getBookmarks",
+  async () => {
+    try {
+      const bookmarks = await fetch(`${API_URL}/bookmarks/${userId}`);
+      if (!bookmarks.ok) {
+        throw bookmarks;
+      }
+      const bookmarkData = await bookmarks.json();
+      return bookmarkData;
+    } catch (e) {
+      console.error("Error while fetching bookmarks: ", e);
+      throw e;
+    }
   }
 );

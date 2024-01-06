@@ -38,7 +38,10 @@ export default function Footer() {
         </span>
       </div>
 
-      <div className="icon-block flex cursor-pointer lg:m-3">
+      <div
+        className="icon-block flex cursor-pointer lg:m-3"
+        onClick={() => navigate("/bookmarks")}
+      >
         <BiBookBookmark size="2em" />
         <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
           Bookmark
