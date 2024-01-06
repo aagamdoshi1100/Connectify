@@ -97,7 +97,6 @@ export const userfeedSlice = createSlice({
         state.createPost.loading = true;
       })
       .addCase(editPostContent.fulfilled, (state, action) => {
-        console.log(action, "edit95");
         state.allPosts = state.allPosts.map((post) => {
           if (post._id === action.payload.editedPost._id) {
             return Object.assign(post, action.payload.editedPost);
@@ -108,17 +107,17 @@ export const userfeedSlice = createSlice({
         state.post = resetUserfeedState.post;
       })
       .addCase(editPostContent.rejected, (state, action) => {
-        console.error(action.error, "98");
+        console.error(action.error);
       })
       //delete
       .addCase(deletePost.pending, (state) => {})
       .addCase(deletePost.fulfilled, (state, action) => {
         state.allPosts = state.allPosts.filter(
-          (post) => post._id !== action.payload
+          (post) => post._id !== action.payload.deletedPost._id
         );
       })
       .addCase(deletePost.rejected, (state, action) => {
-        state.error = action.error.message;
+        console.error(action.error);
       })
       //like/dislike
       .addCase(postLikeHandler.pending, (state) => {})

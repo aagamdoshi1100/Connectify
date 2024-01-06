@@ -78,13 +78,20 @@ export const editPostContent = createAsyncThunk(
 export const deletePost = createAsyncThunk(
   "userfeed/deletePost",
   async (postId) => {
-    const response = await fetch(`${API_URL}/posts/${postId}`, {
-      method: "DELETE",
-      headers: { authorization: token },
-    });
-    const responseData = await response.json();
-    console.log(response, responseData, "res57");
-    return responseData;
+    try {
+      const response = await fetch(`${API_URL}/posts/${postId}`, {
+        method: "DELETE",
+        headers: { authorization: token },
+      });
+      if (!response.ok) {
+        throw response;
+      }
+      const responseData = await response.json();
+      return responseData;
+    } catch (e) {
+      console.error("Error while deleting post:", e);
+      throw e;
+    }
   }
 );
 
