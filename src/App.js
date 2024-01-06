@@ -6,8 +6,13 @@ import Login from "./pages/Login";
 import UserProfile from "./pages/UserProfile";
 import Users from "./pages/Users";
 import Footer from "./pages/Footer";
+import PostComposer from "./components/PostComposer";
+import { useSelector } from "react-redux";
 
 function App() {
+  const showCompomse = useSelector(
+    (store) => store.userfeed.createPost.showComposeComponent
+  );
   return (
     <div className="App">
       <Routes>
@@ -18,6 +23,7 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
+      {showCompomse && <PostComposer />}
     </div>
   );
 }

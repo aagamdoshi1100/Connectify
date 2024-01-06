@@ -4,7 +4,17 @@ import {
   deletePost,
   postLikeHandler,
   postBookMarkHandler,
+  createNewPost,
 } from "./actions";
+
+const resetUserfeedState = {
+  postCreation: {
+    loading: false,
+    showComposeComponent: false,
+    createPostContent: "",
+    createPostImage: "",
+  },
+};
 
 export const userfeedSlice = createSlice({
   name: "userfeed",
@@ -18,17 +28,21 @@ export const userfeedSlice = createSlice({
     },
     createPost: {
       loading: false,
-      enabled: false,
+      showComposeComponent: false,
       createPostContent: "",
       createPostImage: "",
-    },
-    comment: {
-      enabled: false,
     },
     loading: false,
     error: "",
   },
   reducers: {
+    showCompose: (state, action) => {
+      state.createPost.showComposeComponent =
+        !state.createPost.showComposeComponent;
+    },
+    postInputData: (state, action) => {
+      state.createPost[action.payload.type] = action.payload.data;
+    },
     enablePostMenu: (state, action) => {
       state.post.postMenu =
         action.payload !== state.post.postId ? true : !state.post.postMenu;
@@ -45,9 +59,6 @@ export const userfeedSlice = createSlice({
       state.post.postId = action.payload;
       state.post.editPost = true;
     },
-    enableComments: (state, action) => {
-      state.comment.enabled = !state.comment.enabled;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -60,6 +71,19 @@ export const userfeedSlice = createSlice({
         state.allPosts = action.payload.posts;
       })
       .addCase(fetchAllPosts.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      //createNewPost
+      .addCase(createNewPost.pending, (state, action) => {
+        state.createPost.loading = true;
+      })
+      .addCase(createNewPost.fulfilled, (state, action) => {
+        state.allPosts = [...state.allPosts, action.payload.data];
+        state.createPost.loading = false;
+        state.error = "";
+        state.createPost = resetUserfeedState.postCreation;
+      })
+      .addCase(createNewPost.rejected, (state, action) => {
         state.error = action.error.message;
       })
       //delete
@@ -110,5 +134,5 @@ export const userfeedSlice = createSlice({
   },
 });
 
-export const { enablePostMenu, enableEdit, enableComments } =
+export const { enablePostMenu, enableEdit, showCompose, postInputData } =
   userfeedSlice.actions;

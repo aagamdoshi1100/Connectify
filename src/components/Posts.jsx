@@ -3,11 +3,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { FiBookmark } from "react-icons/fi";
-import {
-  enablePostMenu,
-  enableEdit,
-  enableComments,
-} from "../slices/userfeed/userfeedSlice";
+import { enablePostMenu, enableEdit } from "../slices/userfeed/userfeedSlice";
 import {
   deletePost,
   postLikeHandler,
@@ -106,7 +102,7 @@ export const Posts = ({ data }) => {
               <div className="icons flex items-center m-2">
                 <GoComment
                   size="2em"
-                  onClick={() => dispatch(enableComments(post._id))}
+                  //  onClick={() => dispatch(enableComments(post._id))}
                 />
                 <span className="hidden">Comment</span>
               </div>

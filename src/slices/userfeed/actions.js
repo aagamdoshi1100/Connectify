@@ -14,9 +14,36 @@ export const fetchAllPosts = createAsyncThunk(
       }
       const posts = await fetchPosts.json();
       return posts;
-    } catch (error) {
-      console.error("Error fetching posts:", error.message);
-      throw error;
+    } catch (e) {
+      console.error("Error fetching posts:", e);
+      throw e;
+    }
+  }
+);
+
+export const createNewPost = createAsyncThunk(
+  "userfeed/createNewPost",
+  async (postDetails) => {
+    try {
+      const newPostCreationResponse = await fetch(
+        `${API_URL}/posts/${userId}/post`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: token,
+          },
+          body: JSON.stringify(postDetails),
+        }
+      );
+      if (!newPostCreationResponse.ok) {
+        throw newPostCreationResponse;
+      }
+      const newPostData = await newPostCreationResponse.json();
+      return newPostData;
+    } catch (e) {
+      console.error("Error while creating post:", e);
+      throw e;
     }
   }
 );
