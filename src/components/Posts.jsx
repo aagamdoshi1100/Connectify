@@ -14,8 +14,9 @@ import { useNavigate } from "react-router-dom";
 export const Posts = ({ data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const postDetails = useSelector((state) => state.userfeed.post);
-  const bookmarks = useSelector((state) => state.userfeed.bookmarks);
+  const { post: postDetails, bookmarks } = useSelector(
+    (state) => state.userfeed
+  );
   const loggedInUser = localStorage.getItem("username");
 
   return (
