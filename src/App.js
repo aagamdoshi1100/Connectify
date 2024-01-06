@@ -26,6 +26,9 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       {showCompomse && <PostComposer />}
+      <div className="footer-primary-container lg:fixed lg:left-[5%] lg:w-[20%]">
+        <Footer />
+      </div>
     </div>
   );
 }

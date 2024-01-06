@@ -10,5 +10,15 @@ export default function Bookmark() {
     dispatch(getBookmarks());
   }, [dispatch]);
   const { bookmarks, loading } = useSelector((store) => store.userfeed);
-  return <div>{loading ? <ReactLoader /> : <Posts data={bookmarks} />}</div>;
+  return (
+    <div>
+      {loading ? (
+        <ReactLoader />
+      ) : (
+        <div className="mb-20">
+          <Posts data={bookmarks} />
+        </div>
+      )}
+    </div>
+  );
 }

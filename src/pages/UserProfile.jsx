@@ -63,7 +63,7 @@ export default function UserProfile() {
               </div>
             </div>
           </div>
-          <div className="posts lg:flex lg:justify-center">
+          <div className="posts mb-20 lg:flex lg:justify-center">
             <Posts data={user} />
           </div>
         </>
