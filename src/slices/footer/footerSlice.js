@@ -1,23 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-  data: {
-    name: "",
-    id: "",
-  },
-};
+const initialState = {};
 
 const footerSlice = createSlice({
   name: "footer",
   initialState,
-  reducers: {
-    setDataArray: (state, action) => {
-      state.data.name = action.payload.name;
-      state.data.id = action.payload.id;
-    },
-  },
+  reducers: {},
   extraReducers: (builders) => {},
 });
 
 export default footerSlice;
-export const { setDataArray } = footerSlice.actions;
+export const {} = footerSlice.actions;
