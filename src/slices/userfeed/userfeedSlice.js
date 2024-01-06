@@ -5,14 +5,20 @@ import {
   postLikeHandler,
   postBookMarkHandler,
   createNewPost,
+  editPostContent,
 } from "./actions";
 
 const resetUserfeedState = {
-  postCreation: {
+  createPost: {
     loading: false,
     showComposeComponent: false,
     createPostContent: "",
     createPostImage: "",
+  },
+  post: {
+    postMenu: false,
+    postId: "",
+    editPost: false,
   },
 };
 
@@ -52,7 +58,7 @@ export const userfeedSlice = createSlice({
       const getPostForEditing = state.allPosts.find(
         (post) => post._id === action.payload
       );
-      state.createPost.enabled = true;
+      state.createPost.showComposeComponent = true;
       state.createPost.createPostContent = getPostForEditing.content;
       state.createPost.createPostImage = getPostForEditing.image;
       state.post.postMenu = false;
@@ -81,10 +87,28 @@ export const userfeedSlice = createSlice({
         state.allPosts = [...state.allPosts, action.payload.data];
         state.createPost.loading = false;
         state.error = "";
-        state.createPost = resetUserfeedState.postCreation;
+        state.createPost = resetUserfeedState.createPost;
       })
       .addCase(createNewPost.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      //edit
+      .addCase(editPostContent.pending, (state, action) => {
+        state.createPost.loading = true;
+      })
+      .addCase(editPostContent.fulfilled, (state, action) => {
+        console.log(action, "edit95");
+        state.allPosts = state.allPosts.map((post) => {
+          if (post._id === action.payload.editedPost._id) {
+            return Object.assign(post, action.payload.editedPost);
+          }
+          return post;
+        });
+        state.createPost = resetUserfeedState.createPost;
+        state.post = resetUserfeedState.post;
+      })
+      .addCase(editPostContent.rejected, (state, action) => {
+        console.error(action.error, "98");
       })
       //delete
       .addCase(deletePost.pending, (state) => {})
