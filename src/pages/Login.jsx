@@ -95,7 +95,10 @@ export default function Login() {
             </button>
           </div>
           <div className="mt-2 flex justify-center">
-            <NavLink className="text-blue-700 hover:text-purple-700" to="">
+            <NavLink
+              className="text-blue-700 hover:text-purple-700"
+              to="/signup"
+            >
               Don't have an account? Sign up
             </NavLink>
           </div>
