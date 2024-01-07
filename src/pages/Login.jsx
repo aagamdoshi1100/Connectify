@@ -26,6 +26,10 @@ export default function Login() {
     }, 3000);
   }, [dispatch, error.message]);
 
+  useEffect(() => {
+    success && navigate("/");
+  }, [success, navigate]);
+
   const login = () => {
     dispatch(
       loginHandler({
@@ -34,9 +38,6 @@ export default function Login() {
       })
     );
   };
-  if (success) {
-    navigate("/");
-  }
 
   return (
     <div className="login-container fixed top-[46%] left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12 border border-slate-500 rounded-lg">
