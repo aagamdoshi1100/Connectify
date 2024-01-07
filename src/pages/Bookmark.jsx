@@ -4,6 +4,7 @@ import { getBookmarks } from "../slices/userfeed/actions";
 import { Posts } from "../components/Posts";
 import ReactLoader from "../components/ReactLoader";
 import Users from "./Users";
+import Footer from "./Footer";
 
 export default function Bookmark() {
   const dispatch = useDispatch();
@@ -23,6 +24,9 @@ export default function Bookmark() {
             </div>
             <div className="posts-primary-container mb-20 lg:fixed lg:left-[25%] lg:w-[40%] lg:overflow-auto lg:h-[100vh] no-scrollbar">
               <Posts data={bookmarks} />
+            </div>
+            <div className="footer-primary-container lg:fixed lg:left-[5%] lg:w-[20%]">
+              <Footer />
             </div>
           </div>
         </>
