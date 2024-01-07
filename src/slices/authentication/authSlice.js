@@ -21,6 +21,7 @@ export const authSlice = createSlice({
       firstname: "",
       lastname: "",
     },
+    success: false,
     loading: false,
     error: {
       message: "",
@@ -53,6 +54,7 @@ export const authSlice = createSlice({
         localStorage.setItem("username", loggedInUser.username);
         localStorage.setItem("userId", loggedInUser._id);
         state.loading = false;
+        state.success = true;
         state.inputs = resetAuthState.inputs;
         state.error.message = "";
       })

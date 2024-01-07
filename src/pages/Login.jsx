@@ -8,20 +8,35 @@ import {
 } from "../slices/authentication/authSlice";
 import { FaEyeSlash, FaRegEye, FaArrowRight } from "react-icons/fa";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     inputs: authCredentials,
     password: { hide: hidePass },
     error,
+    success,
   } = useSelector((state) => state.auth);
-
   useEffect(() => {
     setTimeout(() => {
       dispatch(disableError());
     }, 3000);
   }, [dispatch, error.message]);
+
+  const login = () => {
+    dispatch(
+      loginHandler({
+        username: authCredentials.username,
+        password: authCredentials.password,
+      })
+    );
+  };
+  if (success) {
+    navigate("/");
+  }
 
   return (
     <div className="login-container fixed top-[46%] left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12 border border-slate-500 rounded-lg">
@@ -69,14 +84,7 @@ export default function Login() {
             <FaArrowRight
               className="bg-purple-700 mt-4 rounded-full p-2 text-white cursor-pointer"
               size="2.5em"
-              onClick={() =>
-                dispatch(
-                  loginHandler({
-                    username: authCredentials.username,
-                    password: authCredentials.password,
-                  })
-                )
-              }
+              onClick={login}
             />
           </div>
           <div className="flex justify-center">
