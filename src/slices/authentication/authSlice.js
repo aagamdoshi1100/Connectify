@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { loginHandler } from "./actions";
 
-const finalState = {
+const resetAuthState = {
   inputs: {
     email: "",
     password: "",
@@ -52,7 +52,7 @@ export const authSlice = createSlice({
         localStorage.setItem("token", token);
         localStorage.setItem("username", loggedInUser.username);
         localStorage.setItem("userId", loggedInUser._id);
-        state.inputs = finalState.inputs;
+        state.inputs = resetAuthState.inputs;
         state.error.message = "";
       })
       .addCase(loginHandler.rejected, (state, action) => {
