@@ -9,7 +9,7 @@ export default function ReactLoader() {
             type="box-up"
             bgColor="purple"
             color="white"
-            title={"box-up"}
+            title={""}
             size={100}
           />
         </div>
