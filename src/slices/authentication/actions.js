@@ -26,3 +26,26 @@ export const loginHandler = createAsyncThunk(
     }
   }
 );
+
+export const signUpHandler = createAsyncThunk(
+  "auth/signUpHandler",
+  async (data) => {
+    try {
+      const signupResponse = await fetch(`${API_URL}/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const responseData = await signupResponse.json();
+      if (!signupResponse.ok) {
+        throw responseData;
+      }
+      return responseData;
+    } catch (e) {
+      console.error("Error while creating user: ", e);
+      throw e;
+    }
+  }
+);

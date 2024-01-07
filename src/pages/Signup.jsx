@@ -1,7 +1,23 @@
 import { NavLink } from "react-router-dom";
-import { FaArrowRight } from "react-icons/fa";
+import { FaEyeSlash, FaRegEye, FaArrowRight } from "react-icons/fa";
+import {
+  disableError,
+  inputsHandler,
+  passwordManager,
+} from "../slices/authentication/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { signUpHandler } from "../slices/authentication/actions";
+import { useEffect } from "react";
 
 export default function Signup() {
+  const dispatch = useDispatch();
+  const { inputs, error, password } = useSelector((store) => store.auth);
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(disableError());
+    }, 5000);
+  }, [dispatch, error.message]);
+  console.log(inputs);
   return (
     <div className="login-container fixed top-[46%] left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12  border border-slate-500 rounded-lg">
       <h2 className="brand-name text-4xl text-center mt-3">Connectify</h2>
@@ -11,18 +27,58 @@ export default function Signup() {
           <input
             type="text"
             className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+            value={inputs.username}
+            onChange={(e) =>
+              dispatch(
+                inputsHandler({
+                  type: "username",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <p className="mt-2 mb-2">Password</p>
-          <input
-            type="password"
-            className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
-          />
+          <div className="relative">
+            {password.hide ? (
+              <FaEyeSlash
+                className="absolute right-2 top-2"
+                onClick={() => dispatch(passwordManager())}
+              />
+            ) : (
+              <FaRegEye
+                className="absolute right-2 top-2"
+                onClick={() => dispatch(passwordManager())}
+              />
+            )}
+            <input
+              type={password.hide ? "password" : "text"}
+              className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+              value={inputs.password}
+              onChange={(e) =>
+                dispatch(
+                  inputsHandler({
+                    type: "password",
+                    value: e.target.value,
+                  })
+                )
+              }
+            />
+          </div>
           <div className="flex gap-3">
             <div>
               <p className="mt-2 mb-2">Firstname</p>
               <input
                 type="text"
                 className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+                value={inputs.firstname}
+                onChange={(e) =>
+                  dispatch(
+                    inputsHandler({
+                      type: "firstname",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
             </div>
             <div>
@@ -30,6 +86,15 @@ export default function Signup() {
               <input
                 type="text"
                 className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+                value={inputs.lastname}
+                onChange={(e) =>
+                  dispatch(
+                    inputsHandler({
+                      type: "lastname",
+                      value: e.target.value,
+                    })
+                  )
+                }
               />
             </div>
           </div>
@@ -37,11 +102,21 @@ export default function Signup() {
           <input
             type="text"
             className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+            value={inputs.email}
+            onChange={(e) =>
+              dispatch(
+                inputsHandler({
+                  type: "email",
+                  value: e.target.value,
+                })
+              )
+            }
           />
           <div className="flex flex-row-reverse">
             <FaArrowRight
               className="bg-purple-700 mt-4 rounded-full p-2 text-white cursor-pointer"
               size="2.5em"
+              onClick={() => dispatch(signUpHandler(inputs))}
             />
           </div>
           <div className="mt-2 flex justify-center">
@@ -51,6 +126,15 @@ export default function Signup() {
             >
               Already have an account? login
             </NavLink>
+          </div>
+          <div className="flex justify-center mt-8">
+            {error.enabled ? (
+              <p className="bg-black text-white fixed bottom-2 p-2 rounded-lg">
+                {error.message}
+              </p>
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>

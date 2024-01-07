@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginHandler } from "./actions";
+import { loginHandler, signUpHandler } from "./actions";
 
 const resetAuthState = {
   inputs: {
@@ -21,7 +21,7 @@ export const authSlice = createSlice({
       firstname: "",
       lastname: "",
     },
-    isLoading: false,
+    loading: false,
     error: {
       message: "",
       enabled: false,
@@ -45,17 +45,37 @@ export const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginHandler.pending, (state, action) => {
-        state.isLoading = true;
+        state.loading = true;
       })
       .addCase(loginHandler.fulfilled, (state, action) => {
         const { loggedInUser, token } = action.payload;
         localStorage.setItem("token", token);
         localStorage.setItem("username", loggedInUser.username);
         localStorage.setItem("userId", loggedInUser._id);
+        state.loading = false;
         state.inputs = resetAuthState.inputs;
         state.error.message = "";
       })
       .addCase(loginHandler.rejected, (state, action) => {
+        console.error(action.error.message);
+        state.error.enabled = true;
+        state.error.message = action.error.message;
+      })
+      //signup
+      .addCase(signUpHandler.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(signUpHandler.fulfilled, (state, action) => {
+        const { createdUser, token } = action.payload.data;
+        localStorage.setItem("token", token);
+        localStorage.setItem("username", createdUser.username);
+        localStorage.setItem("userId", createdUser._id);
+        state.loading = false;
+        state.inputs = resetAuthState.inputs;
+        state.error.message = "";
+      })
+      .addCase(signUpHandler.rejected, (state, action) => {
+        console.error(action.error.message);
         state.error.enabled = true;
         state.error.message = action.error.message;
       });
