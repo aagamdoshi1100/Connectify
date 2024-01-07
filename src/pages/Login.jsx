@@ -24,14 +24,14 @@ export default function Login() {
   }, [dispatch, error.message]);
 
   return (
-    <div className="login-container fixed top-1/2 left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12 h-4/6 border border-slate-500 rounded-lg">
+    <div className="login-container fixed top-[46%] left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12 border border-slate-500 rounded-lg">
       <h2 className="brand-name text-4xl text-center mt-3">Connectify</h2>
       <div className="inputs flex justify-center items-center mt-5">
         <div className="w-11/12">
           <p className="mt-2 mb-2">Username</p>
           <input
             type="text"
-            className="p-2 rounded-lg w-full border border-slate-500"
+            className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
             placeholder="Username"
             value={authCredentials.username}
             onChange={(e) =>
@@ -44,7 +44,7 @@ export default function Login() {
           <div className="password relative">
             <input
               type={hidePass ? "password" : "text"}
-              className="p-2 rounded-lg w-full border border-slate-500"
+              className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
               placeholder="Password"
               value={authCredentials.password}
               onChange={(e) =>
@@ -94,7 +94,7 @@ export default function Login() {
               Guest Login
             </button>
           </div>
-          <div className="mt-2 flex justify-center">
+          <div className="my-2 flex justify-center">
             <NavLink
               className="text-blue-700 hover:text-purple-700"
               to="/signup"
