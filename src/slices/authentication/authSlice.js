@@ -42,6 +42,9 @@ export const authSlice = createSlice({
       state.error.message = "";
       state.error.enabled = false;
     },
+    disableLoginSuccessRedirection: (state, action) => {
+      state.success = false;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -84,5 +87,9 @@ export const authSlice = createSlice({
   },
 });
 
-export const { inputsHandler, passwordManager, disableError } =
-  authSlice.actions;
+export const {
+  inputsHandler,
+  passwordManager,
+  disableError,
+  disableLoginSuccessRedirection,
+} = authSlice.actions;

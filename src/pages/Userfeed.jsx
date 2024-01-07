@@ -5,12 +5,14 @@ import { Posts } from "../components/Posts";
 import ReactLoader from "../components/ReactLoader";
 import Users from "./Users";
 import Footer from "./Footer";
+import { disableLoginSuccessRedirection } from "../slices/authentication/authSlice";
 
 export default function Userfeed() {
   const dispatch = useDispatch();
   const { allPosts, loading } = useSelector((store) => store.userfeed);
   useEffect(() => {
     dispatch(fetchAllPosts());
+    dispatch(disableLoginSuccessRedirection());
   }, [dispatch]);
 
   return (
