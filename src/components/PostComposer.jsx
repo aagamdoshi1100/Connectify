@@ -3,6 +3,7 @@ import { MdOutlineClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { postInputData, showCompose } from "../slices/userfeed/userfeedSlice";
 import { createNewPost, editPostContent } from "../slices/userfeed/actions";
+import ReactLoader from "./ReactLoader";
 
 export default function PostComposer() {
   const dispatch = useDispatch();
@@ -107,6 +108,7 @@ export default function PostComposer() {
           </button>
         )}
       </div>
+      {createPost.loading ? <ReactLoader /> : ""}
     </div>
   );
 }
