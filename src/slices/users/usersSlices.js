@@ -1,10 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUsers } from "./actions";
+import {
+  registerFollowing,
+  fetchUsers,
+  followHandler,
+  followBack,
+} from "./actions";
 
 const initialState = {
   users: [],
+  following: [],
   loading: false,
-  error: "",
+  error: [],
 };
 
 export const usersSlice = createSlice({
@@ -24,6 +30,30 @@ export const usersSlice = createSlice({
       .addCase(fetchUsers.rejected, (state, action) => {
         state.error = action.error.message;
         console.log(action, "extr24");
+      })
+      //follow manager
+      .addCase(followHandler.pending, (state, action) => {})
+      .addCase(followHandler.fulfilled, (state, action) => {
+        state.following = action.payload.response;
+      })
+      .addCase(followHandler.rejected, (state, action) => {
+        console.log(action.error.message);
+      })
+      //follow structure creation
+      .addCase(registerFollowing.pending, (state, action) => {})
+      .addCase(registerFollowing.fulfilled, (state, action) => {
+        state.following = action.payload.response;
+      })
+      .addCase(registerFollowing.rejected, (state, action) => {
+        console.log(action.error.message);
+      })
+      //follow back
+      .addCase(followBack.pending, (state, action) => {})
+      .addCase(followBack.fulfilled, (state, action) => {
+        state.following = action.payload.response;
+      })
+      .addCase(followBack.rejected, (state, action) => {
+        console.log(action.error.message);
       });
   },
 });
