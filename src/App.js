@@ -10,6 +10,7 @@ import PostComposer from "./components/PostComposer";
 import { useSelector } from "react-redux";
 import Bookmark from "./pages/Bookmark";
 import Signup from "./pages/Signup";
+import Header from "./pages/Header";
 
 function App() {
   const showCompomse = useSelector(
@@ -24,6 +25,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/users/:userId/profile" element={<UserProfile />} />
         <Route path="/bookmarks" element={<Bookmark />} />
+        <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
