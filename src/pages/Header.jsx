@@ -15,16 +15,16 @@ export default function Header() {
           <div className="Username flex items-center border border-slate-600 p-1 rounded-full cursor-pointer">
             <p className="username-initial mx-2">{username && username[0]}</p>
             <div className="usermenu absolute right-0 top-10 bg-white border border-slate-300 rounded w-40 shadow-md">
-              <button className="block p-2 border-b border-slate-200 w-full text-left">
+              <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
                 View profile
               </button>
-              <button className="block p-2 border-b border-slate-200 w-full text-left">
+              <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
                 Delete account
               </button>
-              <button className="block p-2 border-b border-slate-200 w-full text-left">
+              <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
                 Feedback
               </button>
-              <button className="block p-2 border-b border-slate-200 w-full text-left">
+              <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
                 About us
               </button>
             </div>
