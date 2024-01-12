@@ -27,6 +27,7 @@ function App() {
         <Route path="/bookmarks" element={<Bookmark />} />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
+        <Route path="/compose-post" element={<PostComposer />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       {showCompomse && <PostComposer />}

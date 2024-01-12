@@ -4,16 +4,62 @@ import { useDispatch, useSelector } from "react-redux";
 import { postInputData, showCompose } from "../slices/userfeed/userfeedSlice";
 import { createNewPost, editPostContent } from "../slices/userfeed/actions";
 import ReactLoader from "./ReactLoader";
+import { useState } from "react";
 
 export default function PostComposer() {
   const dispatch = useDispatch();
   const { createPost, post } = useSelector((store) => store.userfeed);
   const userId = localStorage.getItem("userId");
+  const [imgDimension, setImgDimension] = useState({
+    height: 0,
+    width: 0,
+  });
+
+  const reduceImageSize = async (
+    base64str,
+    MAX_WIDTH = 350,
+    MAX_HEIGHT = 350
+  ) => {
+    return await new Promise((resolve) => {
+      let img = new Image();
+      img.src = base64str;
+      img.onload = async () => {
+        let canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height *= MAX_WIDTH / width;
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width *= MAX_HEIGHT / height;
+            height = MAX_HEIGHT;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        setImgDimension({
+          ...imgDimension,
+          height,
+          width,
+        });
+        let ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL());
+      };
+    });
+  };
+
   const base64 = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = () => {
-      dispatch(postInputData({ type: "createPostImage", data: reader.result }));
+    reader.onload = async () => {
+      const reducedImage = await reduceImageSize(reader.result);
+      dispatch(postInputData({ type: "createPostImage", data: reducedImage }));
     };
   };
 
@@ -22,21 +68,7 @@ export default function PostComposer() {
       <div className="box-discard flex justify-end m-2">
         <MdOutlineClose size="2em" onClick={() => dispatch(showCompose())} />
       </div>
-
-      <div
-        className="absolute"
-        onClick={() =>
-          dispatch(postInputData({ type: "createPostImage", data: "" }))
-        }
-      >
-        {createPost.createPostImage !== "" && (
-          <MdOutlineClose
-            size="3em"
-            className="img-discard relative top-0 p-3"
-          />
-        )}
-      </div>
-      <div className="upload-img flex items-center justify-center border border-slate-400 h-[40vh] lg:h-[50vh]">
+      <div className="upload-img flex items-center justify-center h-[40vh] lg:h-[50vh]">
         {createPost.createPostImage === "" ? (
           <>
             <label htmlFor="image">
@@ -52,11 +84,22 @@ export default function PostComposer() {
             />
           </>
         ) : (
-          <img
-            src={createPost.createPostImage}
-            className="uploaded-img w-full h-full"
-            alt="upload"
-          />
+          <div className="relative">
+            <img
+              src={createPost.createPostImage}
+              className="uploaded-img"
+              width={imgDimension.width}
+              height={imgDimension.height}
+              alt="upload"
+            />
+            <MdOutlineClose
+              size="3em"
+              className="img-discard absolute top-0 p-3"
+              onClick={() =>
+                dispatch(postInputData({ type: "createPostImage", data: "" }))
+              }
+            />
+          </div>
         )}
       </div>
 
