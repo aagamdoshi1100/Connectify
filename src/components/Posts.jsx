@@ -48,18 +48,18 @@ export const Posts = ({ data }) => {
 
                   {postDetails.postMenu && postDetails.postId === post._id && (
                     <div className="postMenu absolute border border-slate-400 right-10 top-0 bg-white p-2 rounded">
-                      <p
+                      <button
                         className="m-1"
                         onClick={() => dispatch(enableEdit(post._id))}
                       >
                         Edit
-                      </p>
-                      <p
+                      </button>
+                      <button
                         className="m-1"
                         onClick={() => dispatch(deletePost(post._id))}
                       >
                         Delete
-                      </p>
+                      </button>
                     </div>
                   )}
                 </div>
