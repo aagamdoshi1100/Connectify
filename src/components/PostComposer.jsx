@@ -5,6 +5,7 @@ import { postInputData, showCompose } from "../slices/userfeed/userfeedSlice";
 import { createNewPost, editPostContent } from "../slices/userfeed/actions";
 import ReactLoader from "./ReactLoader";
 import { useState } from "react";
+import { base64Convertor } from "../Utils/utils";
 
 export default function PostComposer() {
   const dispatch = useDispatch();
@@ -15,52 +16,16 @@ export default function PostComposer() {
     width: 0,
   });
 
-  const reduceImageSize = async (
-    base64str,
-    MAX_WIDTH = 350,
-    MAX_HEIGHT = 350
-  ) => {
-    return await new Promise((resolve) => {
-      let img = new Image();
-      img.src = base64str;
-      img.onload = async () => {
-        let canvas = document.createElement("canvas");
-        let width = img.width;
-        let height = img.height;
-
-        if (width > height) {
-          if (width > MAX_WIDTH) {
-            height *= MAX_WIDTH / width;
-            width = MAX_WIDTH;
-          }
-        } else {
-          if (height > MAX_HEIGHT) {
-            width *= MAX_HEIGHT / height;
-            height = MAX_HEIGHT;
-          }
-        }
-
-        canvas.width = width;
-        canvas.height = height;
-        setImgDimension({
-          ...imgDimension,
-          height,
-          width,
-        });
-        let ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, width, height);
-        resolve(canvas.toDataURL());
-      };
+  const base64Handler = async (file) => {
+    const reducedImageData = await base64Convertor(file);
+    setImgDimension({
+      ...imgDimension,
+      height: reducedImageData.height,
+      width: reducedImageData.width,
     });
-  };
-
-  const base64 = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = async () => {
-      const reducedImage = await reduceImageSize(reader.result);
-      dispatch(postInputData({ type: "createPostImage", data: reducedImage }));
-    };
+    dispatch(
+      postInputData({ type: "createPostImage", data: reducedImageData.url })
+    );
   };
 
   return (
@@ -68,7 +33,7 @@ export default function PostComposer() {
       <div className="box-discard flex justify-end m-2">
         <MdOutlineClose size="2em" onClick={() => dispatch(showCompose())} />
       </div>
-      <div className="upload-img flex items-center justify-center h-[40vh] lg:h-[50vh]">
+      <div className="upload-img flex justify-center">
         {createPost.createPostImage === "" ? (
           <>
             <label htmlFor="image">
@@ -80,11 +45,11 @@ export default function PostComposer() {
               type="file"
               id="image"
               className="file-selector hidden"
-              onChange={(e) => base64(e.target.files[0])}
+              onChange={(e) => base64Handler(e.target.files[0])}
             />
           </>
         ) : (
-          <div className="relative">
+          <div className="relative h-[80%]">
             <img
               src={createPost.createPostImage}
               className="uploaded-img"
