@@ -20,7 +20,7 @@ const userProfileSlice = createSlice({
         state.stat.loading = true;
       })
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
-        state.user = action.payload.profile;
+        state.user = [action.payload.profile];
         state.stat.loading = false;
         state.stat.error = "";
       })

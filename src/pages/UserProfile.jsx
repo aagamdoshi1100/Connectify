@@ -4,6 +4,8 @@ import { fetchUserProfile } from "../slices/userProfile/action";
 import { useDispatch, useSelector } from "react-redux";
 import ReactLoader from "../components/ReactLoader";
 import { Posts } from "../components/Posts";
+import Footer from "./Footer";
+import Header from "./Header";
 
 export default function UserProfile() {
   const { userId } = useParams();
@@ -15,7 +17,10 @@ export default function UserProfile() {
     user,
     stat: { loading },
   } = useSelector((store) => store.userProfile);
-
+  const { allPosts } = useSelector((store) => store.userfeed);
+  const filterPostsForUserProfileView = allPosts.filter(
+    (userPosts) => userId === userPosts.user
+  );
   console.log(user, "userprofile");
   return (
     <div>
@@ -23,6 +28,7 @@ export default function UserProfile() {
         <ReactLoader />
       ) : (
         <>
+          <Header />
           <div className="UserProfile lg:flex lg:justify-center">
             <div className="userImage-userDetails flex  justify-center bg-slate-100 lg:border lg:border-slate-100 sm:w-1/2 lg:w-1/2 lg:justify-around">
               <div className="userImage-Name flex flex-col items-center">
@@ -64,8 +70,11 @@ export default function UserProfile() {
             </div>
           </div>
           <div className="posts mb-20 lg:flex lg:justify-center">
-            <Posts data={user} />
+            {filterPostsForUserProfileView.length !== 0 && (
+              <Posts data={filterPostsForUserProfileView} />
+            )}
           </div>
+          <Footer />
         </>
       )}
     </div>
