@@ -12,7 +12,7 @@ import { useState } from "react";
 import { base64Convertor } from "../Utils/utils";
 import {
   clearImageState,
-  enableUpload,
+  disableUpload,
   setImageToState,
 } from "../slices/userProfile/userProfileSlice";
 import { setProfilePicture } from "../slices/userProfile/action";
@@ -55,7 +55,7 @@ export default function PostComposer() {
           size="2em"
           onClick={
             uploadProfileImageStates.isEnabled
-              ? () => dispatch(enableUpload())
+              ? () => dispatch(disableUpload())
               : () => dispatch(discardCompose())
           }
         />

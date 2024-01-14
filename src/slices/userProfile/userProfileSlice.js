@@ -24,8 +24,11 @@ const userProfileSlice = createSlice({
   initialState,
   reducers: {
     enableUpload: (state, action) => {
-      state.uploadProfileImageStates.isEnabled =
-        !state.uploadProfileImageStates.isEnabled;
+      state.uploadProfileImageStates.isEnabled = true;
+    },
+    disableUpload: (state, action) => {
+      state.uploadProfileImageStates.isEnabled = false;
+      state.uploadProfileImageStates.image = "";
     },
     setImageToState: (state, action) => {
       state.uploadProfileImageStates.image = action.payload;
@@ -69,6 +72,7 @@ export default userProfileSlice;
 export const {
   setUserprofileId,
   enableUpload,
+  disableUpload,
   setImageToState,
   clearImageState,
 } = userProfileSlice.actions;
