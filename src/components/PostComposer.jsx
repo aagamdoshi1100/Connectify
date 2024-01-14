@@ -1,7 +1,11 @@
 import { BiImageAdd } from "react-icons/bi";
 import { MdOutlineClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { postInputData, showCompose } from "../slices/userfeed/userfeedSlice";
+import {
+  discardCompose,
+  postInputData,
+  showCompose,
+} from "../slices/userfeed/userfeedSlice";
 import { createNewPost, editPostContent } from "../slices/userfeed/actions";
 import ReactLoader from "./ReactLoader";
 import { useState } from "react";
@@ -21,8 +25,8 @@ export default function PostComposer() {
   );
   const userId = localStorage.getItem("userId");
   const [imgDimension, setImgDimension] = useState({
-    height: 0,
-    width: 0,
+    height: "350px",
+    width: "100%",
   });
 
   const base64Handler = async (file) => {
@@ -43,7 +47,6 @@ export default function PostComposer() {
   const imageData = uploadProfileImageStates.isEnabled
     ? uploadProfileImageStates.image
     : createPost.createPostImage;
-  console.log(uploadProfileImageStates);
 
   return (
     <div className="post-composer-container top-[40%] left-1/2 fixed -translate-x-1/2 -translate-y-[40%] bg-slate-200 border-slate-300 border rounded-lg  w-[90%] md:w-[45%] lg:w-[45%]">
@@ -53,7 +56,7 @@ export default function PostComposer() {
           onClick={
             uploadProfileImageStates.isEnabled
               ? () => dispatch(enableUpload())
-              : () => dispatch(showCompose())
+              : () => dispatch(discardCompose())
           }
         />
       </div>
