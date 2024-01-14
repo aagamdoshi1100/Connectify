@@ -6,6 +6,7 @@ import ReactLoader from "../components/ReactLoader";
 import Users from "./Users";
 import Footer from "./Footer";
 import { disableLoginSuccessRedirection } from "../slices/authentication/authSlice";
+import Header from "./Header";
 
 export default function Userfeed() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ export default function Userfeed() {
         <ReactLoader />
       ) : (
         <>
+          <Header />
           <div className="userfeed-primary-container lg:flex">
             <div className="users-primary-container lg:fixed lg:left-[65%] lg:w-[30%]">
               <Users />
