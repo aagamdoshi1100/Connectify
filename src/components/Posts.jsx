@@ -18,7 +18,7 @@ export const Posts = ({ data }) => {
     (state) => state.userfeed
   );
   const loggedInUser = localStorage.getItem("username");
-
+  console.log(data);
   return (
     <>
       {data?.map((post) => {
@@ -33,7 +33,17 @@ export const Posts = ({ data }) => {
                   className="icon-username flex items-center m-2 "
                   onClick={() => navigate(`/users/${post.user._id}/profile`)}
                 >
-                  <div className="user-icon border border-slate-600 w-10 h-11 rounded-md"></div>
+                  <div className="user-icon-profile border border-slate-600 w-10 h-11 rounded-md  overflow-hidden">
+                    <img
+                      src={
+                        post.user.profileIcon === ""
+                          ? "../../Profile-Image-Default.jpg"
+                          : post.user.profileIcon
+                      }
+                      className="profileImage w-full h-full"
+                      alt="profile"
+                    />
+                  </div>
                   <div className="ml-2">
                     <p>{`${post.user.firstname} ${post.user.lastname}`}</p>
                     <p className="username">@{post.user.username}</p>

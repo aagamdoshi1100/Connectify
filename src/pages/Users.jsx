@@ -36,9 +36,12 @@ export default function Users() {
                 <div className="profileIcon flex justify-center">
                   <div className="profileIcon-border w-16 h-16 rounded-lg bg-green-400 overflow-hidden lg:w-20">
                     <img
-                      src={profileIcon}
-                      className="profileImg w-full h-full"
-                      alt="profile"
+                      src={
+                        user.profileIcon === ""
+                          ? "../../Profile-Image-Default.jpg"
+                          : user.profileIcon
+                      }
+                      className="profileImage w-full h-full"
                     />
                   </div>
                 </div>
