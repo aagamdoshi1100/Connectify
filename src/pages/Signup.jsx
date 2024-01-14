@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FaEyeSlash, FaRegEye, FaArrowRight } from "react-icons/fa";
 import {
   disableError,
@@ -11,12 +11,19 @@ import { useEffect } from "react";
 
 export default function Signup() {
   const dispatch = useDispatch();
-  const { inputs, error, password } = useSelector((store) => store.auth);
+  const navigate = useNavigate();
+  const { inputs, error, password, success } = useSelector(
+    (store) => store.auth
+  );
   useEffect(() => {
     setTimeout(() => {
       dispatch(disableError());
     }, 5000);
   }, [dispatch, error.message]);
+
+  useEffect(() => {
+    success && navigate("/");
+  }, [success]);
   console.log(inputs);
   return (
     <div className="login-container fixed top-[46%] left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12  border border-slate-500 rounded-lg">

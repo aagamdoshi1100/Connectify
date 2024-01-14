@@ -76,12 +76,14 @@ export const authSlice = createSlice({
         localStorage.setItem("username", createdUser.username);
         localStorage.setItem("userId", createdUser._id);
         state.loading = false;
+        state.success = true;
         state.inputs = resetAuthState.inputs;
         state.error.message = "";
       })
       .addCase(signUpHandler.rejected, (state, action) => {
         console.error(action.error.message);
         state.error.enabled = true;
+        state.loading = false;
         state.error.message = action.error.message;
       });
   },
