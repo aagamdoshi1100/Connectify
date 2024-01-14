@@ -66,6 +66,10 @@ export const userfeedSlice = createSlice({
       state.post.postId = action.payload;
       state.post.editPost = true;
     },
+    discardCompose: (state, action) => {
+      state.post = resetUserfeedState.post;
+      state.createPost = resetUserfeedState.createPost;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -172,5 +176,10 @@ export const userfeedSlice = createSlice({
   },
 });
 
-export const { enablePostMenu, enableEdit, showCompose, postInputData } =
-  userfeedSlice.actions;
+export const {
+  enablePostMenu,
+  enableEdit,
+  showCompose,
+  discardCompose,
+  postInputData,
+} = userfeedSlice.actions;
