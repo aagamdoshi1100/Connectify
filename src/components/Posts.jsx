@@ -10,6 +10,7 @@ import {
   postBookMarkHandler,
 } from "../slices/userfeed/actions";
 import { useNavigate } from "react-router-dom";
+import Identity from "./Identity";
 
 export const Posts = ({ data }) => {
   const dispatch = useDispatch();
@@ -29,26 +30,7 @@ export const Posts = ({ data }) => {
           >
             <div className="post-header">
               <div className="header-row flex  justify-between items-center ">
-                <div
-                  className="icon-username flex items-center m-2 "
-                  onClick={() => navigate(`/users/${post.user._id}/profile`)}
-                >
-                  <div className="user-icon-profile border border-slate-600 w-10 h-11 rounded-md  overflow-hidden">
-                    <img
-                      src={
-                        post.user.profileIcon === ""
-                          ? "../../Profile-Image-Default.jpg"
-                          : post.user.profileIcon
-                      }
-                      className="profileImage w-full h-full"
-                      alt="profile"
-                    />
-                  </div>
-                  <div className="ml-2">
-                    <p>{`${post.user.firstname} ${post.user.lastname}`}</p>
-                    <p className="username">@{post.user.username}</p>
-                  </div>
-                </div>
+                <Identity user={post.user} />
                 <div className="relative">
                   <BsThreeDotsVertical
                     size="2em"
