@@ -31,7 +31,10 @@ export default function Footer() {
 
         <div className="icon-block flex cursor-pointer lg:m-3">
           <IoMdSearch size="2em" />
-          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
+          <span
+            className="icon-name hidden lg:inline-flex ml-3 lg:text-xl"
+            onClick={() => navigate("/search")}
+          >
             Search
           </span>
         </div>
@@ -51,10 +54,7 @@ export default function Footer() {
           onClick={() => navigate("/bookmarks")}
         >
           <IoChatbubbleEllipsesOutline size="2em" />
-          <span
-            className="icon-name hidden lg:inline-flex ml-3 lg:text-xl"
-            onClick={() => navigate("/search")}
-          >
+          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
             Chats
           </span>
         </div>
