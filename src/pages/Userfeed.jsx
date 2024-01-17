@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllPosts } from "../slices/userfeed/actions";
 import { Posts } from "../components/Posts";
@@ -11,10 +11,15 @@ import Header from "./Header";
 export default function Userfeed() {
   const dispatch = useDispatch();
   const { allPosts, loading } = useSelector((store) => store.userfeed);
-  useEffect(() => {
+
+  const fetchUserFeed = useCallback(() => {
     dispatch(fetchAllPosts());
     dispatch(disableLoginSuccessRedirection());
   }, [dispatch]);
+
+  useEffect(() => {
+    fetchUserFeed();
+  }, [fetchUserFeed]);
 
   return (
     <div>

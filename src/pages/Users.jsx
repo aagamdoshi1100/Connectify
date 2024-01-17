@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import {
   registerFollowing,
   fetchUsers,
@@ -10,10 +10,16 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Users() {
   const dispatch = useDispatch();
   const userId = localStorage.getItem("userId");
-  useEffect(() => {
+
+  const fetchUsersData = useCallback(() => {
     dispatch(fetchUsers());
     dispatch(registerFollowing(userId));
   }, [dispatch]);
+
+  useEffect(() => {
+    fetchUsersData();
+  }, [fetchUsersData]);
+
   const { users, following } = useSelector((store) => store.users);
   const findMyFollowings = following?.filter(
     (selectMyFollowings) => selectMyFollowings.user === userId
