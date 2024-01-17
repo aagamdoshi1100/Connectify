@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import Bookmark from "./pages/Bookmark";
 import Signup from "./pages/Signup";
 import Header from "./pages/Header";
+import OneToOneChat from "./components/OneToOneChat";
+import FindUser from "./pages/FindUser";
 
 function App() {
   const showCompomse = useSelector(
@@ -24,7 +26,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:userId/profile" element={<UserProfile />} />
+        <Route path="/search" element={<FindUser />} />
         <Route path="/bookmarks" element={<Bookmark />} />
+        <Route path="/user-chat" element={<OneToOneChat />} />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/compose-post" element={<PostComposer />} />
