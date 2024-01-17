@@ -32,6 +32,12 @@ export default function Header() {
                 >
                   View profile
                 </button>
+                <button
+                  className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
+                  onClick={() => navigate("/bookmarks")}
+                >
+                  Bookamarks
+                </button>
                 <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
                   Delete account
                 </button>

@@ -1,4 +1,4 @@
-import { BiLogOut, BiBookBookmark } from "react-icons/bi";
+import { BiLogOut } from "react-icons/bi";
 import { AiOutlineHome } from "react-icons/ai";
 import { FaRegPlusSquare } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showCompose } from "../slices/userfeed/userfeedSlice";
 import { logout } from "../slices/footer/footerSlice";
+import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -49,9 +50,12 @@ export default function Footer() {
           className="icon-block flex cursor-pointer lg:m-3"
           onClick={() => navigate("/bookmarks")}
         >
-          <BiBookBookmark size="2em" />
-          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
-            Bookmark
+          <IoChatbubbleEllipsesOutline size="2em" />
+          <span
+            className="icon-name hidden lg:inline-flex ml-3 lg:text-xl"
+            onClick={() => navigate("/search")}
+          >
+            Chats
           </span>
         </div>
 
