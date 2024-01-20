@@ -4,18 +4,24 @@ const initialState = {
   headerMenu: {
     isEnabled: false,
   },
+  searchManager: {
+    isEnabled: false,
+  },
 };
 
 const headerSlice = createSlice({
-  name: "footer",
+  name: "header",
   initialState,
   reducers: {
     toggleHeaderMenu: (state, action) => {
       state.headerMenu.isEnabled = !state.headerMenu.isEnabled;
+    },
+    toggleSearch: (state, action) => {
+      state.searchManager.isEnabled = !state.searchManager.isEnabled;
     },
   },
   extraReducers: (builders) => {},
 });
 
 export default headerSlice;
-export const { toggleHeaderMenu } = headerSlice.actions;
+export const { toggleHeaderMenu, toggleSearch } = headerSlice.actions;
