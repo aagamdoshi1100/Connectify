@@ -15,7 +15,7 @@ export default function UserProfile() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchUserProfile(userId));
-  }, [dispatch]);
+  }, [dispatch, userId]);
   const { user, loading, uploadProfileImageStates } = useSelector(
     (store) => store.userProfile
   );
@@ -71,12 +71,12 @@ export default function UserProfile() {
                     <p>Following</p>
                   </div>
                 </div>
-                <div className="buttons mt-8 flex">
+                <div className="buttons mt-8 flex gap-1">
                   <button className="bg-purple-500 text-white p-1 rounded-sm w-1/2  flex-grow">
-                    Edit
+                    Message
                   </button>
-                  <button className="bg-purple-500 text-white p-2 rounded-sm w-1/2 ml-1 flex-grow">
-                    Following
+                  <button className="bg-purple-500 text-white p-1 rounded-sm w-1/2  flex-grow">
+                    Edit Profile
                   </button>
                 </div>
               </div>
