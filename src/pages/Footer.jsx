@@ -1,7 +1,7 @@
 import { BiLogOut } from "react-icons/bi";
 import { AiOutlineHome } from "react-icons/ai";
 import { FaRegPlusSquare } from "react-icons/fa";
-import { IoMdSearch } from "react-icons/io";
+import { MdLightMode } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showCompose } from "../slices/userfeed/userfeedSlice";
@@ -30,12 +30,9 @@ export default function Footer() {
         </div>
 
         <div className="icon-block flex cursor-pointer lg:m-3">
-          <IoMdSearch size="2em" />
-          <span
-            className="icon-name hidden lg:inline-flex ml-3 lg:text-xl"
-            onClick={() => navigate("/search")}
-          >
-            Search
+          <MdLightMode size="1.7em" />
+          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
+            Day/Night
           </span>
         </div>
 

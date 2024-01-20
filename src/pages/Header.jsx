@@ -1,4 +1,3 @@
-import { MdLightMode } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleSearch, toggleHeaderMenu } from "../slices/header/headerSlice";
@@ -36,7 +35,6 @@ export default function Header() {
               Search
             </span>
           </div>
-          <MdLightMode size="1.7em" />
 
           <div className="relative">
             <div
