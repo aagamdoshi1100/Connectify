@@ -1,58 +1,82 @@
 import { MdLightMode } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toggleHeaderMenu } from "../slices/header/headerSlice";
+import { toggleSearch, toggleHeaderMenu } from "../slices/header/headerSlice";
+import Search from "../components/Search";
+import { IoMdSearch } from "react-icons/io";
+import { MdOutlineSearchOff } from "react-icons/md";
 
 export default function Header() {
   const username = localStorage.getItem("username");
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { headerMenu } = useSelector((store) => store.header);
+  const { headerMenu, searchManager } = useSelector((store) => store.header);
   return (
-    <div className="header-container  border border-slate-300 bg-slate-100 p-2 flex justify-between items-center">
-      <h3 className="brand-logo font-serif text-2xl text-purple-600">
-        Connectify
-      </h3>
+    <div className="primary-header-container sticky top-0 w-full bg-white">
+      <div className="secondary-header-container  border border-slate-300 bg-slate-100 p-2 flex justify-between items-center">
+        <h3 className="brand-logo font-serif text-2xl text-purple-600 lg:pl-5">
+          Connectify
+        </h3>
 
-      <div className="header-right flex justify-between items-center space-x-4 p-1">
-        <MdLightMode size="1.7em" />
-
-        <div className="relative">
+        <div className="header-right flex justify-between items-center space-x-4 p-1 lg:pr-5">
+          <div className="hidden lg:block">
+            <Search />
+          </div>
           <div
-            className="Username flex items-center border border-slate-600 p-1 rounded-full cursor-pointer"
-            onClick={() => dispatch(toggleHeaderMenu())}
+            className="icon-block flex cursor-pointer lg:m-3 lg:hidden"
+            onClick={() => dispatch(toggleSearch())}
           >
-            <p className="username-initial mx-2">{username && username[0]}</p>
-            {headerMenu.isEnabled ? (
-              <div className="usermenu absolute right-0 top-10 bg-white border border-slate-300 rounded w-40 shadow-md">
-                <button
-                  className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
-                  onClick={() => navigate(`/users/${userId}/profile`)}
-                >
-                  View profile
-                </button>
-                <button
-                  className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
-                  onClick={() => navigate("/bookmarks")}
-                >
-                  Bookamarks
-                </button>
-                <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
-                  Delete account
-                </button>
-                <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
-                  Feedback
-                </button>
-                <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
-                  About us
-                </button>
-              </div>
+            {searchManager.isEnabled ? (
+              <MdOutlineSearchOff size="2em" />
             ) : (
-              ""
+              <IoMdSearch size="2em" />
             )}
+            <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
+              Search
+            </span>
+          </div>
+          <MdLightMode size="1.7em" />
+
+          <div className="relative">
+            <div
+              className="Username flex items-center border border-slate-600 p-1 rounded-full cursor-pointer lg:p-1.5"
+              onClick={() => dispatch(toggleHeaderMenu())}
+            >
+              <p className="username-initial mx-2">{username && username[0]}</p>
+              {headerMenu.isEnabled ? (
+                <div className="usermenu absolute right-0 top-10 lg:top-11 bg-white border border-slate-300 rounded w-40 shadow-md">
+                  <button
+                    className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
+                    onClick={() => navigate(`/users/${userId}/profile`)}
+                  >
+                    View profile
+                  </button>
+                  <button
+                    className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
+                    onClick={() => navigate("/bookmarks")}
+                  >
+                    Bookamarks
+                  </button>
+                  <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
+                    Delete account
+                  </button>
+                  <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
+                    Feedback
+                  </button>
+                  <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
+                    About us
+                  </button>
+                </div>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         </div>
+      </div>
+      <div className="header-search lg:hidden">
+        {searchManager.isEnabled ? <Search /> : ""}
       </div>
     </div>
   );
