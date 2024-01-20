@@ -12,7 +12,7 @@ import Bookmark from "./pages/Bookmark";
 import Signup from "./pages/Signup";
 import Header from "./pages/Header";
 import OneToOneChat from "./components/OneToOneChat";
-import FindUser from "./pages/FindUser";
+import Search from "./components/Search";
 
 function App() {
   const showCompomse = useSelector(
@@ -26,7 +26,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:userId/profile" element={<UserProfile />} />
-        <Route path="/search" element={<FindUser />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/bookmarks" element={<Bookmark />} />
         <Route path="/user-chat" element={<OneToOneChat />} />
         <Route path="/header" element={<Header />} />
