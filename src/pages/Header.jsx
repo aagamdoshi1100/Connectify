@@ -12,7 +12,7 @@ export default function Header() {
   const dispatch = useDispatch();
   const { headerMenu, searchManager } = useSelector((store) => store.header);
   return (
-    <div className="primary-header-container sticky top-0 w-full bg-white">
+    <div className="primary-header-container sticky top-0 w-full bg-white z-20">
       <div className="secondary-header-container  border border-slate-300 bg-slate-100 p-2 flex justify-between items-center">
         <h3 className="brand-logo font-serif text-2xl text-purple-600 lg:pl-5">
           Connectify
