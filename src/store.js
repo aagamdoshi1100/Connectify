@@ -5,6 +5,7 @@ import userProfileSlice from "./slices/userProfile/userProfileSlice";
 import footerSlice from "./slices/footer/footerSlice";
 import { usersSlice } from "./slices/users/usersSlices";
 import headerSlice from "./slices/header/headerSlice";
+import { chatSlice } from "./slices/Chat/chatSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     header: headerSlice.reducer,
     footer: footerSlice.reducer,
     users: usersSlice.reducer,
+    chats: chatSlice.reducer,
   },
 });

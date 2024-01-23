@@ -48,7 +48,7 @@ export default function Footer() {
 
         <div
           className="icon-block flex cursor-pointer lg:m-3"
-          onClick={() => navigate("/bookmarks")}
+          onClick={() => navigate("/chats")}
         >
           <IoChatbubbleEllipsesOutline size="2em" />
           <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">

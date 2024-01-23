@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchUserProfile } from "../slices/userProfile/action";
 import { useDispatch, useSelector } from "react-redux";
 import ReactLoader from "../components/ReactLoader";
@@ -13,12 +13,14 @@ import { enableUpload } from "../slices/userProfile/userProfileSlice";
 export default function UserProfile() {
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchUserProfile(userId));
   }, [dispatch, userId]);
   const { user, loading, uploadProfileImageStates } = useSelector(
     (store) => store.userProfile
   );
+  localStorage.setItem("userProfile", JSON.stringify(user[0]));
   const { allPosts } = useSelector((store) => store.userfeed);
   const filterPostsForUserProfileView = allPosts.filter(
     (userPosts) => userId === userPosts.user
@@ -72,7 +74,10 @@ export default function UserProfile() {
                   </div>
                 </div>
                 <div className="buttons mt-8 flex gap-1">
-                  <button className="bg-purple-500 text-white p-1 rounded-sm w-1/2  flex-grow">
+                  <button
+                    className="bg-purple-500 text-white p-1 rounded-sm w-1/2  flex-grow"
+                    onClick={() => navigate("/user-chat")}
+                  >
                     Message
                   </button>
                   <button className="bg-purple-500 text-white p-1 rounded-sm w-1/2  flex-grow">
