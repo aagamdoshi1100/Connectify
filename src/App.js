@@ -13,6 +13,7 @@ import Signup from "./pages/Signup";
 import Header from "./pages/Header";
 import OneToOneChat from "./components/OneToOneChat";
 import Search from "./components/Search";
+import AllChats from "./components/AllChats";
 
 function App() {
   const showCompomse = useSelector(
@@ -29,6 +30,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/bookmarks" element={<Bookmark />} />
         <Route path="/user-chat" element={<OneToOneChat />} />
+        <Route path="/chats" element={<AllChats />} />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/compose-post" element={<PostComposer />} />
