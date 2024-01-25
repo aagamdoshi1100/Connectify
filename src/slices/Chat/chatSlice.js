@@ -32,7 +32,14 @@ export const chatSlice = createSlice({
       .addCase(findCurrentRoom.fulfilled, (state, action) => {
         state.messageList = action.payload.data;
       })
-      .addCase(findCurrentRoom.rejected, (state, action) => {});
+      .addCase(findCurrentRoom.rejected, (state, action) => {})
+
+      //fetch all message room
+      .addCase(fetchAllRooms.pending, (state, action) => {})
+      .addCase(fetchAllRooms.fulfilled, (state, action) => {
+        state.usersChatProfiles = action.payload.data;
+      })
+      .addCase(fetchAllRooms.rejected, (state, action) => {});
   },
 });
 
