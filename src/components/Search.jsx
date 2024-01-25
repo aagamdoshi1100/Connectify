@@ -43,7 +43,10 @@ export default function Search() {
           />
           <div className="users absolute top-14 bg-white w-[94vw] lg:w-[25vw]">
             {search.searches.map((user) => (
-              <div className="user border border-slate-500 bg-white">
+              <div
+                className="user border border-slate-500 bg-white"
+                key={user._id}
+              >
                 <Identity user={user} />
               </div>
             ))}
