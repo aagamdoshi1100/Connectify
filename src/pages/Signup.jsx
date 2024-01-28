@@ -8,6 +8,9 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { signUpHandler } from "../slices/authentication/actions";
 import { useEffect } from "react";
+import { SlUser } from "react-icons/sl";
+import { GoLock } from "react-icons/go";
+import { MdOutlineEmail } from "react-icons/md";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -26,15 +29,21 @@ export default function Signup() {
   }, [success]);
   console.log(inputs);
   return (
-    <div className="login-container fixed top-[46%] left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12  border border-slate-500 rounded-lg">
-      <h2 className="brand-name text-4xl text-center mt-3">Connectify</h2>
-      <div className="inputs flex justify-center items-center mt-5 focus:outline-none">
-        <div className="w-11/12">
-          <p className="mt-2 mb-2">Username</p>
+    <div className="login-container">
+      <div className="pl-4">
+        <h2 className="text-4xl font-serif text-left m-4 mb-2 mt-16">
+          Create account
+        </h2>
+        <p className="text-slate-400 font-serif ml-4">Sign up to get started</p>
+      </div>
+      <div className="inputs flex flex-col justify-center items-center mt-5 gap-4">
+        <div className="relative w-10/12">
+          <SlUser size="1.3em" className="absolute left-3 top-3" />
           <input
             type="text"
-            className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+            className="p-2 pl-12 w-full border border-slate-400 focus:outline-none"
             value={inputs.username}
+            placeholder="Username"
             onChange={(e) =>
               dispatch(
                 inputsHandler({
@@ -44,72 +53,78 @@ export default function Signup() {
               )
             }
           />
-          <p className="mt-2 mb-2">Password</p>
-          <div className="relative">
-            {password.hide ? (
-              <FaEyeSlash
-                className="absolute right-2 top-2"
-                onClick={() => dispatch(passwordManager())}
-              />
-            ) : (
-              <FaRegEye
-                className="absolute right-2 top-2"
-                onClick={() => dispatch(passwordManager())}
-              />
-            )}
+        </div>
+        <div className="relative w-10/12">
+          <GoLock size="1.3em" className="absolute left-3 top-3" />
+          {password.hide ? (
+            <FaEyeSlash
+              size="1.3em"
+              className="absolute right-3 top-3"
+              onClick={() => dispatch(passwordManager())}
+            />
+          ) : (
+            <FaRegEye
+              size="1.3em"
+              className="absolute right-3 top-3"
+              onClick={() => dispatch(passwordManager())}
+            />
+          )}
+          <input
+            type={password.hide ? "password" : "text"}
+            className="p-2 pl-12 w-full border border-slate-400 focus:outline-none"
+            value={inputs.password}
+            placeholder="Password"
+            onChange={(e) =>
+              dispatch(
+                inputsHandler({
+                  type: "password",
+                  value: e.target.value,
+                })
+              )
+            }
+          />
+        </div>
+        <div className="flex gap-2 w-10/12">
+          <div>
             <input
-              type={password.hide ? "password" : "text"}
-              className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
-              value={inputs.password}
+              type="text"
+              className="p-2 w-full border border-slate-400 focus:outline-none"
+              value={inputs.firstname}
+              placeholder="First name"
               onChange={(e) =>
                 dispatch(
                   inputsHandler({
-                    type: "password",
+                    type: "firstname",
                     value: e.target.value,
                   })
                 )
               }
             />
           </div>
-          <div className="flex gap-3">
-            <div>
-              <p className="mt-2 mb-2">Firstname</p>
-              <input
-                type="text"
-                className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
-                value={inputs.firstname}
-                onChange={(e) =>
-                  dispatch(
-                    inputsHandler({
-                      type: "firstname",
-                      value: e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
-            <div>
-              <p className="mt-2 mb-2">Lastname</p>
-              <input
-                type="text"
-                className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
-                value={inputs.lastname}
-                onChange={(e) =>
-                  dispatch(
-                    inputsHandler({
-                      type: "lastname",
-                      value: e.target.value,
-                    })
-                  )
-                }
-              />
-            </div>
+          <div>
+            <input
+              type="text"
+              className="p-2 w-full border border-slate-400 focus:outline-none"
+              value={inputs.lastname}
+              placeholder="Last name"
+              onChange={(e) =>
+                dispatch(
+                  inputsHandler({
+                    type: "lastname",
+                    value: e.target.value,
+                  })
+                )
+              }
+            />
           </div>
-          <p className="mt-2 mb-2">Email</p>
+        </div>
+        <div className="relative w-10/12">
+          <MdOutlineEmail size="1.3em" className="absolute left-3 top-3" />
           <input
             type="text"
-            className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+            className="p-2 pl-12 w-full border border-slate-400 focus:outline-none"
             value={inputs.email}
+            placeholder="Email"
             onChange={(e) =>
               dispatch(
                 inputsHandler({
@@ -119,30 +134,32 @@ export default function Signup() {
               )
             }
           />
-          <div className="flex flex-row-reverse">
-            <FaArrowRight
-              className="bg-purple-700 mt-4 rounded-full p-2 text-white cursor-pointer"
-              size="2.5em"
-              onClick={() => dispatch(signUpHandler(inputs))}
-            />
-          </div>
-          <div className="mt-2 flex justify-center">
-            <NavLink
-              className="text-blue-700 hover:text-purple-700 mb-5"
-              to="/login"
-            >
-              Already have an account? login
-            </NavLink>
-          </div>
-          <div className="flex justify-center mt-8">
-            {error.enabled ? (
-              <p className="bg-black text-white fixed bottom-2 p-2 rounded-lg">
-                {error.message}
-              </p>
-            ) : (
-              ""
-            )}
-          </div>
+        </div>
+        <button
+          className="bg-purple-500 text-white p-2 w-10/12"
+          onClick={() => dispatch(signUpHandler(inputs))}
+        >
+          Signup
+        </button>
+        <div className="flex items-center w-10/12">
+          <div className="flex-grow border-t border-gray-400"></div>
+          <div className="mx-4 text-gray-500">OR</div>
+          <div className="flex-grow border-t border-gray-400"></div>
+        </div>
+        <button
+          className="bg-black text-white w-10/12 p-2"
+          onClick={() => navigate("/login")}
+        >
+          Already have an account? login
+        </button>
+        <div className="flex justify-center mt-8">
+          {error.enabled ? (
+            <p className="bg-black text-white fixed bottom-2 p-2 rounded-lg">
+              {error.message}
+            </p>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>
