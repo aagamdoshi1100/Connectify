@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchUserProfile, setProfilePicture } from "./action";
+import { fetchUserProfile, setEditedData, setProfilePicture } from "./action";
 
 const resetProfileState = {
   uploadProfileImageStates: {
@@ -16,6 +16,18 @@ const initialState = {
     image: "",
   },
   loading: false,
+  editUserProfile: {
+    isEnabled: false,
+  },
+  userProfileData: {
+    dob: "",
+    bio: "",
+    email: "",
+    country: "",
+    interest: "",
+    interestArr: [],
+  },
+  isUserDetailsSelected: "User details",
   error: [],
 };
 
@@ -36,6 +48,28 @@ const userProfileSlice = createSlice({
     clearImageState: (state, action) => {
       state.uploadProfileImageStates.image = "";
     },
+    enableProfileForEditing: (state, action) => {
+      state.editUserProfile.isEnabled = !state.editUserProfile.isEnabled;
+    },
+    profileDataFeeder: (state, action) => {
+      state.userProfileData[action.payload.key] = action.payload.value;
+    },
+    interestsFeeder: (state, action) => {
+      state.userProfileData.interestArr = [
+        ...state.userProfileData.interestArr,
+        state.userProfileData.interest,
+      ];
+      state.userProfileData.interest = "";
+    },
+    removeInterest: (state, action) => {
+      state.userProfileData.interestArr =
+        state.userProfileData.interestArr.filter(
+          (int) => int !== action.payload
+        );
+    },
+    togglerUserDetailsAndPosts: (state, action) => {
+      state.isUserDetailsSelected = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -45,6 +79,14 @@ const userProfileSlice = createSlice({
       .addCase(fetchUserProfile.fulfilled, (state, action) => {
         state.user = [action.payload.profile];
         state.loading = false;
+        state.userProfileData = {
+          dob: action.payload.profile.dob,
+          bio: action.payload.profile.bio,
+          email: action.payload.profile.email,
+          country: action.payload.profile.country,
+          interest: "",
+          interestArr: action.payload.profile.interestArr,
+        };
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
         state.error = [...state.error, action.error.message];
@@ -64,6 +106,24 @@ const userProfileSlice = createSlice({
       .addCase(setProfilePicture.rejected, (state, action) => {
         state.error = [...state.error, action.error.message];
         state.loading = false;
+      })
+
+      //Set edited data
+      .addCase(setEditedData.pending, (state, action) => {})
+      .addCase(setEditedData.fulfilled, (state, action) => {
+        state.user = [action.payload.profile];
+        state.userProfileData = {
+          dob: action.payload.profile.dob,
+          bio: action.payload.profile.bio,
+          email: action.payload.profile.email,
+          country: action.payload.profile.country,
+          interest: "",
+          interestArr: action.payload.profile.interestArr,
+        };
+        state.editUserProfile.isEnabled = false;
+      })
+      .addCase(setEditedData.rejected, (state, action) => {
+        console.error = action.error.message;
       });
   },
 });
@@ -75,4 +135,10 @@ export const {
   disableUpload,
   setImageToState,
   clearImageState,
+  enableProfileForEditing,
+  profileDataFeeder,
+  interestsFeeder,
+  removeInterest,
+  isUserDetailsSelected,
+  togglerUserDetailsAndPosts,
 } = userProfileSlice.actions;

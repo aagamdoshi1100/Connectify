@@ -17,7 +17,7 @@ export default function Footer() {
   };
 
   return (
-    <div className="footer-container fixed bottom-0 w-full bg-white border border-slate-300 lg:border-white lg:w-[20%] lg:h-[88%]">
+    <div className="footer-container fixed bottom-0 w-full bg-white border border-slate-300 lg:border-white lg:w-[20%] lg:h-[88%] z-30">
       <div className="footer-icon-container flex m-3 justify-around lg:flex-col lg:justify-normal lg:m-5">
         <div
           className="icon-block flex cursor-pointer lg:m-3"

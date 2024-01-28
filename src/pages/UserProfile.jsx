@@ -1,14 +1,18 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchUserProfile } from "../slices/userProfile/action";
+import { fetchUserProfile, setEditedData } from "../slices/userProfile/action";
 import { useDispatch, useSelector } from "react-redux";
-import ReactLoader from "../components/ReactLoader";
 import { Posts } from "../components/Posts";
 import Footer from "./Footer";
 import Header from "./Header";
 import { FaPlus } from "react-icons/fa";
 import PostComposer from "../components/PostComposer";
-import { enableUpload } from "../slices/userProfile/userProfileSlice";
+import {
+  enableProfileForEditing,
+  enableUpload,
+  togglerUserDetailsAndPosts,
+} from "../slices/userProfile/userProfileSlice";
+import EditProfile from "./EditProfile";
 
 export default function UserProfile() {
   const { userId } = useParams();
@@ -17,85 +21,130 @@ export default function UserProfile() {
   useEffect(() => {
     dispatch(fetchUserProfile(userId));
   }, [dispatch, userId]);
-  const { user, loading, uploadProfileImageStates } = useSelector(
-    (store) => store.userProfile
-  );
-  localStorage.setItem("userProfile", JSON.stringify(user[0]));
+  const {
+    user,
+    userProfileData,
+    uploadProfileImageStates,
+    editUserProfile,
+    isUserDetailsSelected,
+  } = useSelector((store) => store.userProfile);
   const { allPosts } = useSelector((store) => store.userfeed);
+  const loggedUserId = localStorage.getItem("userId");
+
+  localStorage.setItem("userProfile", JSON.stringify(user[0]));
   const filterPostsForUserProfileView = allPosts.filter(
-    (userPosts) => userId === userPosts.user
+    (userPosts) => userId === userPosts.user._id
   );
-  console.log(user, "userprofile");
+  console.log(user, filterPostsForUserProfileView, "userprofile");
   return (
-    <div>
-      {loading ? (
-        <ReactLoader />
-      ) : (
-        <>
-          <Header />
-          <div className="UserProfile lg:flex lg:justify-center">
-            <div className="userImage-userDetails flex  justify-center bg-slate-100 lg:border lg:border-slate-100 sm:w-1/2 lg:w-1/2 lg:justify-around">
-              <div className="userImage-Name flex flex-col items-center">
-                <div className="userImage-upload-icon relative">
-                  <div className="userImage w-32 h-32 border border-slate-500 rounded-full overflow-hidden m-3 lg:w-48 lg:h-48">
-                    <img
-                      src={
-                        user[0]?.profileIcon === ""
-                          ? "../../Profile-Image-Default.jpg"
-                          : user[0]?.profileIcon
-                      }
-                      className="object-cover w-full h-full"
-                      alt="userImage"
-                    />
-                  </div>
-                  <FaPlus
-                    className="upload-icon absolute bottom-2 right-5 bg-purple-500 text-white p-1 rounded-xl lg:right-10"
-                    size="2em"
-                    onClick={() => dispatch(enableUpload())}
-                  />
-                </div>
-                <p className="text-lg">
-                  {user[0]?.firstname} {user[0]?.lastname}
-                </p>
+    <div className="profile-container w-full h-full absolute bg-slate-100">
+      <Header />
+      <Footer />
+      <div className="profile-secondary flex justify-center ">
+        <div className="profileImage-backgroundImage absolute top-10 lg:top-20 lg:left-[22%] w-full lg:w-[40%] h-[70%] bg-white border border-white rounded-xl overflow-hidden">
+          <img
+            src="https://images.pexels.com/photos/13721769/pexels-photo-13721769.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
+            className="object-cover w-full h-[30vh]"
+            alt="backgroundImage"
+          />
+          <div className="profile-image absolute top-32 left-[50%] -translate-x-[50%] w-40 h-40 border border-purple-400 bg-white rounded-full p-1">
+            <img
+              src={
+                user[0]?.profileIcon === "" ||
+                user[0]?.profileIcon === undefined
+                  ? "../../Profile-Image-Default.jpg"
+                  : user[0]?.profileIcon
+              }
+              className="object-cover w-full h-full rounded-full"
+              alt="userImage"
+            />
+            <FaPlus
+              className="upload-icon absolute bottom-1 right-3 lg:right-2 bg-purple-500 text-white p-1 rounded-xl"
+              size="2em"
+              onClick={() => dispatch(enableUpload())}
+            />
+          </div>
+          <div className="user-container flex items-center flex-col absolute bottom-0 w-full pb-7">
+            <p className="username text-xl mb-3">
+              {user[0]?.firstname} {user[0]?.lastname}
+            </p>
+            <div className="basic-details flex w-[70%]">
+              <div className="pl-3 text-center flex-grow">
+                <p>{filterPostsForUserProfileView?.length}</p>
+                <p>Posts</p>
               </div>
-              <div className="userDetails-buttons flex flex-col justify-center lg:flex-grow">
-                <div className="userDetails flex justify-center items-center lg:flex-grow">
-                  <div className="pl-3 text-center lg:flex-grow">
-                    <p>{user?.length}</p>
-                    <p>Posts</p>
-                  </div>
-                  <div className="pl-3 text-center lg:flex-grow">
-                    <p>-</p>
-                    <p>Follwers</p>
-                  </div>
-                  <div className="pl-3 text-center lg:flex-grow">
-                    <p>-</p>
-                    <p>Following</p>
-                  </div>
-                </div>
-                <div className="buttons mt-8 flex gap-1">
-                  <button
-                    className="bg-purple-500 text-white p-1 rounded-sm w-1/2  flex-grow"
-                    onClick={() => navigate("/user-chat")}
-                  >
-                    Message
-                  </button>
-                  <button className="bg-purple-500 text-white p-1 rounded-sm w-1/2  flex-grow">
-                    Edit Profile
-                  </button>
-                </div>
+              <div className="pl-3 text-center flex-grow">
+                <p>0</p>
+                <p>Follwers</p>
+              </div>
+              <div className="pl-3 text-center flex-grow">
+                <p>0</p>
+                <p>Following</p>
               </div>
             </div>
+            <div className="profile-actions flex">
+              {userId === loggedUserId ? (
+                editUserProfile.isEnabled ? (
+                  <button
+                    className="p-2 bg-purple-500 text-white rounded-xl m-2"
+                    onClick={() =>
+                      dispatch(
+                        setEditedData({ loggedUserId, data: userProfileData })
+                      )
+                    }
+                  >
+                    Save changes
+                  </button>
+                ) : (
+                  <button
+                    className="p-2 bg-purple-500 text-white rounded-xl m-2"
+                    onClick={() => dispatch(enableProfileForEditing())}
+                  >
+                    Edit Profile
+                  </button>
+                )
+              ) : (
+                ""
+              )}
+              <button
+                className="p-2 bg-purple-500 text-white rounded-xl m-2"
+                onClick={() => navigate("/user-chat")}
+              >
+                Message
+              </button>
+            </div>
           </div>
-          <div className="posts mb-20 lg:flex lg:justify-center">
-            {filterPostsForUserProfileView.length !== 0 && (
-              <Posts data={filterPostsForUserProfileView} />
-            )}
-          </div>
-          <Footer />
-          {uploadProfileImageStates.isEnabled && <PostComposer />}
-        </>
-      )}
+        </div>
+      </div>
+      <div className="user-basic-details absolute w-full lg:w-[32%] top-[76%] lg:top-20 lg:left-[64%] flex flex-col p-4 pb-16 bg-slate-100 lg:overflow-auto lg:h-[86vh] no-scrollbar">
+        <div className="flex pb-15">
+          <button
+            className={`text-xl text-left pt-2 pb-2 border-b-2 w-[46%] flex grow text-red-400  border-red-500 mr-1 ${
+              isUserDetailsSelected === "User details" ? "bg-white" : ""
+            }`}
+            onClick={() => dispatch(togglerUserDetailsAndPosts("User details"))}
+          >
+            User details
+          </button>
+          <button
+            className={`text-xl text-left pt-2 pb-2 border-b-2 w-[46%] flex grow text-purple-400  border-purple-500 mr-1 ${
+              isUserDetailsSelected === "Posts" ? "bg-white" : ""
+            }`}
+            onClick={() => dispatch(togglerUserDetailsAndPosts("Posts"))}
+          >
+            Posts
+          </button>
+        </div>
+        {isUserDetailsSelected === "User details" ? (
+          <EditProfile
+            editFlag={editUserProfile.isEnabled}
+            profileDetails={user[0]}
+          />
+        ) : (
+          <Posts data={filterPostsForUserProfileView} />
+        )}
+      </div>
+      {uploadProfileImageStates.isEnabled && <PostComposer />}
     </div>
   );
 }

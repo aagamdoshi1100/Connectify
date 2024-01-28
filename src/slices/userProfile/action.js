@@ -40,3 +40,26 @@ export const setProfilePicture = createAsyncThunk(
     }
   }
 );
+
+export const setEditedData = createAsyncThunk(
+  "userProfile/setEditedData",
+  async ({ loggedUserId, data }) => {
+    try {
+      const response = await fetch(`${API_URL}/users/${loggedUserId}/edit`, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ data }),
+      });
+      const responseData = await response.json();
+      if (!response.ok) {
+        throw responseData;
+      }
+      return responseData;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+);
