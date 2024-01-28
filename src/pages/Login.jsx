@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
 import { loginHandler } from "../slices/authentication/actions";
 import {
   inputsHandler,
@@ -9,6 +8,8 @@ import {
 import { FaEyeSlash, FaRegEye, FaArrowRight } from "react-icons/fa";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { SlUser } from "react-icons/sl";
+import { GoLock } from "react-icons/go";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -40,27 +41,32 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container fixed top-[46%] left-1/2 -translate-x-2/4 -translate-y-2/4 w-10/12 md:w-6/12 lg:w-4/12 border border-slate-500 rounded-lg">
-      <h2 className="brand-name text-4xl text-center mt-3">Connectify</h2>
-      <div className="inputs flex justify-center items-center mt-5">
-        <div className="w-11/12">
-          <p className="mt-2 mb-2">Username</p>
-          <input
-            type="text"
-            className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
-            placeholder="Username"
-            value={authCredentials.username}
-            onChange={(e) =>
-              dispatch(
-                inputsHandler({ type: "username", value: e.target.value })
-              )
-            }
-          />
-          <p className="mt-2 mb-2">Password</p>
-          <div className="password relative">
+    <div className="login-container">
+      <div className=" m-8 mt-20">
+        <h2 className="text-4xl font-serif text-left">Welcome Back</h2>
+        <p className="text-slate-400 font-serif mb-8">
+          Enter credential to continue
+        </p>
+        <div className="inputs flex justify-center items-center flex-col gap-4 ">
+          <div className="relative w-full">
+            <SlUser size="1.3em" className="absolute left-3 top-3" />
+            <input
+              type="text"
+              className="p-2 pl-12 w-full border border-slate-400 focus:outline-none"
+              placeholder="Enter Username"
+              value={authCredentials.username}
+              onChange={(e) =>
+                dispatch(
+                  inputsHandler({ type: "username", value: e.target.value })
+                )
+              }
+            />
+          </div>
+          <div className="password relative w-full">
+            <GoLock size="1.3em" className="absolute left-3 top-3" />
             <input
               type={hidePass ? "password" : "text"}
-              className="p-1 w-full border-b-2 border-purple-700 focus:outline-none"
+              className="p-2 pl-12 w-full  border border-slate-400 focus:outline-none"
               placeholder="Password"
               value={authCredentials.password}
               onChange={(e) =>
@@ -71,46 +77,47 @@ export default function Login() {
             />
             {hidePass ? (
               <FaEyeSlash
-                className="absolute top-3 right-2"
+                className="absolute top-3 right-3"
                 onClick={() => dispatch(passwordManager())}
               />
             ) : (
               <FaRegEye
-                className="absolute top-3 right-2"
+                className="absolute top-3 right-3"
                 onClick={() => dispatch(passwordManager())}
               />
             )}
           </div>
-          <div className="flex flex-row-reverse">
-            <FaArrowRight
-              className="bg-purple-700 mt-4 rounded-full p-2 text-white cursor-pointer"
-              size="2.5em"
-              onClick={login}
-            />
+          <button
+            className="bg-purple-500 text-white w-full p-2"
+            onClick={login}
+          >
+            Login
+          </button>
+          <button
+            className="bg-yellow-500 text-white w-full p-2"
+            onClick={() =>
+              dispatch(
+                loginHandler({
+                  username: "Test User",
+                  password: "TestUser@123",
+                })
+              )
+            }
+          >
+            Guest Login
+          </button>
+          <div className="flex items-center w-full">
+            <div className="flex-grow border-t border-gray-400"></div>
+            <div className="mx-4 text-gray-500">OR</div>
+            <div className="flex-grow border-t border-gray-400"></div>
           </div>
-          <div className="flex justify-center">
-            <button
-              className="bg-yellow-500 w-1/2 mt-4 rounded-full p-2 text-white"
-              onClick={() =>
-                dispatch(
-                  loginHandler({
-                    username: "Test User",
-                    password: "TestUser@123",
-                  })
-                )
-              }
-            >
-              Guest Login
-            </button>
-          </div>
-          <div className="my-2 flex justify-center">
-            <NavLink
-              className="text-blue-700 hover:text-purple-700"
-              to="/signup"
-            >
-              Don't have an account? Sign up
-            </NavLink>
-          </div>
+          <button
+            className="bg-black text-white w-full p-2"
+            onClick={() => navigate("/signup")}
+          >
+            Don't have an account? Sign up
+          </button>
+
           <div className="flex justify-center mt-8">
             {error.enabled ? (
               <p className="bg-black text-white fixed bottom-2 p-2 rounded-lg">
