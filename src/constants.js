@@ -11,3 +11,6 @@ const formattedHours = hours < 10 ? `0${hours}` : hours;
 let minutes = timeStamp.getMinutes();
 const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
 export let time = `${formattedHours}:${formattedMinutes}`;
+
+export const followBtnStyle =
+  " flex-grow text-white lg:text-purple-600 p-1 text-center bg-purple-600 lg:bg-white rounded-sm lg:rounded-none ";
