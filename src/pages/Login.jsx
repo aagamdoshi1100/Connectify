@@ -41,7 +41,7 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container lg:w-[80%] flex flex-col lg:flex-row lg:fixed lg:left-[50%] lg:top-[45%] lg:-translate-x-[50%] lg:-translate-y-[50%] ">
+    <div className="login-container lg:w-[80%] flex flex-col lg:flex-row lg:fixed lg:left-[50%] lg:top-[45%] lg:-translate-x-[50%] lg:-translate-y-[50%] bg-white shadow-xl">
       <div className="login-left hidden lg:w-[50%]  lg:flex lg:justify-center lg:items-center lg:flex-col lg:bg-gradient-to-r lg:from-indigo-500 lg:via-purple-500 lg:to-pink-500">
         <p className="text-4xl font-serif text-center m-4 mb-2 text-white">
           Hello, Friend!

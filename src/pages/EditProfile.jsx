@@ -16,7 +16,7 @@ export default function EditProfile({ editFlag, profileDetails }) {
     " p-1 mt-2 mb-2 border-b-2 border-purple-700 focus:outline-none ";
   const margin = " mt-2 mb-2 ";
   const textColor = " text-slate-400 ";
-  const savedContainerStyle = ` bg-white rounded-xl ${margin} p-2 `;
+  const savedContainerStyle = ` bg-white shadow-xl rounded-xl ${margin} p-2 `;
   return (
     <div className="pb-20">
       <div

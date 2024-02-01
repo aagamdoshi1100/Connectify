@@ -37,11 +37,13 @@ export default function UserProfile() {
   );
   console.log(user, filterPostsForUserProfileView, "userprofile");
   return (
-    <div className="profile-container w-full h-full absolute bg-slate-100">
+    <div className="profile-container w-full h-full absolute">
       <Header />
-      <Footer />
-      <div className="profile-secondary flex justify-center ">
-        <div className="profileImage-backgroundImage absolute top-10 lg:top-20 lg:left-[22%] w-full lg:w-[40%] h-[70%] bg-white border border-white rounded-xl overflow-hidden">
+      <div className="profile-footer lg:fixed lg:left-[5%]">
+        <Footer />
+      </div>
+      <div className="profile-secondary flex justify-center">
+        <div className="profileImage-backgroundImage absolute top-10 lg:top-20 lg:left-[24%] w-full lg:w-[40%] h-[70%] bg-white border border-white rounded-xl overflow-hidden  shadow-xl">
           <img
             src="https://images.pexels.com/photos/13721769/pexels-photo-13721769.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
             className="object-cover w-full h-[30vh]"
@@ -116,7 +118,7 @@ export default function UserProfile() {
           </div>
         </div>
       </div>
-      <div className="user-basic-details absolute w-full lg:w-[32%] top-[76%] lg:top-20 lg:left-[64%] flex flex-col p-4 pb-16 bg-slate-100 lg:overflow-auto lg:h-[86vh] no-scrollbar">
+      <div className="user-basic-details absolute w-full lg:w-[32%] top-[76%] lg:top-20 lg:left-[64%] flex flex-col p-4 pb-16 lg:overflow-auto lg:h-[86vh] no-scrollbar">
         <div className="flex pb-15">
           <button
             className={`text-xl text-left pt-2 pb-2 border-b-2 w-[46%] flex grow text-red-400  border-red-500 mr-1 ${

@@ -5,10 +5,10 @@ export default function Identity({ user }) {
   const navigate = useNavigate();
   return (
     <div
-      className="icon-username flex items-center m-2 "
+      className="icon-username flex items-center m-1 "
       onClick={() => navigate(`/users/${_id}/profile`)}
     >
-      <div className="user-icon-profile border border-slate-600 w-10 h-11 rounded-md  overflow-hidden">
+      <div className="user-icon-profile border w-12 h-12 rounded-full  overflow-hidden">
         <img
           src={
             profileIcon === "" ? "../../Profile-Image-Default.jpg" : profileIcon
@@ -18,8 +18,8 @@ export default function Identity({ user }) {
         />
       </div>
       <div className="ml-2">
-        <p>{`${firstname} ${lastname}`}</p>
-        <p className="username text-slate-600">@{username}</p>
+        <p className="fullname font-light font-[system-ui]">{`${firstname} ${lastname}`}</p>
+        <p className="username text-slate-400">@{username}</p>
       </div>
     </div>
   );

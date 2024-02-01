@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { GoKebabHorizontal } from "react-icons/go";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
-import { FiBookmark } from "react-icons/fi";
+import { MdOutlineBookmarkBorder } from "react-icons/md";
 import { enablePostMenu, enableEdit } from "../slices/userfeed/userfeedSlice";
 import {
   deletePost,
@@ -18,23 +18,25 @@ export const Posts = ({ data }) => {
   const { post: postDetails, bookmarks } = useSelector(
     (state) => state.userfeed
   );
+  const { users } = useSelector((store) => store.users);
+
   const loggedInUser = localStorage.getItem("username");
-  console.log(data);
+  console.log(data, users);
   return (
     <>
       {data?.map((post) => {
         return (
           <div
             key={post._id}
-            className="posts-secondary-container flex flex-col border border-slate-400 rounded-lg m-4 lg:flex-grow-1"
+            className="posts-secondary-container flex flex-col border-2 border-white bg-white shadow-2xl rounded-lg m-2 lg:flex-grow-1 lg:p-2 cursor-pointer"
           >
             <div className="post-header">
-              <div className="header-row flex  justify-between items-center ">
+              <div className="header-row flex  justify-between items-center py-1">
                 <Identity user={post.user} />
                 <div className="relative">
-                  <BsThreeDotsVertical
-                    size="2em"
-                    className="mr-3"
+                  <GoKebabHorizontal
+                    size="1.5em"
+                    className="mr-3 lg:mr-2"
                     onClick={() => dispatch(enablePostMenu(post._id))}
                   />
 
@@ -56,13 +58,8 @@ export const Posts = ({ data }) => {
                   )}
                 </div>
               </div>
-              <hr className="border border-slate-400" />
-
-              <div className="content m-2">
-                <p>{post.content}</p>
-              </div>
             </div>
-            <div className="post-image">
+            <div className="post-image rounded-lg overflow-hidden">
               {post.image !== "" && (
                 <img
                   src={post.image}
@@ -73,11 +70,10 @@ export const Posts = ({ data }) => {
                 />
               )}
             </div>
-            <div className="post-footer flex item-center justify-around">
+            <div className="post-footer flex item-center">
               <div className="icons flex items-center m-2">
-                <p className="text-xl mr-2">{post.likedBy.length}</p>
                 <AiOutlineLike
-                  size="2em"
+                  size="1.5em"
                   color={
                     post.likedBy.includes(loggedInUser) ? "blueviolet" : "black"
                   }
@@ -94,14 +90,14 @@ export const Posts = ({ data }) => {
               </div>
               <div className="icons flex items-center m-2">
                 <GoComment
-                  size="2em"
+                  size="1.5em"
                   //  onClick={() => dispatch(enableComments(post._id))}
                 />
                 <span className="hidden">Comment</span>
               </div>
               <div className="icons flex items-center m-2">
-                <FiBookmark
-                  size="2em"
+                <MdOutlineBookmarkBorder
+                  size="1.5em"
                   color={
                     bookmarks.find((data) => data._id === post._id)
                       ? "blueviolet"
@@ -112,6 +108,80 @@ export const Posts = ({ data }) => {
                 <span className="hidden">Bookmark</span>
               </div>
             </div>
+            <div className="like-details ml-2 lg:m-2">
+              {post.likedBy.length > 0 && (
+                <div className="like-content flex items-center relative text-sm">
+                  {post.likedBy[0] && (
+                    <div className="like-user-image absolute border-2 border-white w-6 h-6 rounded-full cursor-pointer overflow-hidden ">
+                      <img
+                        src={
+                          users.find(
+                            (findImage) =>
+                              findImage.username === post.likedBy[0]
+                          ).profileIcon
+                        }
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )}
+                  {post.likedBy[1] && (
+                    <div className="like-user-image absolute left-3 lg:left-4 border border-white w-6 h-6 rounded-full cursor-pointer overflow-hidden ">
+                      <img
+                        src={
+                          users.find(
+                            (findImage) =>
+                              findImage.username === post.likedBy[1]
+                          ).profileIcon
+                        }
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )}
+                  {post.likedBy[2] && (
+                    <div className="like-user-image absolute left-6 lg:left-7 border-2 border-white w-6 h-6 rounded-full cursor-pointer overflow-hidden ">
+                      <img
+                        src={
+                          users.find(
+                            (findImage) =>
+                              findImage.username === post.likedBy[2]
+                          ).profileIcon
+                        }
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )}
+                  {post.likedBy.length === 3 ? (
+                    <p className="text-sm pl-12 lg:pl-14">
+                      {`Liked by ${post.likedBy[0]} and ${
+                        post.likedBy.length - 1
+                      } others`}
+                    </p>
+                  ) : (
+                    <p
+                      className={
+                        post.likedBy.length > 1
+                          ? "px-1 pl-10 lg:pl-12"
+                          : "px-1 pl-7 lg:pl-8"
+                      }
+                    >
+                      Liked by {post.likedBy[0]}
+                      {post.likedBy.length === 2 && (
+                        <span className="px-1">
+                          and
+                          <b className="px-1">{post.likedBy.length - 1}</b>
+                          others
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+            {post.content && (
+              <div className="content m-2">
+                <p className="post-content text-sm">{post.content}</p>
+              </div>
+            )}
           </div>
         );
       })}

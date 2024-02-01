@@ -12,11 +12,12 @@ export default function Header() {
   const dispatch = useDispatch();
   const { headerMenu, searchManager } = useSelector((store) => store.header);
   return (
-    <div className="primary-header-container sticky top-0 w-full bg-white z-20">
-      <div className="secondary-header-container  border border-slate-300 bg-slate-100 p-2 flex justify-between items-center">
-        <h3 className="brand-logo font-serif text-2xl text-purple-600 lg:pl-5">
-          Connectify
-        </h3>
+    <div className="primary-header-container sticky top-0 w-full bg-white z-50">
+      <div className="secondary-header-container  border-2 border-white shadow-lg flex justify-between items-center">
+        <img
+          src="../../connectify_logo.jpg"
+          className="w-[50vw] lg:w-[20vw] h-14"
+        />
 
         <div className="header-right flex justify-between items-center space-x-4 p-1 lg:pr-5">
           <div className="hidden lg:block">
@@ -49,12 +50,6 @@ export default function Header() {
                     onClick={() => navigate(`/users/${userId}/profile`)}
                   >
                     View profile
-                  </button>
-                  <button
-                    className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
-                    onClick={() => navigate("/bookmarks")}
-                  >
-                    Bookamarks
                   </button>
                   <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
                     Delete account

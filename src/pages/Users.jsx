@@ -37,11 +37,11 @@ export default function Users() {
           return (
             <div
               key={_id}
-              className="user-card border-2 m-1 border-white shadow-2xl lg:shadow-xl w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[90%]"
+              className="user-card border-2 m-1 border-white shadow-2xl lg:shadow-xl bg-white w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[90%]"
             >
-              <div className="profileIcon-user-details flex flex-col justify-center lg:flex lg:flex-row">
-                <div className="profileIcon flex justify-center">
-                  <div className="profileIcon-border w-16 h-16 rounded-lg bg-green-400 overflow-hidden lg:w-20">
+              <div className="profileIcon-user-details flex flex-col justify-center lg:flex lg:flex-row lg:pl-1">
+                <div className="profileIcon flex justify-center items-center">
+                  <div className="profileIcon-border w-14 h-14 rounded-full overflow-hidden ">
                     <img
                       src={
                         user.profileIcon === ""
