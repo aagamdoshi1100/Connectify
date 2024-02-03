@@ -13,11 +13,8 @@ export default function AllChats() {
   }, [dispatch]);
   const { usersChatProfiles } = useSelector((store) => store.chats);
   return (
-    <div>
-      <div>
-        <Header />
-      </div>
-      <div>
+    <>
+      <div className="allchats h-[83vh] lg:h-[92vh] overflow-auto no-scrollbar bg-white shadow-2xl">
         {usersChatProfiles?.map((profile) => {
           return (
             <IdentityForChats
@@ -30,9 +27,9 @@ export default function AllChats() {
           );
         })}
       </div>
-      <div>
+      <div className="lg:hidden">
         <Footer />
       </div>
-    </div>
+    </>
   );
 }

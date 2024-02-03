@@ -1,11 +1,18 @@
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { currentUserChatView } from "../slices/Chat/chatSlice";
+import { findCurrentRoom } from "../slices/Chat/actions";
 
 export default function IdentityForChats({ user }) {
   const { _id, userDetails, lastChat } = user;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const navigationHandler = () => {
+    const loggedUserId = localStorage.getItem("userId");
     localStorage.setItem("userProfile", JSON.stringify(userDetails));
-    navigate("/user-chat");
+    dispatch(currentUserChatView(userDetails));
+    dispatch(findCurrentRoom({ loggedUserId, targetUserId: userDetails._id }));
+    navigate("/message-view");
   };
 
   return (
@@ -14,7 +21,7 @@ export default function IdentityForChats({ user }) {
       onClick={navigationHandler}
     >
       <div className="username-userIcon flex">
-        <div className="user-icon-profile border border-slate-600 w-10 h-11 rounded-full  overflow-hidden">
+        <div className="user-icon-profile border w-11 h-11 rounded-full  overflow-hidden">
           <img
             src={
               userDetails.profileIcon === ""
@@ -27,11 +34,11 @@ export default function IdentityForChats({ user }) {
         </div>
         <div className="ml-2">
           <p>{`${userDetails.username}`}</p>
-          <p className="username text-slate-600">{lastChat.message}</p>
+          <p className="username text-slate-600">{lastChat?.message}</p>
         </div>
       </div>
       <div className="flex">
-        <p className="username text-slate-600">{lastChat.time}</p>
+        <p className="username text-slate-600">{lastChat?.time}</p>
       </div>
     </div>
   );

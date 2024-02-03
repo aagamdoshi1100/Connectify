@@ -4,7 +4,7 @@ import { fetchAllRooms, findCurrentRoom } from "./actions";
 export const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    currentChats: [],
+    currentChat: {},
     messageList: {},
     usersChatProfiles: [],
     inputs: {
@@ -22,6 +22,12 @@ export const chatSlice = createSlice({
     updateSentMessageToList: (state, action) => {
       state.messageList.chats = [...state.messageList.chats, action.payload];
       state.inputs.message = "";
+    },
+    currentUserChatView: (state, action) => {
+      state.currentChat = action.payload;
+    },
+    clearMessageList: (state, action) => {
+      state.messageList.chats = [];
     },
   },
   extraReducers: (builders) => {
@@ -43,5 +49,10 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { messageHandler, receivedMessageList, updateSentMessageToList } =
-  chatSlice.actions;
+export const {
+  messageHandler,
+  receivedMessageList,
+  updateSentMessageToList,
+  currentUserChatView,
+  clearMessageList,
+} = chatSlice.actions;

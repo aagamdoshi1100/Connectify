@@ -118,7 +118,7 @@ export const Posts = ({ data }) => {
                           users.find(
                             (findImage) =>
                               findImage.username === post.likedBy[0]
-                          ).profileIcon
+                          )?.profileIcon
                         }
                         className="w-full h-full"
                       />
@@ -131,7 +131,7 @@ export const Posts = ({ data }) => {
                           users.find(
                             (findImage) =>
                               findImage.username === post.likedBy[1]
-                          ).profileIcon
+                          )?.profileIcon
                         }
                         className="w-full h-full"
                       />
@@ -144,7 +144,7 @@ export const Posts = ({ data }) => {
                           users.find(
                             (findImage) =>
                               findImage.username === post.likedBy[2]
-                          ).profileIcon
+                          )?.profileIcon
                         }
                         className="w-full h-full"
                       />

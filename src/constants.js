@@ -14,3 +14,5 @@ export let time = `${formattedHours}:${formattedMinutes}`;
 
 export const followBtnStyle =
   " flex-grow text-white lg:text-purple-600 p-1 text-center bg-purple-600 lg:bg-white rounded-sm lg:rounded-none ";
+export const iconBlockStyle =
+  " icon-block flex cursor-pointer p-3 lg:border lg:border-white lg:p-3 lg:hover:bg-slate-100 lg:hover:shadow-md ";

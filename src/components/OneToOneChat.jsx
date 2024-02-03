@@ -1,5 +1,6 @@
 import Identity from "./Identity";
 import { BiSend } from "react-icons/bi";
+import { IoReturnUpBackOutline } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { findCurrentRoom } from "../slices/Chat/actions";
@@ -7,30 +8,34 @@ import {
   receivedMessageList,
   messageHandler,
   updateSentMessageToList,
+  clearMessageList,
 } from "../slices/Chat/chatSlice";
 import { API_URL, date, time } from "../constants";
 import io from "socket.io-client";
+import { useNavigate } from "react-router-dom";
 
 const socket = io.connect(`${API_URL}/`);
 export default function OneToOneChat() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [unhide, setUnhide] = useState("");
   const messageContainerRef = useRef(null);
-  const { messageList, inputs } = useSelector((store) => store.chats);
+  const { messageList, inputs, currentChat } = useSelector(
+    (store) => store.chats
+  );
 
   const loggedUserId = localStorage.getItem("userId");
   const sender = localStorage.getItem("username");
   const targetUserProfile = localStorage.getItem("userProfile");
 
   const { _id, profileIcon, firstname, lastname, username } =
-    JSON.parse(targetUserProfile);
+    JSON.parse(targetUserProfile) || currentChat;
 
   useEffect(() => {
     scrollToBottom();
   }, [messageList.chats]);
 
   useEffect(() => {
-    dispatch(findCurrentRoom({ loggedUserId, targetUserId: _id }));
     socket.emit("Join_Room", { loggedUserId, targetUserId: _id });
   }, [dispatch]);
 
@@ -50,9 +55,13 @@ export default function OneToOneChat() {
       messageContainerRef.current.scrollHeight;
   };
 
+  const backToAllChats = () => {
+    navigate("/chat-view");
+    dispatch(clearMessageList());
+  };
   return (
-    <div className="Chat-container">
-      <div className="header m-2">
+    <div className="Chat-container bg-white shadow-2xl absolute top-0 z-50 w-[100vw] h-[100vh] lg:h-[92vh] lg:w-[40vw] ">
+      <div className="header flex justify-between m-2">
         <Identity
           user={{
             _id,
@@ -62,9 +71,14 @@ export default function OneToOneChat() {
             username,
           }}
         />
+        <IoReturnUpBackOutline
+          size="1.6em"
+          className="lg:hidden mr-5 mt-3"
+          onClick={backToAllChats}
+        />
       </div>
       <div
-        className="messages-container fixed top-14 overflow-auto h-[80vh] w-full"
+        className="messages-container h-[82vh] lg:h-[72vh] overflow-auto no-scrollbar"
         ref={messageContainerRef}
       >
         {messageList?.chats?.map((chatObj, index) => {
@@ -150,7 +164,7 @@ export default function OneToOneChat() {
           );
         })}
       </div>
-      <div className="textbox-send flex w-[100vw] items-center fixed bottom-0 gap-4 box-border p-3">
+      <div className="textbox-send flex gap-2 p-2">
         <input
           type="text"
           className="textbox p-2 border border-slate-600 rounded-lg flex-grow"

@@ -14,6 +14,8 @@ import Header from "./pages/Header";
 import OneToOneChat from "./components/OneToOneChat";
 import Search from "./components/Search";
 import AllChats from "./components/AllChats";
+import ChatView from "./pages/ChatView";
+import MessageView from "./pages/MessageView";
 
 function App() {
   const showCompomse = useSelector(
@@ -31,6 +33,8 @@ function App() {
         <Route path="/bookmarks" element={<Bookmark />} />
         <Route path="/user-chat" element={<OneToOneChat />} />
         <Route path="/chats" element={<AllChats />} />
+        <Route path="/chat-view" element={<ChatView />} />
+        <Route path="/message-view" element={<MessageView />} />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/compose-post" element={<PostComposer />} />

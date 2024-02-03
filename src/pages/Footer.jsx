@@ -1,7 +1,7 @@
-import { MdLogout } from "react-icons/md";
+import { IoIosLogOut } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
-import { FaRegPlusSquare } from "react-icons/fa";
-import { FaRegBookmark } from "react-icons/fa6";
+import { VscDiffAdded } from "react-icons/vsc";
+import { CiBookmark } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showCompose } from "../slices/userfeed/userfeedSlice";
@@ -20,39 +20,57 @@ export default function Footer() {
   return (
     <div className="footer-container fixed bottom-0 bg-white w-full border lg:border-2 border-slate-200 lg:border-white shadow-xl lg:w-[18%] lg:h-[100vh] z-30">
       <div className="footer-icon-container flex justify-around lg:flex-col lg:justify-normal lg:mt-20">
-        <div className={iconBlockStyle} onClick={() => navigate("/")}>
-          <AiOutlineHome size="2em" />
-          <span className="icon-name hidden lg:pl-2 lg:inline-flex lg:text-2xl">
-            Home
-          </span>
+        <div className="lg:border-l-8 border-white lg:hover:border-l-8 hover:border-purple-500">
+          <div className={iconBlockStyle} onClick={() => navigate("/")}>
+            <AiOutlineHome size="1.8em" className="lg:text-slate-500" />
+            <span className="icon-name hidden ml-4 lg:inline-flex lg:text-lg font-serif">
+              Home
+            </span>
+          </div>
         </div>
-
-        <div className={iconBlockStyle} onClick={() => navigate("/bookmarks")}>
-          <FaRegBookmark size="1.7em" />
-          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
-            Bookamarks
-          </span>
+        <div className="lg:border-l-8 border-white lg:hover:border-l-8 hover:border-purple-500">
+          <div
+            className={iconBlockStyle}
+            onClick={() => navigate("/bookmarks")}
+          >
+            <CiBookmark size="1.7em" className="lg:text-slate-500" />
+            <span className="icon-name hidden lg:inline-flex ml-4 lg:text-lg font-serif">
+              Bookamarks
+            </span>
+          </div>
         </div>
-
-        <div className={iconBlockStyle} onClick={() => dispatch(showCompose())}>
-          <FaRegPlusSquare size="2em" />
-          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
-            Post
-          </span>
+        <div className="lg:border-l-8 border-white lg:hover:border-l-8 hover:border-purple-500">
+          <div
+            className={iconBlockStyle}
+            onClick={() => dispatch(showCompose())}
+          >
+            <VscDiffAdded size="1.8em" className="lg:text-slate-500" />
+            <span className="icon-name hidden lg:inline-flex ml-4 lg:text-lg font-serif">
+              Post
+            </span>
+          </div>
         </div>
-
-        <div className={iconBlockStyle} onClick={() => navigate("/chats")}>
-          <IoChatbubbleEllipsesOutline size="2em" />
-          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
-            Chats
-          </span>
+        <div className="lg:border-l-8 border-white lg:hover:border-l-8 hover:border-purple-500">
+          <div
+            className={iconBlockStyle}
+            onClick={() => navigate("/chat-view")}
+          >
+            <IoChatbubbleEllipsesOutline
+              size="1.8em"
+              className="lg:text-slate-500"
+            />
+            <span className="icon-name hidden lg:inline-flex ml-4 lg:text-lg font-serif">
+              Chats
+            </span>
+          </div>
         </div>
-
-        <div className={iconBlockStyle} onClick={logoutHandler}>
-          <MdLogout size="2em" />
-          <span className="icon-name hidden lg:inline-flex ml-3 lg:text-xl">
-            Log out
-          </span>
+        <div className="lg:border-l-8 border-white lg:hover:border-l-8 hover:border-purple-500">
+          <div className={iconBlockStyle} onClick={logoutHandler}>
+            <IoIosLogOut size="1.8em" className="lg:text-slate-500" />
+            <span className="icon-name hidden lg:inline-flex ml-4 lg:text-lg font-serif">
+              Log out
+            </span>
+          </div>
         </div>
       </div>
     </div>
