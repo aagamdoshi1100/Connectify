@@ -35,6 +35,10 @@ function App() {
         <Route path="/chats" element={<AllChats />} />
         <Route path="/chat-view" element={<ChatView />} />
         <Route path="/message-view" element={<MessageView />} />
+        <Route
+          path="/message-view/:receiverUserId/"
+          element={<MessageView />}
+        />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/compose-post" element={<PostComposer />} />

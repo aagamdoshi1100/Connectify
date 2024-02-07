@@ -1,8 +1,16 @@
+import { useEffect } from "react";
 import AllChats from "../components/AllChats";
 import OneToOneChat from "../components/OneToOneChat";
 import Footer from "./Footer";
 import Header from "./Header";
+import { fetchAllRooms } from "../slices/Chat/actions";
+import { useDispatch } from "react-redux";
 export default function ChatView() {
+  const dispatch = useDispatch();
+  const loggedUserId = localStorage.getItem("userId");
+  useEffect(() => {
+    dispatch(fetchAllRooms(loggedUserId));
+  }, [dispatch]);
   return (
     <div className="chatview">
       <div className="header">

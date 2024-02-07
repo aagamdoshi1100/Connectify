@@ -8,13 +8,25 @@ import { showCompose } from "../slices/userfeed/userfeedSlice";
 import { logout } from "../slices/footer/footerSlice";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { iconBlockStyle } from "../constants";
+import { setSenderRecipientDetails } from "../slices/Chat/chatSlice";
 
 export default function Footer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const loggedUserId = localStorage.getItem("userId");
+
   const logoutHandler = () => {
     dispatch(logout());
     navigate("/login");
+  };
+  const navigateToChats = () => {
+    dispatch(
+      setSenderRecipientDetails({
+        senderId: loggedUserId,
+        recipientId: loggedUserId,
+      })
+    );
+    navigate("/chat-view");
   };
 
   return (
@@ -51,10 +63,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="lg:border-l-8 border-white lg:hover:border-l-8 hover:border-purple-500">
-          <div
-            className={iconBlockStyle}
-            onClick={() => navigate("/chat-view")}
-          >
+          <div className={iconBlockStyle} onClick={navigateToChats}>
             <IoChatbubbleEllipsesOutline
               size="1.8em"
               className="lg:text-slate-500"

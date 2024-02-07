@@ -4,30 +4,45 @@ import { fetchAllRooms, findCurrentRoom } from "./actions";
 export const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    currentChat: {},
-    messageList: {},
-    usersChatProfiles: [],
+    // currentChat: {},
+    // messageList: {},
+    messageWindow: {
+      userChats: [],
+      recipient: {},
+      _ids: {
+        senderId: "",
+        recipientId: "",
+      },
+    },
+    rooms: [],
     inputs: {
       message: "",
       room: "",
     },
+    loading: false,
   },
   reducers: {
+    setSenderRecipientDetails: (state, action) => {
+      state.messageWindow._ids = {
+        senderId: action.payload.senderId,
+        recipientId: action.payload.recipientId,
+      };
+    },
+    messageWindowHandler: (state, action) => {
+      state.messageWindow.userChats = action.payload.userChats;
+      state.messageWindow.recipient = action.payload.recipient;
+    },
     messageHandler: (state, action) => {
       state.inputs.message = action.payload;
     },
-    receivedMessageList: (state, action) => {
-      state.messageList = action.payload;
-    },
-    updateSentMessageToList: (state, action) => {
-      state.messageList.chats = [...state.messageList.chats, action.payload];
+    clearMessageField: (state, action) => {
       state.inputs.message = "";
     },
-    currentUserChatView: (state, action) => {
-      state.currentChat = action.payload;
-    },
-    clearMessageList: (state, action) => {
-      state.messageList.chats = [];
+    receivedMessageEventHandler: (state, action) => {
+      state.messageWindow.userChats = [
+        ...state.messageWindow.userChats,
+        action.payload,
+      ];
     },
   },
   extraReducers: (builders) => {
@@ -36,23 +51,31 @@ export const chatSlice = createSlice({
       //find current message room
       .addCase(findCurrentRoom.pending, (state, action) => {})
       .addCase(findCurrentRoom.fulfilled, (state, action) => {
-        state.messageList = action.payload.data;
+        // console.log(action.payload, "messageist");
+        // state.messageList = action.payload.data;
       })
       .addCase(findCurrentRoom.rejected, (state, action) => {})
 
       //fetch all message room
-      .addCase(fetchAllRooms.pending, (state, action) => {})
-      .addCase(fetchAllRooms.fulfilled, (state, action) => {
-        state.usersChatProfiles = action.payload.data;
+      .addCase(fetchAllRooms.pending, (state, action) => {
+        state.loading = true;
       })
-      .addCase(fetchAllRooms.rejected, (state, action) => {});
+      .addCase(fetchAllRooms.fulfilled, (state, action) => {
+        console.log(action.payload, "fetch all mess room,user chat profiles");
+        state.rooms = action.payload.data;
+        state.loading = false;
+      })
+      .addCase(fetchAllRooms.rejected, (state, action) => {
+        state.loading = false;
+        console.error(action.error.message);
+      });
   },
 });
 
 export const {
+  setSenderRecipientDetails,
+  messageWindowHandler,
   messageHandler,
-  receivedMessageList,
-  updateSentMessageToList,
-  currentUserChatView,
-  clearMessageList,
+  receivedMessageEventHandler,
+  clearMessageField,
 } = chatSlice.actions;
