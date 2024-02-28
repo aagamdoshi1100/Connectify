@@ -12,10 +12,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import Identity from "./Identity";
 import ReactLoader from "./ReactLoader";
+import { useRef } from "react";
+import useClickOutside from "../hooks/useClickOutside";
 
 export const Posts = ({ data }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const postMenuRef = useRef(null);
+  useClickOutside(postMenuRef, () => dispatch(enablePostMenu("")));
   const {
     post: postDetails,
     bookmarks,
@@ -50,7 +54,10 @@ export const Posts = ({ data }) => {
 
                         {postDetails.postMenu &&
                           postDetails.postId === post._id && (
-                            <div className="postMenu absolute border border-slate-400 right-10 top-0 bg-white p-2 rounded">
+                            <div
+                              className="postMenu absolute border border-slate-400 right-10 top-0 bg-white p-2 rounded"
+                              ref={postMenuRef}
+                            >
                               <button
                                 className="m-1"
                                 onClick={() => dispatch(enableEdit(post._id))}

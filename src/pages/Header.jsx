@@ -4,12 +4,16 @@ import { toggleSearch, toggleHeaderMenu } from "../slices/header/headerSlice";
 import Search from "../components/Search";
 import { IoMdSearch } from "react-icons/io";
 import { MdOutlineSearchOff } from "react-icons/md";
+import { useRef } from "react";
+import useClickOutside from "../hooks/useClickOutside";
 
 export default function Header() {
   const username = localStorage.getItem("username");
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const headerMenuRef = useRef(null);
+  useClickOutside(headerMenuRef, () => dispatch(toggleHeaderMenu()));
   const { headerMenu, searchManager } = useSelector((store) => store.header);
   return (
     <div className="primary-header-container sticky top-0 w-full bg-white z-40">
@@ -44,7 +48,10 @@ export default function Header() {
             >
               <p className="username-initial mx-2">{username && username[0]}</p>
               {headerMenu.isEnabled ? (
-                <div className="usermenu absolute right-0 top-10 lg:top-11 bg-white border border-slate-300 rounded w-40 shadow-md">
+                <div
+                  className="usermenu absolute right-0 top-10 lg:top-11 bg-white border border-slate-300 rounded w-40 shadow-md"
+                  ref={headerMenuRef}
+                >
                   <button
                     className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
                     onClick={() => navigate(`/users/${userId}/profile`)}
