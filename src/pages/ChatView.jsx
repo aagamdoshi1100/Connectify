@@ -16,7 +16,7 @@ export default function ChatView() {
       <div className="header">
         <Header />
       </div>
-      <div className="footer lg:fixed lg:left-[8%]">
+      <div className="footer lg:fixed lg:left-[7%] lg:w-[20%]">
         <Footer />
       </div>
       <div className="allchats lg:fixed lg:left-[27%] lg:w-[26%]">

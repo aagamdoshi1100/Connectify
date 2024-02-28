@@ -9,7 +9,7 @@ import {
 const initialState = {
   users: [],
   following: [],
-  loading: false,
+  loadingUsers: false,
   error: [],
 };
 
@@ -20,15 +20,16 @@ export const usersSlice = createSlice({
   extraReducers: (builders) => {
     builders
       .addCase(fetchUsers.pending, (state, action) => {
-        state.loading = true;
+        state.loadingUsers = true;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.users = action.payload.users;
-        state.loading = false;
+        state.loadingUsers = false;
         state.error = "";
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.error = action.error.message;
+        state.loadingUsers = false;
         console.log(action, "extr24");
       })
       //follow manager

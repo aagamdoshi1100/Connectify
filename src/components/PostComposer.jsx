@@ -169,7 +169,13 @@ export default function PostComposer() {
           </button>
         )}
       </div>
-      {createPost.loading ? <ReactLoader /> : ""}
+      {createPost.loading ? (
+        <div className="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]">
+          <ReactLoader />
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }

@@ -39,7 +39,8 @@ export const userfeedSlice = createSlice({
       createPostContent: "",
       createPostImage: "",
     },
-    loading: false,
+    loadingPosts: false,
+    loadingBookmarks: false,
     error: "",
   },
   reducers: {
@@ -75,14 +76,15 @@ export const userfeedSlice = createSlice({
     builder
 
       .addCase(fetchAllPosts.pending, (state) => {
-        state.loading = true;
+        state.loadingPosts = true;
       })
       .addCase(fetchAllPosts.fulfilled, (state, action) => {
-        state.loading = false;
+        state.loadingPosts = false;
         state.allPosts = action.payload.posts;
       })
       .addCase(fetchAllPosts.rejected, (state, action) => {
         state.error = action.error.message;
+        state.loadingPosts = false;
       })
       //createNewPost
       .addCase(createNewPost.pending, (state, action) => {
@@ -96,6 +98,7 @@ export const userfeedSlice = createSlice({
       })
       .addCase(createNewPost.rejected, (state, action) => {
         state.error = action.error.message;
+        state.createPost.loading = false;
       })
       //edit
       .addCase(editPostContent.pending, (state, action) => {
@@ -161,17 +164,18 @@ export const userfeedSlice = createSlice({
       })
       // All bookmarks
       .addCase(getBookmarks.pending, (state, action) => {
-        state.loading = true;
+        state.loadingBookmarks = true;
       })
       .addCase(getBookmarks.fulfilled, (state, action) => {
         state.bookmarks = state.allPosts.filter((post) =>
           action.payload.bookmarks.includes(post._id)
         );
-        state.loading = false;
+        state.loadingBookmarks = false;
         state.error = "";
       })
       .addCase(getBookmarks.rejected, (state, action) => {
         state.error = action.payload.error.message;
+        state.loadingBookmarks = false;
       });
   },
 });

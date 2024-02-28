@@ -6,7 +6,7 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
     const users = await fetch(`${API_URL}/users`);
     const usersData = await users.json();
     if (!users.ok) {
-      throw usersData;
+      throw new Error("Failed to fetch users");
     }
     return usersData;
   } catch (e) {
