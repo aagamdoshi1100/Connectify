@@ -44,7 +44,13 @@ export const Posts = ({ data }) => {
                 >
                   <div className="post-header">
                     <div className="header-row flex  justify-between items-center py-1">
-                      <Identity user={post.user} />
+                      <div className="flex">
+                        <Identity user={post.user} />
+                        <p className="p-1 pt-2 text-slate-400 text-xs">
+                          {post.createdAt.slice(0, 10)}
+                        </p>
+                      </div>
+
                       <div className="relative">
                         <GoKebabHorizontal
                           size="1.5em"
@@ -55,21 +61,38 @@ export const Posts = ({ data }) => {
                         {postDetails.postMenu &&
                           postDetails.postId === post._id && (
                             <div
-                              className="postMenu absolute border border-slate-400 right-10 top-0 bg-white p-2 rounded"
+                              className="postMenu absolute flex flex-col border border-slate-400 right-10 top-0 bg-white p-2 rounded"
                               ref={postMenuRef}
                             >
-                              <button
-                                className="m-1"
-                                onClick={() => dispatch(enableEdit(post._id))}
-                              >
-                                Edit
-                              </button>
-                              <button
-                                className="m-1"
-                                onClick={() => dispatch(deletePost(post._id))}
-                              >
-                                Delete
-                              </button>
+                              {loggedInUser === post.user.username ? (
+                                <>
+                                  <button
+                                    className="m-1 text-left"
+                                    onClick={() =>
+                                      dispatch(enableEdit(post._id))
+                                    }
+                                  >
+                                    Edit
+                                  </button>
+                                  <button
+                                    className="m-1 text-left"
+                                    onClick={() =>
+                                      dispatch(deletePost(post._id))
+                                    }
+                                  >
+                                    Delete
+                                  </button>{" "}
+                                </>
+                              ) : (
+                                <button
+                                  className="m-1 text-left whitespace-nowrap"
+                                  onClick={() =>
+                                    navigate(`/users/${post.user._id}/profile`)
+                                  }
+                                >
+                                  View profile
+                                </button>
+                              )}
                             </div>
                           )}
                       </div>

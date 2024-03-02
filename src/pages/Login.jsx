@@ -56,7 +56,7 @@ export default function Login() {
           Don't have an account? Sign up
         </button>
       </div>
-      <div className="login-right lg:w-[50%]">
+      <div className="login-right lg:w-[50%] h-[100vh] lg:h-[70vh]">
         <div className=" m-8 mt-20">
           <h2 className="text-4xl font-serif text-left mt-16 lg:my-2">
             Welcome Back

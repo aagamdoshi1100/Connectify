@@ -30,7 +30,7 @@ export default function Signup() {
   console.log(inputs);
   return (
     <div className="signup-container lg:w-[80%] flex lg:fixed lg:left-[50%] lg:top-[45%] lg:-translate-x-[50%] lg:-translate-y-[50%] bg-white shadow-xl">
-      <div className="signup-left lg:w-[50%]">
+      <div className="signup-left lg:w-[50%] h-[100vh] lg:h-[70vh]">
         <div className="pl-4 lg:pl-8">
           <h2 className="text-4xl font-serif text-left m-4 mb-2 mt-16">
             Create account
