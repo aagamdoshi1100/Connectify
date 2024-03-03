@@ -1,5 +1,4 @@
-export const API_URL = "http://localhost:3000";
-// "https://connectify-backend.vercel.app";
+export const API_URL = "https://connectify-backend.vercel.app";
 
 const timeStamp = new Date();
 
