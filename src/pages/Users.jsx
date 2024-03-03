@@ -48,7 +48,7 @@ export default function Users() {
                 return (
                   <div
                     key={_id}
-                    className="user-card border-2 m-1 border-white shadow-2xl lg:shadow-xl bg-white w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[90%]"
+                    className="user-card border-2 m-1 border-white shadow-2xl lg:shadow-xl bg-white w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[98%]"
                   >
                     <div className="profileIcon-user-details flex flex-col justify-center lg:flex lg:flex-row lg:pl-1">
                       <div className="profileIcon flex justify-center items-center">
@@ -64,8 +64,8 @@ export default function Users() {
                         </div>
                       </div>
                       <div className="user-details lg:m-2 text-center lg:text-left">
-                        <p className="lg:whitespace-nowrap lg:overflow-hidden lg:text-ellipsis lg:w-[8vw]">{`${firstname} ${lastname}`}</p>
-                        <p className="text-slate-500 text-sm lg:whitespace-nowrap lg:overflow-hidden lg:text-ellipsis lg:w-[8vw]">{`@${username}`}</p>
+                        <p className="lg:whitespace-nowrap lg:overflow-hidden lg:text-ellipsis lg:w-[10vw]">{`${firstname} ${lastname}`}</p>
+                        <p className="text-slate-500 text-sm lg:whitespace-nowrap lg:overflow-hidden lg:text-ellipsis lg:w-[10vw]">{`@${username}`}</p>
                       </div>
                     </div>
                     <div className="user-card-button py-1 flex w-[95%] lg:w-[110px]">

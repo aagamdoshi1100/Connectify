@@ -49,7 +49,7 @@ export default function PostComposer() {
     : createPost.createPostImage;
 
   return (
-    <div className="post-composer-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-50">
+    <div className="post-composer-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-20">
       <div className="post-composer-container top-[40%] left-1/2 fixed -translate-x-1/2 -translate-y-[40%] bg-slate-200 border-slate-300 border rounded-lg  w-[90%] md:w-[45%] lg:w-[45%] z-10">
         <div className="box-discard flex justify-end m-2">
           <MdOutlineClose

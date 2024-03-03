@@ -39,11 +39,11 @@ export default function UserProfile() {
   return (
     <div className="profile-container w-full h-full absolute">
       <Header />
-      <div className="profile-footer lg:fixed lg:left-[5%]">
+      <div className="profile-footer">
         <Footer />
       </div>
       <div className="profile-secondary flex justify-center">
-        <div className="profileImage-backgroundImage absolute top-10 lg:top-20 lg:left-[24%] w-full lg:w-[40%] h-[70%] bg-white border border-white rounded-xl overflow-hidden  shadow-xl">
+        <div className="profileImage-backgroundImage absolute top-10 lg:top-20 lg:left-[27%] w-full lg:w-[36%] h-[70%] bg-white border border-white rounded-xl overflow-hidden  shadow-xl">
           <img
             src="https://images.pexels.com/photos/13721769/pexels-photo-13721769.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
             className="object-cover w-full h-[30vh]"

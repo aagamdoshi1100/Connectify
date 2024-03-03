@@ -20,7 +20,7 @@ export default function Userfeed() {
     fetchUserFeed();
   }, [fetchUserFeed]);
   return (
-    <div>
+    <>
       <Header />
       <div className="userfeed-primary-container lg:flex">
         <div className="users-primary-container lg:fixed lg:left-[65%] lg:w-[28%]">
@@ -29,10 +29,8 @@ export default function Userfeed() {
         <div className="posts-primary-container mb-20 lg:pb-[60px] lg:fixed lg:left-[25%] lg:w-[40%] lg:overflow-auto lg:h-[100vh] no-scrollbar">
           <Posts data={allPosts} />
         </div>
-        <div className="footer-primary-container lg:fixed lg:left-[7%] lg:w-[20%]">
-          <Footer />
-        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }

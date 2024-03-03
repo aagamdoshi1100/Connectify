@@ -16,8 +16,8 @@ export default function Header() {
   useClickOutside(headerMenuRef, () => dispatch(toggleHeaderMenu()));
   const { headerMenu, searchManager } = useSelector((store) => store.header);
   return (
-    <div className="primary-header-container sticky top-0 w-full bg-white z-40">
-      <div className="secondary-header-container  border-2 border-white shadow-lg flex justify-between items-center lg:px-[8%]">
+    <div className="primary-header-container sticky top-0 w-full bg-white z-30">
+      <div className="secondary-header-container  border-2 border-white shadow-lg flex justify-between items-center">
         <img
           src="../../connectify_logo.jpg"
           className="w-[50vw] lg:w-[20vw] h-14"

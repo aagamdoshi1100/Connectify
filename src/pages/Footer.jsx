@@ -29,7 +29,7 @@ export default function Footer() {
   };
 
   return (
-    <div className="footer-container fixed bottom-0 bg-white w-full border lg:border-2 border-slate-200 lg:border-white shadow-xl lg:w-[18%] lg:h-[100vh] z-30">
+    <div className="footer-container fixed bottom-0 bg-white border lg:border-2 border-slate-200 lg:border-white shadow-xl w-[100vw] lg:w-[25%] lg:h-[100vh] z-20">
       <div className="footer-icon-container flex justify-around lg:flex-col lg:justify-normal lg:mt-20">
         {/* Home */}
         <div
