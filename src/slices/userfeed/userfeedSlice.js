@@ -7,6 +7,7 @@ import {
   createNewPost,
   editPostContent,
   getBookmarks,
+  uploadComment,
 } from "./actions";
 
 const resetUserfeedState = {
@@ -20,6 +21,14 @@ const resetUserfeedState = {
     postMenu: false,
     postId: "",
     editPost: false,
+  },
+  createComment: {
+    isEnabled: false,
+    data: {
+      user: "",
+      content: "",
+    },
+    postId: "",
   },
 };
 
@@ -38,6 +47,14 @@ export const userfeedSlice = createSlice({
       showComposeComponent: false,
       createPostContent: "",
       createPostImage: "",
+    },
+    createComment: {
+      isEnabled: false,
+      data: {
+        user: "",
+        content: "",
+      },
+      postId: "",
     },
     loadingPosts: false,
     loadingBookmarks: false,
@@ -70,6 +87,17 @@ export const userfeedSlice = createSlice({
     discardCompose: (state, action) => {
       state.post = resetUserfeedState.post;
       state.createPost = resetUserfeedState.createPost;
+    },
+    enableCommentComponent: (state, action) => {
+      state.createComment.isEnabled = true;
+      state.createComment.postId = action.payload;
+    },
+    disableCommentContainer: (state, action) => {
+      state.createComment = resetUserfeedState.createComment;
+    },
+    commentInputHandler: (state, action) => {
+      state.createComment.data.content = action.payload.content;
+      state.createComment.data.user = action.payload.user;
     },
   },
   extraReducers: (builder) => {
@@ -176,6 +204,24 @@ export const userfeedSlice = createSlice({
       .addCase(getBookmarks.rejected, (state, action) => {
         state.error = action.payload.error.message;
         state.loadingBookmarks = false;
+      })
+      //Upload comment
+      .addCase(uploadComment.pending, (state, action) => {})
+      .addCase(uploadComment.fulfilled, (state, action) => {
+        console.log(action);
+        state.allPosts = state.allPosts.map((post) => {
+          if (post._id === state.createComment.postId) {
+            return {
+              ...post,
+              comment: action.payload.data,
+            };
+          }
+          return post;
+        });
+        state.createComment.data.content = "";
+      })
+      .addCase(uploadComment.rejected, (state, action) => {
+        state.error = action.payload.error.message;
       });
   },
 });
@@ -186,4 +232,7 @@ export const {
   showCompose,
   discardCompose,
   postInputData,
+  enableCommentComponent,
+  disableCommentContainer,
+  commentInputHandler,
 } = userfeedSlice.actions;

@@ -136,3 +136,30 @@ export const getBookmarks = createAsyncThunk(
     }
   }
 );
+
+export const uploadComment = createAsyncThunk(
+  "userfeed/uploadComment",
+  async ({ postId, user, content, date, time }) => {
+    try {
+      const response = await fetch(`${API_URL}/posts/${postId}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+        body: JSON.stringify({
+          user,
+          content,
+          date,
+          time,
+        }),
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+      return responseData;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+);

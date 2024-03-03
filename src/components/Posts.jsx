@@ -3,7 +3,11 @@ import { GoKebabHorizontal } from "react-icons/go";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoComment } from "react-icons/go";
 import { MdOutlineBookmarkBorder } from "react-icons/md";
-import { enablePostMenu, enableEdit } from "../slices/userfeed/userfeedSlice";
+import {
+  enablePostMenu,
+  enableEdit,
+  enableCommentComponent,
+} from "../slices/userfeed/userfeedSlice";
 import {
   deletePost,
   postLikeHandler,
@@ -14,6 +18,7 @@ import Identity from "./Identity";
 import ReactLoader from "./ReactLoader";
 import { useRef } from "react";
 import useClickOutside from "../hooks/useClickOutside";
+import Comments from "../pages/Comments";
 
 export const Posts = ({ data }) => {
   const dispatch = useDispatch();
@@ -24,6 +29,7 @@ export const Posts = ({ data }) => {
     post: postDetails,
     bookmarks,
     loadingPosts,
+    createComment,
   } = useSelector((state) => state.userfeed);
   const { users } = useSelector((store) => store.users);
 
@@ -132,10 +138,13 @@ export const Posts = ({ data }) => {
                     <div className="icons flex items-center m-2">
                       <GoComment
                         size="1.5em"
-                        //  onClick={() => dispatch(enableComments(post._id))}
+                        onClick={() =>
+                          dispatch(enableCommentComponent(post._id))
+                        }
                       />
                       <span className="hidden">Comment</span>
                     </div>
+                    {createComment.isEnabled ? <Comments /> : ""}
                     <div className="icons flex items-center m-2">
                       <MdOutlineBookmarkBorder
                         size="1.5em"

@@ -16,6 +16,7 @@ import Search from "./components/Search";
 import AllChats from "./components/AllChats";
 import ChatView from "./pages/ChatView";
 import MessageView from "./pages/MessageView";
+import Comments from "./pages/Comments";
 
 function App() {
   const showCompomse = useSelector(
@@ -42,6 +43,7 @@ function App() {
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
         <Route path="/compose-post" element={<PostComposer />} />
+        <Route path="/comments" element={<Comments />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       {showCompomse && <PostComposer />}
