@@ -3,15 +3,16 @@ import { API_URL } from "../../constants";
 
 export const findCurrentRoom = createAsyncThunk(
   "chat/findCurrentRoom",
-  async ({ loggedUserId, targetUserId }) => {
+  async ({ senderId, recipientId }) => {
     try {
       const response = await fetch(
-        `${API_URL}/chat/${loggedUserId}/${targetUserId}`
+        `${API_URL}/chat/${senderId}/${recipientId}`
       );
       const responseData = await response.json();
       if (!response.ok) {
         throw responseData;
       }
+      console.log(response);
       return responseData;
     } catch (e) {
       console.error(e);
@@ -26,7 +27,6 @@ export const fetchAllRooms = createAsyncThunk(
     try {
       const response = await fetch(`${API_URL}/chat/user/${loggedUserId}`);
       const responseData = await response.json();
-      console.log(response, responseData);
       if (!response.ok) {
         throw responseData;
       }

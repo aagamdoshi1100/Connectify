@@ -16,7 +16,7 @@ export default function Users() {
   const fetchUsersData = useCallback(() => {
     dispatch(fetchUsers());
     dispatch(registerFollowing(userId));
-  }, [dispatch]);
+  }, [dispatch, userId]);
 
   useEffect(() => {
     fetchUsersData();
@@ -27,6 +27,10 @@ export default function Users() {
   );
   const findMyFollowings = following?.filter(
     (selectMyFollowings) => selectMyFollowings.user === userId
+  );
+  localStorage.setItem(
+    "userProfile",
+    JSON.stringify(users.filter((user) => user._id === userId))
   );
   return (
     <div className="users-secondary-container overflow-auto flex lg:flex-col pt-3 lg:pb-20 lg:overflow-auto lg:h-[100vh] no-scrollbar">
@@ -48,18 +52,19 @@ export default function Users() {
                 return (
                   <div
                     key={_id}
-                    className="user-card border-2 m-1 border-white shadow-2xl lg:shadow-xl bg-white w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[98%]"
+                    className="user-card border-2 m-1 border-white shadow-2xl lg:shadow-xl bg-white w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[98%] p-1 lg:p-2"
                   >
                     <div className="profileIcon-user-details flex flex-col justify-center lg:flex lg:flex-row lg:pl-1">
                       <div className="profileIcon flex justify-center items-center">
                         <div className="profileIcon-border w-14 h-14 rounded-full overflow-hidden ">
                           <img
                             src={
-                              user.profileIcon === ""
+                              profileIcon === ""
                                 ? "../../Profile-Image-Default.jpg"
-                                : user.profileIcon
+                                : profileIcon
                             }
                             className="profileImage w-full h-full"
+                            alt="userProfileImage"
                           />
                         </div>
                       </div>

@@ -6,7 +6,7 @@ export default function AllChats() {
   const { rooms } = useSelector((store) => store.chats);
   return (
     <>
-      <div className="allchats h-[83vh] lg:h-[92vh] overflow-auto no-scrollbar bg-white shadow-2xl">
+      <div className="allchats h-[83vh] lg:h-[92vh] overflow-auto no-scrollbar bg-slate-50 shadow-2xl pb-[100px]">
         {Array.isArray(rooms) ? (
           rooms?.map((room) => {
             return (

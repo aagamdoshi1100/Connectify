@@ -34,7 +34,7 @@ export default function Footer() {
         {/* Home */}
         <div
           className={
-            location.pathname == "/"
+            location.pathname === "/"
               ? "border-b-4 lg:border-b-0 lg:border-l-8 border-purple-500 bg-slate-100"
               : "" + " lg:border-l-8 lg:border-white  hover:border-purple-500"
           }
@@ -52,7 +52,7 @@ export default function Footer() {
         {/* Bookmarks */}
         <div
           className={
-            location.pathname == "/bookmarks"
+            location.pathname === "/bookmarks"
               ? "border-b-4 lg:border-b-0 lg:border-l-8 border-purple-500 bg-slate-100"
               : "" + " lg:border-l-8 lg:border-white  hover:border-purple-500"
           }
@@ -82,7 +82,7 @@ export default function Footer() {
         {/* Chats */}
         <div
           className={
-            location.pathname == "/chat-view"
+            location.pathname === "/chat-view"
               ? "border-b-4 lg:border-b-0 lg:border-l-8 border-purple-500 bg-slate-100"
               : "" + " lg:border-l-8 lg:border-white  hover:border-purple-500"
           }

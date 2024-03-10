@@ -5,13 +5,9 @@ import Header from "./Header";
 export default function MessageView() {
   return (
     <div className="chatview">
-      <div className="header">
-        <Header />
-      </div>
-      <div className="footer lg:fixed lg:left-[8%]">
-        <Footer />
-      </div>
-      <div className="allchats hidden lg:block lg:fixed lg:left-[27%] lg:w-[26%]">
+      <Header />
+      <Footer />
+      <div className="allchats hidden lg:block lg:fixed lg:left-[26%] lg:w-[27%]">
         <AllChats />
       </div>
       <div className="onetoone lg:fixed lg:left-[53%] lg:w-[35%]">

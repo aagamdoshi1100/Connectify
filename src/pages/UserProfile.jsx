@@ -13,14 +13,18 @@ import {
   togglerUserDetailsAndPosts,
 } from "../slices/userProfile/userProfileSlice";
 import EditProfile from "./EditProfile";
+import { setSenderRecipientDetails } from "../slices/Chat/chatSlice";
+import { findCurrentRoom } from "../slices/Chat/actions";
 
 export default function UserProfile() {
   const { userId } = useParams();
+  const loggedUserId = localStorage.getItem("userId");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchUserProfile(userId));
-  }, [dispatch, userId]);
+    dispatch(findCurrentRoom({ senderId: loggedUserId, recipientId: userId }));
+  }, [dispatch, userId, loggedUserId]);
   const {
     user,
     userProfileData,
@@ -29,12 +33,20 @@ export default function UserProfile() {
     isUserDetailsSelected,
   } = useSelector((store) => store.userProfile);
   const { allPosts } = useSelector((store) => store.userfeed);
-  const loggedUserId = localStorage.getItem("userId");
 
   localStorage.setItem("userProfile", JSON.stringify(user[0]));
   const filterPostsForUserProfileView = allPosts.filter(
     (userPosts) => userId === userPosts.user._id
   );
+  const navigateToUserChat = () => {
+    dispatch(
+      setSenderRecipientDetails({
+        senderId: loggedUserId,
+        recipientId: user[0]._id,
+      })
+    );
+    navigate("/message-view");
+  };
   console.log(user, filterPostsForUserProfileView, "userprofile");
   return (
     <div className="profile-container w-full h-full absolute">
@@ -110,7 +122,7 @@ export default function UserProfile() {
               )}
               <button
                 className="p-2 bg-purple-500 text-white rounded-xl m-2"
-                onClick={() => navigate("/user-chat")}
+                onClick={() => navigateToUserChat()}
               >
                 Message
               </button>

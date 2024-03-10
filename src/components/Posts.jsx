@@ -34,7 +34,7 @@ export const Posts = ({ data }) => {
   const { users } = useSelector((store) => store.users);
 
   const loggedInUser = localStorage.getItem("username");
-  console.log(data, users);
+  //console.log(data, users);
   return (
     <>
       {loadingPosts ? (
@@ -52,7 +52,7 @@ export const Posts = ({ data }) => {
                     <div className="header-row flex  justify-between items-center py-1">
                       <div className="flex">
                         <Identity user={post.user} />
-                        <p className="p-1 pt-2 text-slate-400 text-xs">
+                        <p className="p-1 pt-2 pl-2 text-slate-400 text-xs">
                           {post.createdAt.slice(0, 10)}
                         </p>
                       </div>
@@ -108,7 +108,7 @@ export const Posts = ({ data }) => {
                     {post.image !== "" && (
                       <img
                         src={post.image}
-                        className="max-h-96"
+                        className="max-h-96 object-contain"
                         width="100%"
                         height="100%"
                         alt="Post"
@@ -171,6 +171,7 @@ export const Posts = ({ data }) => {
                                 )?.profileIcon
                               }
                               className="w-full h-full"
+                              alt="likedBy"
                             />
                           </div>
                         )}
@@ -184,6 +185,7 @@ export const Posts = ({ data }) => {
                                 )?.profileIcon
                               }
                               className="w-full h-full"
+                              alt="likedBy"
                             />
                           </div>
                         )}
@@ -197,6 +199,7 @@ export const Posts = ({ data }) => {
                                 )?.profileIcon
                               }
                               className="w-full h-full"
+                              alt="likedBy"
                             />
                           </div>
                         )}

@@ -1,27 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  messageWindowHandler,
-  setSenderRecipientDetails,
-} from "../slices/Chat/chatSlice";
+import { setSenderRecipientDetails } from "../slices/Chat/chatSlice";
 
 export default function ChatIdentityMapper({ user }) {
   const { recipientDetails, userChats } = user;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { rooms } = useSelector((store) => store.chats);
   const senderId = localStorage.getItem("userId");
 
   const navigateToUserChat = () => {
-    const roomFinder = rooms.find(
-      (room) => room.recipient._id === recipientDetails._id
-    );
-    dispatch(
-      messageWindowHandler({
-        userChats: roomFinder.chats,
-        recipient: roomFinder.recipient,
-      })
-    );
     dispatch(
       setSenderRecipientDetails({
         senderId,
@@ -33,7 +20,7 @@ export default function ChatIdentityMapper({ user }) {
 
   return (
     <div
-      className="icon-username flex items-center justify-between m-2 "
+      className="icon-username flex items-center justify-between bg-white shadow-md border-white border rounded-md p-3 m-2"
       onClick={navigateToUserChat}
     >
       <div className="username-userIcon flex">
@@ -49,14 +36,14 @@ export default function ChatIdentityMapper({ user }) {
           />
         </div>
         <div className="ml-2">
-          <p>{`${recipientDetails?.username}`}</p>
-          <p className="lastchat-message text-slate-600">
+          <p className="font-[500] text-sm">{`${recipientDetails?.username}`}</p>
+          <p className="lastchat-message text-slate-600 text-sm whitespace-nowrap overflow-hidden text-ellipsis w-[60vw] lg:w-[15vw]">
             {userChats.length > 0 && userChats[userChats.length - 1].message}
           </p>
         </div>
       </div>
       <div className="flex">
-        <p className="lastchat-time text-slate-600">
+        <p className="lastchat-time text-slate-600 text-[12px]">
           {userChats.length > 0 && userChats[userChats.length - 1].time}
         </p>
       </div>

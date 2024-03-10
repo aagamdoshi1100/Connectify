@@ -4,11 +4,7 @@ import { fetchAllRooms, findCurrentRoom } from "./actions";
 export const chatSlice = createSlice({
   name: "chat",
   initialState: {
-    // currentChat: {},
-    // messageList: {},
     messageWindow: {
-      userChats: [],
-      recipient: {},
       _ids: {
         senderId: "",
         recipientId: "",
@@ -28,10 +24,7 @@ export const chatSlice = createSlice({
         recipientId: action.payload.recipientId,
       };
     },
-    messageWindowHandler: (state, action) => {
-      state.messageWindow.userChats = action.payload.userChats;
-      state.messageWindow.recipient = action.payload.recipient;
-    },
+
     messageHandler: (state, action) => {
       state.inputs.message = action.payload;
     },
@@ -39,10 +32,28 @@ export const chatSlice = createSlice({
       state.inputs.message = "";
     },
     receivedMessageEventHandler: (state, action) => {
-      state.messageWindow.userChats = [
-        ...state.messageWindow.userChats,
-        action.payload,
-      ];
+      console.log("rec event", action);
+
+      state.rooms = state.rooms.map((room) => {
+        if (room.recipient._id === action.payload.senderId) {
+          return {
+            ...room,
+            chats: [...room.chats, action.payload],
+          };
+        }
+        return room;
+      });
+    },
+    sentMessageEventHandler: (state, action) => {
+      state.rooms = state.rooms.map((room) => {
+        if (room._id === action.payload.roomId) {
+          return {
+            ...room,
+            chats: [...room.chats, action.payload.sentMessage],
+          };
+        }
+        return room;
+      });
     },
   },
   extraReducers: (builders) => {
@@ -51,10 +62,18 @@ export const chatSlice = createSlice({
       //find current message room
       .addCase(findCurrentRoom.pending, (state, action) => {})
       .addCase(findCurrentRoom.fulfilled, (state, action) => {
-        // console.log(action.payload, "messageist");
-        // state.messageList = action.payload.data;
+        console.log(
+          action.payload,
+          "Room accessed via user profile",
+          state.rooms.find((room) => room._id === action.payload.data._id)
+        );
+        if (!state.rooms.find((room) => room._id === action.payload.data._id)) {
+          state.rooms = [...state.rooms, action.payload.data];
+        }
       })
-      .addCase(findCurrentRoom.rejected, (state, action) => {})
+      .addCase(findCurrentRoom.rejected, (state, action) => {
+        console.error(action.error.message);
+      })
 
       //fetch all message room
       .addCase(fetchAllRooms.pending, (state, action) => {
@@ -74,8 +93,8 @@ export const chatSlice = createSlice({
 
 export const {
   setSenderRecipientDetails,
-  messageWindowHandler,
   messageHandler,
+  sentMessageEventHandler,
   receivedMessageEventHandler,
   clearMessageField,
 } = chatSlice.actions;

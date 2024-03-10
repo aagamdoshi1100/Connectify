@@ -5,7 +5,7 @@ export default function Identity({ user }) {
   const navigate = useNavigate();
   return (
     <div
-      className="icon-username flex items-center m-1 "
+      className="icon-username flex items-center p-1"
       onClick={() => navigate(`/users/${_id}/profile`)}
     >
       <div className="user-icon-profile border w-12 h-12 rounded-full  overflow-hidden">
@@ -19,7 +19,7 @@ export default function Identity({ user }) {
       </div>
       <div className="ml-2">
         <p className="fullname font-light font-[system-ui]">{`${firstname} ${lastname}`}</p>
-        <p className="username text-slate-400">@{username}</p>
+        <p className="username text-slate-300">@{username}</p>
       </div>
     </div>
   );

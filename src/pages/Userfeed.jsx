@@ -6,15 +6,18 @@ import Users from "./Users";
 import Footer from "./Footer";
 import { disableLoginSuccessRedirection } from "../slices/authentication/authSlice";
 import Header from "./Header";
+import { fetchAllRooms } from "../slices/Chat/actions";
 
 export default function Userfeed() {
   const dispatch = useDispatch();
-  const { allPosts, loading } = useSelector((store) => store.userfeed);
+  const { allPosts } = useSelector((store) => store.userfeed);
+  const loggedUserId = localStorage.getItem("userId");
 
   const fetchUserFeed = useCallback(() => {
     dispatch(fetchAllPosts());
     dispatch(disableLoginSuccessRedirection());
-  }, [dispatch]);
+    dispatch(fetchAllRooms(loggedUserId));
+  }, [dispatch, loggedUserId]);
 
   useEffect(() => {
     fetchUserFeed();
