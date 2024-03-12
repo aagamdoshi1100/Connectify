@@ -3,11 +3,13 @@ import { API_URL } from "../../constants";
 
 export const fetchUserProfile = createAsyncThunk(
   "userProfile/fetchUserProfile",
-  async (userId) => {
+  async (reqUserProfileId) => {
+    // Fetch the extracted user id from params
     const getToken = localStorage.getItem("token");
+    const userId = localStorage.getItem("userId"); //logged In user Id
     try {
       const userProfileResponse = await fetch(
-        `${API_URL}/users/${userId}/profile`,
+        `${API_URL}/users/${reqUserProfileId}/profile?userId=${userId}`,
         {
           method: "GET",
           headers: {

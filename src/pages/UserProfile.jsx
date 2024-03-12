@@ -24,7 +24,7 @@ export default function UserProfile() {
   useEffect(() => {
     dispatch(fetchUserProfile(userId));
     dispatch(findCurrentRoom({ senderId: loggedUserId, recipientId: userId }));
-  }, [dispatch, userId, loggedUserId]);
+  }, [dispatch, userId]);
   const {
     user,
     userProfileData,
@@ -47,7 +47,6 @@ export default function UserProfile() {
     );
     navigate("/message-view");
   };
-  console.log(user, filterPostsForUserProfileView, "userprofile");
   return (
     <div className="profile-container w-full h-full absolute">
       <Header />
@@ -72,11 +71,13 @@ export default function UserProfile() {
               className="object-cover w-full h-full rounded-full"
               alt="userImage"
             />
-            <FaPlus
-              className="upload-icon absolute bottom-1 right-3 lg:right-2 bg-purple-500 text-white p-1 rounded-xl"
-              size="2em"
-              onClick={() => dispatch(enableUpload())}
-            />
+            {loggedUserId === userId && (
+              <FaPlus
+                className="upload-icon absolute bottom-1 right-3 lg:right-2 bg-purple-500 text-white p-1 rounded-xl"
+                size="2em"
+                onClick={() => dispatch(enableUpload())}
+              />
+            )}
           </div>
           <div className="user-container flex items-center flex-col absolute bottom-0 w-full pb-7">
             <p className="username text-xl mb-3">
