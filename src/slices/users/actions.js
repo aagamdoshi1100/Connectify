@@ -2,16 +2,24 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_URL } from "../../constants";
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+  const getToken = localStorage.getItem("token");
+  const getUserId = localStorage.getItem("userId");
   try {
-    const users = await fetch(`${API_URL}/users`);
+    const users = await fetch(`${API_URL}/users?userId=${getUserId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: getToken,
+      },
+    });
     const usersData = await users.json();
     if (!users.ok) {
-      throw new Error("Failed to fetch users");
+      throw usersData;
     }
     return usersData;
-  } catch (e) {
-    console.error(e.message);
-    throw e;
+  } catch (err) {
+    console.error({ Error_message: err.message });
+    throw err;
   }
 });
 

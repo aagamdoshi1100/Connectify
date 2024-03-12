@@ -10,7 +10,7 @@ const initialState = {
   users: [],
   following: [],
   loadingUsers: false,
-  error: [],
+  error_Message: "",
 };
 
 export const usersSlice = createSlice({
@@ -25,12 +25,10 @@ export const usersSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.users = action.payload.users;
         state.loadingUsers = false;
-        state.error = "";
       })
       .addCase(fetchUsers.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error_Message = action.error.message;
         state.loadingUsers = false;
-        console.log(action, "extr24");
       })
       //follow manager
       .addCase(followHandler.pending, (state, action) => {})

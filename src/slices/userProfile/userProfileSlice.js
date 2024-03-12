@@ -28,7 +28,7 @@ const initialState = {
     interestArr: [],
   },
   isUserDetailsSelected: "User details",
-  error: [],
+  error_Message: "",
 };
 
 const userProfileSlice = createSlice({
@@ -89,7 +89,7 @@ const userProfileSlice = createSlice({
         };
       })
       .addCase(fetchUserProfile.rejected, (state, action) => {
-        state.error = [...state.error, action.error.message];
+        state.error_Message = action.error.message;
         state.loading = false;
       })
 
@@ -104,7 +104,7 @@ const userProfileSlice = createSlice({
         state.loading = false;
       })
       .addCase(setProfilePicture.rejected, (state, action) => {
-        state.error = [...state.error, action.error.message];
+        state.error_Message = action.error.message;
         state.loading = false;
       })
 
@@ -123,7 +123,7 @@ const userProfileSlice = createSlice({
         state.editUserProfile.isEnabled = false;
       })
       .addCase(setEditedData.rejected, (state, action) => {
-        console.error = action.error.message;
+        state.error_Message = action.error.message;
       });
   },
 });

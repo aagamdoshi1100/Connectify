@@ -1,22 +1,27 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { API_URL } from "../../constants";
 
-const token = localStorage.getItem("token");
-const userId = localStorage.getItem("userId");
-
 export const fetchAllPosts = createAsyncThunk(
   "userfeed/fetchAllPosts",
   async () => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
     try {
-      const fetchPosts = await fetch(`${API_URL}/posts`);
-      if (!fetchPosts.ok) {
-        throw new Error("Failed to fetch posts");
-      }
+      const fetchPosts = await fetch(`${API_URL}/posts?userId=${getUserId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: getToken,
+        },
+      });
       const posts = await fetchPosts.json();
+      if (!fetchPosts.ok) {
+        throw posts;
+      }
       return posts;
-    } catch (e) {
-      console.error("Error fetching posts:", e);
-      throw e;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
     }
   }
 );
@@ -24,33 +29,42 @@ export const fetchAllPosts = createAsyncThunk(
 export const createNewPost = createAsyncThunk(
   "userfeed/createNewPost",
   async (postDetails) => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
     try {
       const newPostCreationResponse = await fetch(
-        `${API_URL}/posts/${userId}/post`,
+        `${API_URL}/posts/${getUserId}/post`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            authorization: token,
+            authorization: getToken,
           },
           body: JSON.stringify(postDetails),
         }
       );
-      if (!newPostCreationResponse.ok) {
-        throw newPostCreationResponse;
-      }
       const newPostData = await newPostCreationResponse.json();
+      if (!newPostCreationResponse.ok) {
+        throw newPostData;
+      }
       return newPostData;
-    } catch (e) {
-      console.error("Error while creating post:", e);
-      throw e;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
     }
   }
 );
 
 export const editPostContent = createAsyncThunk(
   "userfeed/editPostContent",
-  async (postDetails) => {
+  async (details) => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
+    const postDetails = {
+      userId: getUserId,
+      data: details.body,
+      postId: details.postId,
+    };
     try {
       const editPostContentResponse = await fetch(
         `${API_URL}/posts/edit/${postDetails.postId}`,
@@ -58,19 +72,19 @@ export const editPostContent = createAsyncThunk(
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            authorization: token,
+            authorization: getToken,
           },
-          body: JSON.stringify(postDetails.body),
+          body: JSON.stringify(postDetails),
         }
       );
-      if (!editPostContentResponse.ok) {
-        throw editPostContentResponse;
-      }
       const edited = await editPostContentResponse.json();
+      if (!editPostContentResponse.ok) {
+        throw edited;
+      }
       return edited;
-    } catch (e) {
-      console.error("Error while editing post:", e);
-      throw e;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
     }
   }
 );
@@ -78,19 +92,24 @@ export const editPostContent = createAsyncThunk(
 export const deletePost = createAsyncThunk(
   "userfeed/deletePost",
   async (postId) => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
     try {
-      const response = await fetch(`${API_URL}/posts/${postId}`, {
-        method: "DELETE",
-        headers: { authorization: token },
-      });
-      if (!response.ok) {
-        throw response;
+      const deleteRequestResponse = await fetch(
+        `${API_URL}/posts/${postId}?userId=${getUserId}`,
+        {
+          method: "DELETE",
+          headers: { authorization: getToken },
+        }
+      );
+      const deleted = await deleteRequestResponse.json();
+      if (!deleteRequestResponse.ok) {
+        throw deleted;
       }
-      const responseData = await response.json();
-      return responseData;
-    } catch (e) {
-      console.error("Error while deleting post:", e);
-      throw e;
+      return deleted;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
     }
   }
 );
@@ -98,41 +117,75 @@ export const deletePost = createAsyncThunk(
 export const postLikeHandler = createAsyncThunk(
   "userfeed/postLikeHandler",
   async ({ postId, likedBy }) => {
-    const response = await fetch(`${API_URL}/posts/${postId}/likeHandler`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", authorization: token },
-      body: JSON.stringify({ likedBy }),
-    });
-    const responseData = await response.json();
-    return responseData;
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
+    try {
+      const likeResponse = await fetch(
+        `${API_URL}/posts/${postId}/likeHandler?userId=${getUserId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: getToken,
+          },
+          body: JSON.stringify({ likedBy }),
+        }
+      );
+      const liked = await likeResponse.json();
+      if (!likeResponse.ok) {
+        throw liked;
+      }
+      return liked;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
+    }
   }
 );
 
 export const postBookMarkHandler = createAsyncThunk(
   "userfeed/postBookMarkHandler",
   async (postId) => {
-    const response = await fetch(`${API_URL}/bookmarks/${postId}/${userId}`, {
-      method: "POST",
-      headers: { authorization: token },
-    });
-    const responseData = await response.json();
-    return responseData.bookmarks;
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
+    try {
+      const bookmarkResponse = await fetch(
+        `${API_URL}/bookmarks/${postId}/${getUserId}`,
+        {
+          method: "POST",
+          headers: { authorization: getToken },
+        }
+      );
+      const responseData = await bookmarkResponse.json();
+      if (!bookmarkResponse.ok) {
+        throw responseData;
+      }
+      return responseData.bookmarks;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
+    }
   }
 );
 
 export const getBookmarks = createAsyncThunk(
   "userfeed/getBookmarks",
   async () => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
     try {
-      const bookmarks = await fetch(`${API_URL}/bookmarks/${userId}`);
-      if (!bookmarks.ok) {
-        throw bookmarks;
+      const allBookmarks = await fetch(`${API_URL}/bookmarks/${getUserId}`, {
+        method: "GET",
+        headers: { authorization: getToken },
+      });
+      const bookmarkData = await allBookmarks.json();
+      if (!allBookmarks.ok) {
+        throw bookmarkData;
       }
-      const bookmarkData = await bookmarks.json();
       return bookmarkData;
-    } catch (e) {
-      console.error("Error while fetching bookmarks: ", e);
-      throw e;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
     }
   }
 );
@@ -140,26 +193,33 @@ export const getBookmarks = createAsyncThunk(
 export const uploadComment = createAsyncThunk(
   "userfeed/uploadComment",
   async ({ postId, user, content, date, time }) => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
     try {
-      const response = await fetch(`${API_URL}/posts/${postId}/comment`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-        body: JSON.stringify({
-          user,
-          content,
-          date,
-          time,
-        }),
-      });
-
+      const response = await fetch(
+        `${API_URL}/posts/${postId}/comment?userId=${getUserId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: getToken,
+          },
+          body: JSON.stringify({
+            user,
+            content,
+            date,
+            time,
+          }),
+        }
+      );
       const responseData = await response.json();
-      console.log(responseData);
+      if (!response.ok) {
+        throw responseData;
+      }
       return responseData;
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
     }
   }
 );

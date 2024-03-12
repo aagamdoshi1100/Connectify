@@ -30,6 +30,7 @@ const resetUserfeedState = {
     },
     postId: "",
   },
+  error_Message: "",
 };
 
 export const userfeedSlice = createSlice({
@@ -111,7 +112,7 @@ export const userfeedSlice = createSlice({
         state.allPosts = action.payload.posts;
       })
       .addCase(fetchAllPosts.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error_Message = action.error.message;
         state.loadingPosts = false;
       })
       //createNewPost
@@ -125,7 +126,7 @@ export const userfeedSlice = createSlice({
         state.createPost = resetUserfeedState.createPost;
       })
       .addCase(createNewPost.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error_Message = action.error.message;
         state.createPost.loading = false;
       })
       //edit
@@ -143,7 +144,8 @@ export const userfeedSlice = createSlice({
         state.post = resetUserfeedState.post;
       })
       .addCase(editPostContent.rejected, (state, action) => {
-        console.error(action.error);
+        state.error_Message = action.error.message;
+        state.createPost.loading = false;
       })
       //delete
       .addCase(deletePost.pending, (state) => {})
@@ -153,7 +155,7 @@ export const userfeedSlice = createSlice({
         );
       })
       .addCase(deletePost.rejected, (state, action) => {
-        console.error(action.error);
+        state.error_Message = action.error.message;
       })
       //like/dislike
       .addCase(postLikeHandler.pending, (state) => {})
@@ -178,9 +180,10 @@ export const userfeedSlice = createSlice({
         });
       })
       .addCase(postLikeHandler.rejected, (state, action) => {
-        state.error = action.error.message;
+        console.log("aa");
+        state.error_Message = action.error.message;
       })
-      //bookmark
+      //Add/Remove bookmark
       .addCase(postBookMarkHandler.pending, (state) => {})
       .addCase(postBookMarkHandler.fulfilled, (state, action) => {
         state.bookmarks = state.allPosts.filter((post) =>
@@ -188,9 +191,9 @@ export const userfeedSlice = createSlice({
         );
       })
       .addCase(postBookMarkHandler.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.error_Message = action.error.message;
       })
-      // All bookmarks
+      // Get all bookmarks
       .addCase(getBookmarks.pending, (state, action) => {
         state.loadingBookmarks = true;
       })
@@ -199,16 +202,14 @@ export const userfeedSlice = createSlice({
           action.payload.bookmarks.includes(post._id)
         );
         state.loadingBookmarks = false;
-        state.error = "";
       })
       .addCase(getBookmarks.rejected, (state, action) => {
-        state.error = action.payload.error.message;
+        state.error_Message = action.payload.error.message;
         state.loadingBookmarks = false;
       })
       //Upload comment
       .addCase(uploadComment.pending, (state, action) => {})
       .addCase(uploadComment.fulfilled, (state, action) => {
-        console.log(action);
         state.allPosts = state.allPosts.map((post) => {
           if (post._id === state.createComment.postId) {
             return {
@@ -221,7 +222,7 @@ export const userfeedSlice = createSlice({
         state.createComment.data.content = "";
       })
       .addCase(uploadComment.rejected, (state, action) => {
-        state.error = action.payload.error.message;
+        state.error_Message = action.payload.error.message;
       });
   },
 });
