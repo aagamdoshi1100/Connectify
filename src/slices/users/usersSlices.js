@@ -4,6 +4,7 @@ import {
   fetchUsers,
   followHandler,
   followBack,
+  deleteUserAccount,
 } from "./actions";
 
 const initialState = {
@@ -11,12 +12,20 @@ const initialState = {
   following: [],
   loadingUsers: false,
   error_Message: "",
+  accountDeletionReq: {
+    isEnabledConfirmation: false,
+  },
 };
 
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    manageConfirmationPage: (state, action) => {
+      state.accountDeletionReq.isEnabledConfirmation =
+        !state.accountDeletionReq.isEnabledConfirmation;
+    },
+  },
   extraReducers: (builders) => {
     builders
       .addCase(fetchUsers.pending, (state, action) => {
@@ -53,6 +62,15 @@ export const usersSlice = createSlice({
       })
       .addCase(followBack.rejected, (state, action) => {
         console.log(action.error.message);
+      })
+
+      // Delete user account
+      .addCase(deleteUserAccount.pending, (state, action) => {})
+      .addCase(deleteUserAccount.fulfilled, (state, action) => {})
+      .addCase(deleteUserAccount.rejected, (state, action) => {
+        state.error_Message = action.error.message;
       });
   },
 });
+
+export const { manageConfirmationPage } = usersSlice.actions;

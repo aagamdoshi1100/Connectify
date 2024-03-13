@@ -77,3 +77,29 @@ export const followBack = createAsyncThunk(
     }
   }
 );
+
+export const deleteUserAccount = createAsyncThunk(
+  "users/deleteUserAccount",
+  async (userId) => {
+    const getToken = localStorage.getItem("token");
+    try {
+      const deleteUserAccountResponse = await fetch(
+        `${API_URL}/users/${userId}/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: getToken,
+          },
+        }
+      );
+      const responseData = await deleteUserAccountResponse.json();
+      if (!deleteUserAccountResponse.ok) {
+        throw responseData;
+      }
+      return responseData;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
+    }
+  }
+);

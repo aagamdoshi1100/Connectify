@@ -6,6 +6,7 @@ import { IoMdSearch } from "react-icons/io";
 import { MdOutlineSearchOff } from "react-icons/md";
 import { useRef } from "react";
 import useClickOutside from "../hooks/useClickOutside";
+import { manageConfirmationPage } from "../slices/users/usersSlices";
 
 export default function Header() {
   const username = localStorage.getItem("username");
@@ -21,6 +22,7 @@ export default function Header() {
         <img
           src="../../connectify_logo.jpg"
           className="w-[50vw] lg:w-[20vw] h-14"
+          alt="brand logo"
         />
 
         <div className="header-right flex justify-between items-center space-x-4 p-1 lg:pr-5">
@@ -58,7 +60,10 @@ export default function Header() {
                   >
                     View profile
                   </button>
-                  <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
+                  <button
+                    className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
+                    onClick={() => dispatch(manageConfirmationPage())}
+                  >
                     Delete account
                   </button>
                   <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">

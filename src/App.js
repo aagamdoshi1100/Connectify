@@ -17,10 +17,14 @@ import AllChats from "./components/AllChats";
 import ChatView from "./pages/ChatView";
 import MessageView from "./pages/MessageView";
 import Comments from "./pages/Comments";
+import DeleteAccount from "./pages/DeleteAccount";
 
 function App() {
   const showCompomse = useSelector(
     (store) => store.userfeed.createPost.showComposeComponent
+  );
+  const manageDeletion = useSelector(
+    (store) => store.users.accountDeletionReq.isEnabledConfirmation
   );
   return (
     <div className="App">
@@ -44,9 +48,11 @@ function App() {
         <Route path="/footer" element={<Footer />} />
         <Route path="/compose-post" element={<PostComposer />} />
         <Route path="/comments" element={<Comments />} />
+        <Route path="/delete-account" element={<DeleteAccount />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       {showCompomse && <PostComposer />}
+      {manageDeletion && <DeleteAccount />}
     </div>
   );
 }
