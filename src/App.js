@@ -18,6 +18,7 @@ import ChatView from "./pages/ChatView";
 import MessageView from "./pages/MessageView";
 import Comments from "./pages/Comments";
 import DeleteAccount from "./pages/DeleteAccount";
+import Feedback from "./pages/Feedback";
 
 function App() {
   const showCompomse = useSelector(
@@ -26,6 +27,7 @@ function App() {
   const manageDeletion = useSelector(
     (store) => store.users.accountDeletionReq.isEnabledConfirmation
   );
+  const manageFeedback = useSelector((store) => store.users.feedback.isEnabled);
   return (
     <div className="App">
       <Routes>
@@ -49,10 +51,12 @@ function App() {
         <Route path="/compose-post" element={<PostComposer />} />
         <Route path="/comments" element={<Comments />} />
         <Route path="/delete-account" element={<DeleteAccount />} />
+        <Route path="/feedback" element={<Feedback />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       {showCompomse && <PostComposer />}
       {manageDeletion && <DeleteAccount />}
+      {manageFeedback && <Feedback />}
     </div>
   );
 }
