@@ -5,6 +5,7 @@ import {
   followHandler,
   followBack,
   deleteUserAccount,
+  userFeedback,
 } from "./actions";
 
 const initialState = {
@@ -15,6 +16,11 @@ const initialState = {
   accountDeletionReq: {
     isEnabledConfirmation: false,
   },
+  feedback: {
+    isEnabled: false,
+    rating: "",
+    message: "",
+  },
 };
 
 export const usersSlice = createSlice({
@@ -24,6 +30,16 @@ export const usersSlice = createSlice({
     manageConfirmationPage: (state, action) => {
       state.accountDeletionReq.isEnabledConfirmation =
         !state.accountDeletionReq.isEnabledConfirmation;
+    },
+    manageFeedbackPage: (state, action) => {
+      state.feedback.isEnabled = !state.feedback.isEnabled;
+      state.feedback.message = "";
+    },
+    manageFeedbackInput: (state, action) => {
+      state.feedback = {
+        ...state.feedback,
+        [action.payload.key]: action.payload.value,
+      };
     },
   },
   extraReducers: (builders) => {
@@ -69,8 +85,18 @@ export const usersSlice = createSlice({
       .addCase(deleteUserAccount.fulfilled, (state, action) => {})
       .addCase(deleteUserAccount.rejected, (state, action) => {
         state.error_Message = action.error.message;
+      })
+      // User feedback
+      .addCase(userFeedback.pending, (state, action) => {})
+      .addCase(userFeedback.fulfilled, (state, action) => {})
+      .addCase(userFeedback.rejected, (state, action) => {
+        state.error_Message = action.error.message;
       });
   },
 });
 
-export const { manageConfirmationPage } = usersSlice.actions;
+export const {
+  manageConfirmationPage,
+  manageFeedbackPage,
+  manageFeedbackInput,
+} = usersSlice.actions;

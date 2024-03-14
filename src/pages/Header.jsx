@@ -6,7 +6,10 @@ import { IoMdSearch } from "react-icons/io";
 import { MdOutlineSearchOff } from "react-icons/md";
 import { useRef } from "react";
 import useClickOutside from "../hooks/useClickOutside";
-import { manageConfirmationPage } from "../slices/users/usersSlices";
+import {
+  manageConfirmationPage,
+  manageFeedbackPage,
+} from "../slices/users/usersSlices";
 
 export default function Header() {
   const username = localStorage.getItem("username");
@@ -66,7 +69,10 @@ export default function Header() {
                   >
                     Delete account
                   </button>
-                  <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
+                  <button
+                    className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
+                    onClick={() => dispatch(manageFeedbackPage())}
+                  >
                     Feedback
                   </button>
                   <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">

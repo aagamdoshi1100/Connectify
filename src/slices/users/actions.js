@@ -103,3 +103,32 @@ export const deleteUserAccount = createAsyncThunk(
     }
   }
 );
+
+export const userFeedback = createAsyncThunk(
+  "users/userFeedback",
+  async (data) => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
+    try {
+      const userFeedbackResponse = await fetch(
+        `${API_URL}/users/${getUserId}/feedback`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: getToken,
+          },
+          body: JSON.stringify(data),
+        }
+      );
+      const responseData = await userFeedbackResponse.json();
+      if (!userFeedbackResponse.ok) {
+        throw responseData;
+      }
+      return responseData;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
+    }
+  }
+);
