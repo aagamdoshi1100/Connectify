@@ -46,7 +46,7 @@ export const Posts = ({ data }) => {
               return (
                 <div
                   key={post._id}
-                  className="posts-secondary-container flex flex-col border-2 border-white bg-white shadow-2xl rounded-lg m-2 lg:flex-grow-1 lg:p-2 cursor-pointer"
+                  className="posts-secondary-container flex flex-col border-2 border-white bg-white md:shadow-md rounded-lg m-2 lg:flex-grow-1 lg:p-2 cursor-pointer"
                 >
                   <div className="post-header">
                     <div className="header-row flex  justify-between items-center py-1">
@@ -160,7 +160,7 @@ export const Posts = ({ data }) => {
                   </div>
                   {post.likedBy.length > 0 && (
                     <div className="like-details ml-2 lg:m-2">
-                      <div className="like-content flex items-center relative text-sm">
+                      <div className="like-content flex items-center py-1 md:py-0 relative text-sm">
                         {post.likedBy[0] && (
                           <div className="like-user-image absolute border-2 border-white w-6 h-6 rounded-full cursor-pointer overflow-hidden ">
                             <img
@@ -204,7 +204,7 @@ export const Posts = ({ data }) => {
                           </div>
                         )}
                         {post.likedBy.length > 2 ? (
-                          <p className="text-sm pl-14">
+                          <p className="LikedByText text-sm pl-14">
                             {`Liked by ${post.likedBy[0]} and ${
                               post.likedBy.length - 1
                             } others`}

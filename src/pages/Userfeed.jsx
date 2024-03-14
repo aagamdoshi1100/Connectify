@@ -25,11 +25,11 @@ export default function Userfeed() {
   return (
     <>
       <Header />
-      <div className="userfeed-primary-container lg:flex">
-        <div className="users-primary-container lg:fixed lg:left-[65%] lg:w-[28%]">
+      <div className="userfeed-primary-container md:flex">
+        <div className="users-primary-container md:fixed md:left-[69%] lg:left-[67%] md:w-[30%] lg:w-[30%]">
           <Users />
         </div>
-        <div className="posts-primary-container mb-20 lg:pb-[60px] lg:fixed lg:left-[25%] lg:w-[40%] lg:overflow-auto lg:h-[100vh] no-scrollbar">
+        <div className="posts-primary-container mb-20 md:pb-[60px] md:fixed md:left-[24.5%] lg:left-[26%] md:w-[45%] lg:w-[40%] md:overflow-auto md:h-[100vh] no-scrollbar">
           <Posts data={allPosts} />
         </div>
       </div>

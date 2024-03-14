@@ -33,9 +33,9 @@ export default function Users() {
     JSON.stringify(users.filter((user) => user._id === userId))
   );
   return (
-    <div className="users-secondary-container overflow-auto flex lg:flex-col pt-3 lg:pb-20 lg:overflow-auto lg:h-[100vh] no-scrollbar">
+    <div className="users-secondary-container overflow-auto flex md:flex-col pt-3 md:pb-20 md:overflow-auto md:h-[100vh] no-scrollbar">
       {loadingUsers ? (
-        <div className="relative flex justify-center items-center w-[100vw] lg:w-[28vw] lg:h-[100vh]">
+        <div className="relative flex justify-center items-center w-[100vw] md:w-[28vw] md:h-[100vh]">
           <ReactLoader className="absolute" />
         </div>
       ) : (
@@ -52,9 +52,9 @@ export default function Users() {
                 return (
                   <div
                     key={_id}
-                    className="user-card border-2 m-1 border-white shadow-2xl lg:shadow-xl bg-white w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-lg box-border lg:flex-row  lg:justify-between lg:flex-shrink lg:w-[98%] p-1 lg:p-2"
+                    className="user-card border-2 m-1 border-white shadow-2xl md:shadow-xl bg-white w-[35%] flex flex-col justify-center items-center flex-shrink-0 rounded-md box-border lg:flex-row  lg:justify-between md:flex-shrink md:w-[98%] p-1 md:p-2"
                   >
-                    <div className="profileIcon-user-details flex flex-col justify-center lg:flex lg:flex-row lg:pl-1">
+                    <div className="profileIcon-user-details flex flex-col justify-center md:flex md:flex-row md:pl-1">
                       <div className="profileIcon flex justify-center items-center">
                         <div className="profileIcon-border w-14 h-14 rounded-full overflow-hidden ">
                           <img
@@ -68,12 +68,12 @@ export default function Users() {
                           />
                         </div>
                       </div>
-                      <div className="user-details lg:m-2 text-center lg:text-left">
-                        <p className="lg:whitespace-nowrap lg:overflow-hidden lg:text-ellipsis lg:w-[10vw]">{`${firstname} ${lastname}`}</p>
-                        <p className="text-slate-500 text-sm lg:whitespace-nowrap lg:overflow-hidden lg:text-ellipsis lg:w-[10vw]">{`@${username}`}</p>
+                      <div className="user-details md:m-2 text-center md:text-left">
+                        <p className="md:whitespace-nowrap md:overflow-hidden md:text-ellipsis md:w-[20vw] lg:w-[10vw]">{`${firstname} ${lastname}`}</p>
+                        <p className="text-slate-500 text-sm md:whitespace-nowrap md:overflow-hidden md:text-ellipsis md:w-[20vw] lg:w-[10vw]">{`@${username}`}</p>
                       </div>
                     </div>
-                    <div className="user-card-button py-1 flex w-[95%] lg:w-[110px]">
+                    <div className="user-card-button py-1 flex w-[95%] md:w-[110px]">
                       {btnStatus ? (
                         btnStatus && btnStatus.sender ? (
                           btnStatus.sender && btnStatus.returnFollowed ? (
@@ -91,7 +91,7 @@ export default function Users() {
                             <button
                               className={
                                 followBtnStyle +
-                                "whitespace-nowrap overflow-hidden text-ellipsis lg:w-[100px]"
+                                "whitespace-nowrap overflow-hidden text-ellipsis md:w-[100px]"
                               }
                               onClick={() =>
                                 dispatch(
@@ -117,7 +117,7 @@ export default function Users() {
                           <button
                             className={
                               followBtnStyle +
-                              "whitespace-nowrap overflow-hidden text-ellipsis lg:w-[100px]"
+                              "whitespace-nowrap overflow-hidden text-ellipsis md:w-[100px]"
                             }
                             onClick={() =>
                               dispatch(followBack({ userId, followingId: _id }))

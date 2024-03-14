@@ -22,8 +22,8 @@ function Feedback() {
     dispatch(manageFeedbackPage());
   };
   return (
-    <div className="delete-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-80">
-      <div className="delete-container fixed top-[50%] left-[50%] lg:left-[60%] -translate-x-[50%] -translate-y-[50%] bg-white w-[90vw] h-[72vh] md:h-[60vh] lg:h-[70vh] md:w-[70%] lg:w-[50%] p-4 rounded-xl flex flex-col gap-3 justify-center items-center z-40">
+    <div className="feedback-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-80  z-40">
+      <div className="feedback-container fixed top-[50%] left-[50%] lg:left-[50%] -translate-x-[50%] -translate-y-[50%] bg-white w-[90vw] h-[72vh] md:h-[60vh] lg:h-[70vh] md:w-[70%] lg:w-[50%] p-4 rounded-xl flex flex-col gap-3 justify-center items-center">
         <p className="font-medium text-lg">Give Feedback</p>
         <p className="text-center">
           Please rate your overall experience with the application.

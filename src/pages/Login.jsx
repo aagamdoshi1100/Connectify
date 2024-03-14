@@ -5,7 +5,7 @@ import {
   passwordManager,
   disableError,
 } from "../slices/authentication/authSlice";
-import { FaEyeSlash, FaRegEye, FaArrowRight } from "react-icons/fa";
+import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SlUser } from "react-icons/sl";
@@ -41,8 +41,8 @@ export default function Login() {
   };
 
   return (
-    <div className="login-container lg:w-[80%] flex flex-col lg:flex-row lg:fixed lg:left-[50%] lg:top-[45%] lg:-translate-x-[50%] lg:-translate-y-[50%] bg-white shadow-xl">
-      <div className="login-left hidden lg:w-[50%]  lg:flex lg:justify-center lg:items-center lg:flex-col lg:bg-gradient-to-r lg:from-indigo-500 lg:via-purple-500 lg:to-pink-500">
+    <div className="login-container md:w-[80%] flex flex-col md:flex-row md:fixed md:left-[50%] md:top-[45%] md:-translate-x-[50%] md:-translate-y-[50%] bg-white shadow-xl">
+      <div className="login-left hidden md:w-[50%]  md:flex md:justify-center md:items-center md:flex-col md:bg-gradient-to-r md:from-indigo-500 md:via-purple-500 md:to-pink-500">
         <p className="text-4xl font-serif text-center m-4 mb-2 text-white">
           Hello, Friend!
         </p>
@@ -56,9 +56,9 @@ export default function Login() {
           Don't have an account? Sign up
         </button>
       </div>
-      <div className="login-right lg:w-[50%] h-[100vh] lg:h-[70vh]">
+      <div className="login-right md:w-[50%] h-[100vh] md:h-[70vh]">
         <div className=" m-8 mt-20">
-          <h2 className="text-4xl font-serif text-left mt-16 lg:my-2">
+          <h2 className="text-4xl font-serif text-left mt-16 md:my-2">
             Welcome Back
           </h2>
           <p className="text-slate-400 font-serif mb-8">
@@ -125,13 +125,13 @@ export default function Login() {
             >
               Guest Login
             </button>
-            <div className="flex items-center w-full lg:hidden">
+            <div className="flex items-center w-full md:hidden">
               <div className="flex-grow border-t border-gray-400"></div>
               <div className="mx-4 text-gray-500">OR</div>
               <div className="flex-grow border-t border-gray-400"></div>
             </div>
             <button
-              className="bg-black text-white w-full p-2 lg:hidden"
+              className="bg-black text-white w-full p-2 md:hidden"
               onClick={() => navigate("/signup")}
             >
               Don't have an account? Sign up
@@ -139,7 +139,7 @@ export default function Login() {
 
             <div className="flex justify-center mt-8">
               {error.enabled ? (
-                <p className="bg-black text-white fixed bottom-2 p-2 rounded-lg">
+                <p className="bg-black text-white fixed bottom-2 p-2 rounded-md">
                   {error.message}
                 </p>
               ) : (

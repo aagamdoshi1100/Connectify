@@ -75,9 +75,9 @@ export default function Header() {
                   >
                     Feedback
                   </button>
-                  <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
+                  {/* <button className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer">
                     About us
-                  </button>
+                  </button> */}
                 </div>
               ) : (
                 ""

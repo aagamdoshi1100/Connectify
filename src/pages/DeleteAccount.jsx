@@ -18,7 +18,7 @@ function DeleteAccount() {
     navigate("/login");
   };
   return (
-    <div className="delete-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-80">
+    <div className="delete-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-40">
       <div className="delete-container fixed top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] bg-white w-[90vw] h-[60vh] md:w-[40%] lg:w-[40%] p-4 rounded-xl flex flex-col gap-3 justify-center items-center z-40">
         <img
           src="../../delete-account.jpg"

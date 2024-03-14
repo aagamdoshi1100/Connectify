@@ -29,9 +29,9 @@ export default function Signup() {
   }, [success]);
   console.log(inputs);
   return (
-    <div className="signup-container lg:w-[80%] flex lg:fixed lg:left-[50%] lg:top-[45%] lg:-translate-x-[50%] lg:-translate-y-[50%] bg-white shadow-xl">
-      <div className="signup-left lg:w-[50%] h-[100vh] lg:h-[70vh]">
-        <div className="pl-4 lg:pl-8">
+    <div className="signup-container md:w-[80%] flex md:fixed md:left-[50%] md:top-[45%] md:-translate-x-[50%] md:-translate-y-[50%] bg-white shadow-xl">
+      <div className="signup-left md:w-[50%] h-[100vh] md:h-[70vh]">
+        <div className="pl-4 md:pl-8">
           <h2 className="text-4xl font-serif text-left m-4 mb-2 mt-16">
             Create account
           </h2>
@@ -88,7 +88,7 @@ export default function Signup() {
             />
           </div>
           <div className="flex gap-2 w-10/12">
-            <div className=" lg:flex-grow">
+            <div className=" md:flex-grow">
               <input
                 type="text"
                 className="p-2 w-full border border-slate-400 focus:outline-none"
@@ -104,7 +104,7 @@ export default function Signup() {
                 }
               />
             </div>
-            <div className=" lg:flex-grow">
+            <div className=" md:flex-grow">
               <input
                 type="text"
                 className="p-2 w-full border border-slate-400 focus:outline-none"
@@ -144,20 +144,20 @@ export default function Signup() {
           >
             Signup
           </button>
-          <div className="flex items-center w-10/12 lg:hidden">
+          <div className="flex items-center w-10/12 md:hidden">
             <div className="flex-grow border-t border-gray-400"></div>
             <div className="mx-4 text-gray-500">OR</div>
             <div className="flex-grow border-t border-gray-400"></div>
           </div>
           <button
-            className="bg-black text-white w-10/12 p-2 lg:hidden"
+            className="bg-black text-white w-10/12 p-2 md:hidden"
             onClick={() => navigate("/login")}
           >
             Already have an account? login
           </button>
           <div className="flex justify-center mt-8">
             {error.enabled ? (
-              <p className="bg-black text-white fixed bottom-2 p-2 rounded-lg">
+              <p className="bg-black text-white fixed bottom-2 p-2 rounded-md">
                 {error.message}
               </p>
             ) : (
@@ -166,7 +166,7 @@ export default function Signup() {
           </div>
         </div>
       </div>
-      <div className="signup-right hidden lg:w-[50%]  lg:flex lg:justify-center lg:items-center lg:flex-col lg:bg-gradient-to-r lg:from-indigo-500 lg:via-purple-500 lg:to-pink-500">
+      <div className="signup-right hidden md:w-[50%]  md:flex md:justify-center md:items-center md:flex-col md:bg-gradient-to-r md:from-indigo-500 md:via-purple-500 md:to-pink-500">
         <p className="text-4xl font-serif text-center m-4 mb-2 text-white">
           New Here?
         </p>
