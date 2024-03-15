@@ -15,6 +15,7 @@ import {
   setImageToState,
 } from "../slices/userProfile/userProfileSlice";
 import { setProfilePicture } from "../slices/userProfile/action";
+import { IoCloudUploadOutline } from "react-icons/io5";
 
 export default function PostComposer() {
   const dispatch = useDispatch();
@@ -48,24 +49,27 @@ export default function PostComposer() {
     : createPost.createPostImage;
 
   return (
-    <div className="post-composer-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-80">
-      <div className="post-composer-container top-[40%] left-1/2 fixed -translate-x-1/2 -translate-y-[40%] bg-slate-200 border-slate-300 border rounded-lg  w-[90%] md:w-[45%] lg:w-[45%] z-10">
-        <div className="box-discard flex justify-end m-2">
-          <MdOutlineClose
-            size="2em"
-            onClick={
-              uploadProfileImageStates.isEnabled
-                ? () => dispatch(disableUpload())
-                : () => dispatch(discardCompose())
-            }
-          />
-        </div>
-        <div className="upload-img flex justify-center">
+    <div className="post-composer-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-40">
+      <div className="post-composer-container top-[40%] left-1/2 fixed -translate-x-1/2 -translate-y-[40%] bg-slate-200 border-slate-300 border rounded-lg  w-[90%] md:w-[45%] lg:w-[45%] z-10 p-3">
+        {!uploadProfileImageStates.isEnabled ? (
+          post.editPost ? (
+            <p className="header font-bold text-lg py-2">Edit Post</p>
+          ) : (
+            <p className="header font-bold text-lg py-2">New Post</p>
+          )
+        ) : (
+          <p className="header font-bold text-lg py-2">Set Profile Picture</p>
+        )}
+
+        <div className="upload-img flex justify-center bg-white rounded-lg">
           {imageData === "" ? (
             <>
               <label htmlFor="image">
-                <div className="upload-icon">
-                  <BiImageAdd size="5em" />
+                <div className="upload-icon flex justify-center relative">
+                  <IoCloudUploadOutline className="text-green-600 bg-white p-8 h-[20vh] w-[82vw] md:w-[40vw] rounded-md" />
+                  <p className="upload-text absolute bottom-0 p-1 text-sm">
+                    Click to upload image
+                  </p>
                 </div>
               </label>
               <input
@@ -85,8 +89,8 @@ export default function PostComposer() {
                 alt="upload"
               />
               <MdOutlineClose
-                size="3em"
-                className="img-discard absolute top-0 p-3"
+                size="1.5em"
+                className="img-discard absolute top-2 left-2 p-1 bg-gray-300 rounded-full"
                 onClick={
                   uploadProfileImageStates.isEnabled
                     ? () => dispatch(clearImageState())
@@ -100,10 +104,10 @@ export default function PostComposer() {
           )}
         </div>
 
-        <div className="create-post-content-box flex">
+        <div className="create-post-content-box flex flex-col justify-center">
           {!uploadProfileImageStates.isEnabled && (
             <textarea
-              className="m-2 flex-grow"
+              className=" my-2 p-2 rounded-md outline-none"
               rows="2"
               value={createPost.createPostContent}
               placeholder="Write something..."
@@ -117,58 +121,69 @@ export default function PostComposer() {
               }
             ></textarea>
           )}
-        </div>
-        <div className="multiple-btns flex justify-end p-2">
-          {!uploadProfileImageStates.isEnabled ? (
-            post.editPost ? (
-              <button
-                className="post  bg-violet-700 text-white p-2 rounded-lg w-[30%]"
-                onClick={() =>
-                  dispatch(
-                    editPostContent({
-                      body: {
-                        content: createPost.createPostContent,
-                        image: createPost.createPostImage,
-                      },
-                      postId: post.postId,
-                    })
-                  )
-                }
-              >
-                Update
-              </button>
-            ) : (
-              <button
-                className="post  bg-violet-700 text-white p-2 rounded-lg w-[30%]"
-                onClick={() =>
-                  dispatch(
-                    createNewPost({
-                      content: createPost.createPostContent,
-                      image: createPost.createPostImage,
-                      user: userId,
-                    })
-                  )
-                }
-              >
-                Post
-              </button>
-            )
-          ) : (
+          <div className="multiple-btns flex justify-end pt-2">
             <button
-              className="post  bg-violet-700 text-white p-2 rounded-lg w-[30%]"
-              onClick={() =>
-                dispatch(
-                  setProfilePicture({
-                    image: uploadProfileImageStates.image,
-                    userId,
-                  })
-                )
+              className="bg-gray-300  p-2 rounded-lg w-[20%] mr-2"
+              onClick={
+                uploadProfileImageStates.isEnabled
+                  ? () => dispatch(disableUpload())
+                  : () => dispatch(discardCompose())
               }
             >
-              Upload
+              Cancel
             </button>
-          )}
+            {!uploadProfileImageStates.isEnabled ? (
+              post.editPost ? (
+                <button
+                  className="update text-purple-900 bg-purple-400 p-2 rounded-lg w-[20%]"
+                  onClick={() =>
+                    dispatch(
+                      editPostContent({
+                        body: {
+                          content: createPost.createPostContent,
+                          image: createPost.createPostImage,
+                        },
+                        postId: post.postId,
+                      })
+                    )
+                  }
+                >
+                  Update
+                </button>
+              ) : (
+                <button
+                  className="post text-purple-900 bg-purple-400 p-2 rounded-lg w-[20%]"
+                  onClick={() =>
+                    dispatch(
+                      createNewPost({
+                        content: createPost.createPostContent,
+                        image: createPost.createPostImage,
+                        user: userId,
+                      })
+                    )
+                  }
+                >
+                  Post
+                </button>
+              )
+            ) : (
+              <button
+                className="upload text-purple-900 bg-purple-400 p-2 rounded-lg w-[20%]"
+                onClick={() =>
+                  dispatch(
+                    setProfilePicture({
+                      image: uploadProfileImageStates.image,
+                      userId,
+                    })
+                  )
+                }
+              >
+                Upload
+              </button>
+            )}
+          </div>
         </div>
+
         {createPost.loading ? (
           <div className="absolute left-[50%] top-[50%] -translate-x-[50%] -translate-y-[50%]">
             <ReactLoader />
