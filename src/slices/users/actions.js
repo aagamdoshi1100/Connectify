@@ -132,3 +132,30 @@ export const userFeedback = createAsyncThunk(
     }
   }
 );
+
+export const searchHandler = createAsyncThunk(
+  "users/searchHandler",
+  async (keyword) => {
+    const getToken = localStorage.getItem("token");
+    const getUserId = localStorage.getItem("userId");
+    try {
+      const searchResponse = await fetch(
+        `${API_URL}/users/${getUserId}/search/${keyword}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: getToken,
+          },
+        }
+      );
+      const responseData = await searchResponse.json();
+      if (!searchResponse.ok) {
+        throw responseData;
+      }
+      return responseData;
+    } catch (err) {
+      console.error({ Error_message: err.message });
+      throw err;
+    }
+  }
+);

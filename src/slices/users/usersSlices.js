@@ -6,6 +6,7 @@ import {
   followBack,
   deleteUserAccount,
   userFeedback,
+  searchHandler,
 } from "./actions";
 
 const initialState = {
@@ -20,6 +21,10 @@ const initialState = {
     isEnabled: false,
     rating: "",
     message: "",
+  },
+  search: {
+    searchText: "",
+    searches: [],
   },
 };
 
@@ -39,6 +44,18 @@ export const usersSlice = createSlice({
       state.feedback = {
         ...state.feedback,
         [action.payload.key]: action.payload.value,
+      };
+    },
+    storeSearchKeywords: (state, action) => {
+      state.search = {
+        ...state.search,
+        searchText: action.payload,
+      };
+    },
+    clearSearchResults: (state, action) => {
+      state.search = {
+        searchText: "",
+        searches: [],
       };
     },
   },
@@ -91,6 +108,18 @@ export const usersSlice = createSlice({
       .addCase(userFeedback.fulfilled, (state, action) => {})
       .addCase(userFeedback.rejected, (state, action) => {
         state.error_Message = action.error.message;
+      })
+      // Search
+      .addCase(searchHandler.pending, (state, action) => {})
+      .addCase(searchHandler.fulfilled, (state, action) => {
+        state.search = {
+          ...state.search,
+          searches: action.payload.data,
+        };
+      })
+      .addCase(searchHandler.rejected, (state, action) => {
+        state.error_Message = action.error.message;
+        console.error(action.error.message);
       });
   },
 });
@@ -99,4 +128,6 @@ export const {
   manageConfirmationPage,
   manageFeedbackPage,
   manageFeedbackInput,
+  storeSearchKeywords,
+  clearSearchResults,
 } = usersSlice.actions;
