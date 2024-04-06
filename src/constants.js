@@ -1,4 +1,4 @@
-export const API_URL = "https://connectify-backend.vercel.app";
+export const API_URL = "https://connectify-backend-64h0.onrender.com";
 
 const timeStamp = new Date();
 
