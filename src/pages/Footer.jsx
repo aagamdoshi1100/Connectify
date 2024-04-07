@@ -1,7 +1,7 @@
 import { IoIosLogOut } from "react-icons/io";
 import { AiOutlineHome } from "react-icons/ai";
 import { VscDiffAdded } from "react-icons/vsc";
-import { CiBookmark } from "react-icons/ci";
+import { FiBookmark } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { showCompose } from "../slices/userfeed/userfeedSlice";
@@ -30,7 +30,7 @@ export default function Footer() {
 
   return (
     <div className="footer-container fixed bottom-0 bg-white border md:border-2 border-slate-200 md:border-white shadow-xl w-[100vw] md:w-[25%] md:h-[100vh] z-20">
-      <div className="footer-icon-container flex justify-around md:flex-col md:justify-normal md:mt-20">
+      <div className="footer-icon-container flex justify-around md:flex-col md:justify-around md:h-[50vh] md:mt-20">
         {/* Home */}
         <div
           className={
@@ -43,8 +43,8 @@ export default function Footer() {
             className="icon-block flex cursor-pointer p-3 md:border md:border-white md:p-3 hover:bg-slate-100 md:hover:shadow-md"
             onClick={() => navigate("/")}
           >
-            <AiOutlineHome size="1.8em" className="md:text-slate-500" />
-            <span className="icon-name hidden ml-4 md:inline-flex md:text-md font-serif">
+            <AiOutlineHome size="2em" className="md:text-slate-500" />
+            <span className="icon-name hidden ml-4 md:inline-flex md:text-xl font-serif">
               Home
             </span>
           </div>
@@ -61,8 +61,8 @@ export default function Footer() {
             className="icon-block flex cursor-pointer p-3 md:border md:border-white md:p-3 hover:bg-slate-100 md:hover:shadow-md"
             onClick={() => navigate("/bookmarks")}
           >
-            <CiBookmark size="1.7em" className="md:text-slate-500" />
-            <span className="icon-name hidden md:inline-flex ml-4 md:text-md font-serif">
+            <FiBookmark size="2em" className="md:text-slate-500" />
+            <span className="icon-name hidden md:inline-flex ml-4 md:text-xl font-serif">
               Bookmarks
             </span>
           </div>
@@ -73,8 +73,8 @@ export default function Footer() {
             className=" icon-block flex cursor-pointer p-3 md:border md:border-white md:p-3 hover:bg-slate-100 md:hover:shadow-md "
             onClick={() => dispatch(showCompose())}
           >
-            <VscDiffAdded size="1.8em" className="md:text-slate-500" />
-            <span className="icon-name hidden md:inline-flex ml-4 md:text-md font-serif">
+            <VscDiffAdded size="2em" className="md:text-slate-500" />
+            <span className="icon-name hidden md:inline-flex ml-4 md:text-xl font-serif">
               Post
             </span>
           </div>
@@ -92,10 +92,10 @@ export default function Footer() {
             onClick={navigateToChats}
           >
             <IoChatbubbleEllipsesOutline
-              size="1.8em"
+              size="2em"
               className="md:text-slate-500"
             />
-            <span className="icon-name hidden md:inline-flex ml-4 md:text-md font-serif">
+            <span className="icon-name hidden md:inline-flex ml-4 md:text-xl font-serif">
               Chats
             </span>
           </div>
@@ -106,8 +106,8 @@ export default function Footer() {
             className=" icon-block flex cursor-pointer p-3 md:border md:border-white md:p-3 hover:bg-slate-100 md:hover:shadow-md "
             onClick={logoutHandler}
           >
-            <IoIosLogOut size="1.8em" className="md:text-slate-500" />
-            <span className="icon-name hidden md:inline-flex ml-4 md:text-md font-serif">
+            <IoIosLogOut size="2em" className="md:text-slate-500" />
+            <span className="icon-name hidden md:inline-flex ml-4 md:text-xl font-serif">
               Log out
             </span>
           </div>

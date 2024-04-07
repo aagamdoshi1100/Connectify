@@ -8,10 +8,10 @@ export default function ChatView() {
     <div className="chatview">
       <Header />
       <Footer />
-      <div className="allchats lg:fixed lg:left-[26%] lg:w-[27%]">
+      <div className="allchats md:fixed md:left-[26%] md:w-[30%] cursor-pointer">
         <AllChats />
       </div>
-      <div className="onetoone hidden lg:block lg:fixed lg:left-[53%] lg:w-[35%]">
+      <div className="onetoone hidden md:block md:fixed md:left-[57%] md:w-[35%] cursor-pointer">
         <OneToOneChat />
       </div>
     </div>

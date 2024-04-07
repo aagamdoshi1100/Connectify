@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { GoKebabHorizontal } from "react-icons/go";
-import { AiOutlineLike } from "react-icons/ai";
+import { FaHeart } from "react-icons/fa6";
+import { FaRegHeart } from "react-icons/fa6";
 import { GoComment } from "react-icons/go";
-import { MdOutlineBookmarkBorder } from "react-icons/md";
+import { MdOutlineBookmarks } from "react-icons/md";
+import { MdBookmarks } from "react-icons/md";
 import {
   enablePostMenu,
   enableEdit,
@@ -117,27 +119,37 @@ export const Posts = ({ data }) => {
                   </div>
                   <div className="post-footer flex item-center">
                     <div className="icons flex items-center m-2">
-                      <AiOutlineLike
-                        size="1.5em"
-                        color={
-                          post.likedBy.includes(loggedInUser)
-                            ? "blueviolet"
-                            : "black"
-                        }
-                        onClick={() =>
-                          dispatch(
-                            postLikeHandler({
-                              postId: post._id,
-                              likedBy: loggedInUser,
-                            })
-                          )
-                        }
-                      />
+                      {post.likedBy.includes(loggedInUser) ? (
+                        <FaHeart
+                          size="1.7em"
+                          color={"red"}
+                          onClick={() =>
+                            dispatch(
+                              postLikeHandler({
+                                postId: post._id,
+                                likedBy: loggedInUser,
+                              })
+                            )
+                          }
+                        />
+                      ) : (
+                        <FaRegHeart
+                          size="1.7em"
+                          onClick={() =>
+                            dispatch(
+                              postLikeHandler({
+                                postId: post._id,
+                                likedBy: loggedInUser,
+                              })
+                            )
+                          }
+                        />
+                      )}
                       <span className="hidden">Like</span>
                     </div>
                     <div className="icons flex items-center m-2">
                       <GoComment
-                        size="1.5em"
+                        size="1.7em"
                         onClick={() =>
                           dispatch(enableCommentComponent(post._id))
                         }
@@ -146,15 +158,31 @@ export const Posts = ({ data }) => {
                     </div>
                     {createComment.isEnabled ? <Comments /> : ""}
                     <div className="icons flex items-center m-2">
-                      <MdOutlineBookmarkBorder
-                        size="1.5em"
-                        color={
-                          bookmarks.find((data) => data._id === post._id)
-                            ? "blueviolet"
-                            : "black"
-                        }
-                        onClick={() => dispatch(postBookMarkHandler(post._id))}
-                      />
+                      {bookmarks.find((data) => data._id === post._id) ? (
+                        <MdBookmarks
+                          size="1.7em"
+                          color={
+                            bookmarks.find((data) => data._id === post._id)
+                              ? "blueviolet"
+                              : "black"
+                          }
+                          onClick={() =>
+                            dispatch(postBookMarkHandler(post._id))
+                          }
+                        />
+                      ) : (
+                        <MdOutlineBookmarks
+                          size="1.7em"
+                          color={
+                            bookmarks.find((data) => data._id === post._id)
+                              ? "blueviolet"
+                              : "black"
+                          }
+                          onClick={() =>
+                            dispatch(postBookMarkHandler(post._id))
+                          }
+                        />
+                      )}
                       <span className="hidden">Bookmark</span>
                     </div>
                   </div>
@@ -168,7 +196,8 @@ export const Posts = ({ data }) => {
                                 users.find(
                                   (findImage) =>
                                     findImage.username === post.likedBy[0]
-                                )?.profileIcon
+                                )?.profileIcon ||
+                                "../../Profile-Image-Default.jpg"
                               }
                               className="w-full h-full"
                               alt="likedBy"
@@ -182,7 +211,8 @@ export const Posts = ({ data }) => {
                                 users.find(
                                   (findImage) =>
                                     findImage.username === post.likedBy[1]
-                                )?.profileIcon
+                                )?.profileIcon ||
+                                "../../Profile-Image-Default.jpg"
                               }
                               className="w-full h-full"
                               alt="likedBy"
@@ -196,7 +226,8 @@ export const Posts = ({ data }) => {
                                 users.find(
                                   (findImage) =>
                                     findImage.username === post.likedBy[2]
-                                )?.profileIcon
+                                ).profileIcon ||
+                                "../../Profile-Image-Default.jpg"
                               }
                               className="w-full h-full"
                               alt="likedBy"

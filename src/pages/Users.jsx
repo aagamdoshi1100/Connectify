@@ -8,9 +8,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { followBtnStyle } from "../constants";
 import ReactLoader from "../components/ReactLoader";
+import { useNavigate } from "react-router-dom";
 
 export default function Users() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
 
   const fetchUsersData = useCallback(() => {
@@ -33,7 +35,7 @@ export default function Users() {
     JSON.stringify(users.filter((user) => user._id === userId))
   );
   return (
-    <div className="users-secondary-container overflow-auto flex md:flex-col pt-3 md:pb-20 md:overflow-auto md:h-[100vh] no-scrollbar">
+    <div className="users-secondary-container overflow-auto flex md:flex-col pt-3 md:pb-20 md:overflow-auto md:h-[100vh] cursor-pointer no-scrollbar">
       {loadingUsers ? (
         <div className="relative flex justify-center items-center w-[100vw] md:w-[28vw] md:h-[100vh]">
           <ReactLoader className="absolute" />
@@ -64,12 +66,16 @@ export default function Users() {
                                 : profileIcon
                             }
                             className="profileImage w-full h-full"
+                            onClick={() => navigate(`/users/${_id}/profile`)}
                             alt="userProfileImage"
                           />
                         </div>
                       </div>
                       <div className="user-details md:m-2 text-center md:text-left">
-                        <p className="md:whitespace-nowrap md:overflow-hidden md:text-ellipsis md:w-[20vw] lg:w-[10vw]">{`${firstname} ${lastname}`}</p>
+                        <p
+                          className="md:whitespace-nowrap md:overflow-hidden md:text-ellipsis md:w-[20vw] lg:w-[10vw]"
+                          onClick={() => navigate(`/users/${_id}/profile`)}
+                        >{`${firstname} ${lastname}`}</p>
                         <p className="text-slate-500 text-sm md:whitespace-nowrap md:overflow-hidden md:text-ellipsis md:w-[20vw] lg:w-[10vw]">{`@${username}`}</p>
                       </div>
                     </div>

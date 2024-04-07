@@ -85,23 +85,23 @@ export default function OneToOneChat() {
   };
 
   return (
-    <div className="Chat-container bg-white absolute top-0 z-50 w-[100vw] h-[100vh] lg:h-[92vh] lg:w-[40vw] ">
+    <div className="Chat-container bg-white absolute top-0 z-50 w-[100vw] h-[100vh] md:h-[92vh] md:w-[40vw] ">
       {!loading ? (
         <>
           {filterTheSelectedRoom.length > 0 ? (
             <>
-              <div className="header flex justify-between p-2">
+              <div className="header bg-white fixed top-0 w-full md:top-14 md:w-[40vw] flex justify-between p-2">
                 {filterTheSelectedRoom[0]?.recipient && (
                   <Identity user={filterTheSelectedRoom[0]?.recipient} />
                 )}
                 <IoReturnUpBackOutline
                   size="1.6em"
-                  className="lg:hidden mr-5 mt-3"
+                  className="md:hidden mr-5 mt-3"
                   onClick={backToAllChats}
                 />
               </div>
               <div
-                className="messages-container h-[80vh] lg:h-[71vh] overflow-auto no-scrollbar "
+                className="messages-container pt-[68px] h-[90vh] md:h-[82vh] overflow-auto no-scrollbar "
                 ref={messageContainerRef}
               >
                 {Array.isArray(filterTheSelectedRoom[0]?.chats) &&
@@ -127,7 +127,7 @@ export default function OneToOneChat() {
 
                           {senderId === chatObj.senderId ? (
                             <div
-                              className="sender p-1 m-1 rounded-lg flex flex-row-reverse items-end gap-2"
+                              className="sender p-1 m-1 rounded-md flex flex-row-reverse items-end gap-2"
                               onClick={() => setUnhide(index)}
                             >
                               <span
@@ -156,14 +156,14 @@ export default function OneToOneChat() {
                                 >
                                   {time}
                                 </p>
-                                <span className="bg-purple-600 text-white p-2 rounded-lg break-words max-w-[80vw] lg:max-w-[30vw]">
+                                <span className="bg-purple-600 text-white p-2 rounded-md break-words max-w-[80vw] md:max-w-[30vw]">
                                   {message}
                                 </span>
                               </div>
                             </div>
                           ) : (
                             <div
-                              className="recipient p-1 m-1 rounded-lg flex items-end gap-2"
+                              className="recipient p-1 m-1 rounded-md flex items-end gap-2"
                               onClick={() => setUnhide(index)}
                             >
                               <span
@@ -192,7 +192,7 @@ export default function OneToOneChat() {
                                 >
                                   {time}
                                 </p>
-                                <span className="bg-green-500 text-white p-2 rounded-lg break-words max-w-[80vw] lg:max-w-[30vw]">
+                                <span className="bg-green-500 text-white p-2 rounded-md break-words max-w-[80vw] md:max-w-[30vw]">
                                   {message}
                                 </span>
                               </div>
@@ -204,7 +204,7 @@ export default function OneToOneChat() {
                   })
                 ) : (
                   <p
-                    className="text-center m-32 lg:m-40 text-lg border text-slate-400 rounded-md shadow-sm p-4 cursor-pointer"
+                    className="text-center m-32 md:m-40 text-md border text-slate-400 rounded-md shadow-sm p-4 cursor-pointer"
                     onClick={() =>
                       sendMessage({
                         senderId,
@@ -219,16 +219,16 @@ export default function OneToOneChat() {
                   </p>
                 )}
               </div>
-              <div className="textbox-send flex gap-2 p-2 bg-white shadow-sm relative">
+              <div className="textbox-send flex gap-2 p-2 shadow-sm fixed bottom-0 w-full md:w-[40vw]">
                 <input
                   type="text"
-                  className="textbox p-2 border-none bg-slate-100 rounded-lg flex-grow outline-none pr-14"
+                  className="textbox p-3 border-none bg-slate-200 rounded-lg flex-grow outline-none pr-14"
                   placeholder="Message..."
                   value={inputs.message}
                   onChange={(e) => dispatch(messageHandler(e.target.value))}
                 />
                 <BiSend
-                  size="2.5em"
+                  size="3em"
                   className="send bg-purple-600 text-white p-3 rounded-xl absolute right-2"
                   onClick={() =>
                     sendMessage({
