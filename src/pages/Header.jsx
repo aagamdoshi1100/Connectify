@@ -58,6 +58,12 @@ export default function Header() {
                   ref={headerMenuRef}
                 >
                   <button
+                    className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer bg-gray-200"
+                    disabled={true}
+                  >
+                    {username}
+                  </button>
+                  <button
                     className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer"
                     onClick={() => navigate(`/users/${userId}/profile`)}
                   >

@@ -17,11 +17,11 @@ import ReactLoader from "./ReactLoader";
 export default function OneToOneChat() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const messageContainerRef = useRef("");
   const [unhide, setUnhide] = useState("");
   const { inputs, messageWindow, loading, rooms } = useSelector(
     (store) => store.chats
   );
-  const messageContainerRef = useRef("");
 
   const senderId = localStorage.getItem("userId");
 
@@ -37,7 +37,7 @@ export default function OneToOneChat() {
   let time = `${formattedHours}:${formattedMinutes}`;
 
   useEffect(() => {
-    const socket = io.connect(`${API_URL}/`);
+    const socket = io.connect(`${API_URL}`);
     socket.emit("Join_Room", {
       senderId: senderId,
       roomId: "ThisIsCommonRoomForEveryOne",
@@ -51,10 +51,11 @@ export default function OneToOneChat() {
   }, [dispatch, senderId]);
 
   const filterTheSelectedRoom = rooms.filter(
-    (room) => room.recipient._id === messageWindow._ids.recipientId
+    (room) =>
+      room.recipient && room.recipient._id === messageWindow._ids.recipientId
   );
 
-  const sendMessage = async (data) => {
+  const sendMessage = (data) => {
     const socket = io.connect(`${API_URL}/`);
     socket.emit("Send_Message", data);
     dispatch(
@@ -66,11 +67,12 @@ export default function OneToOneChat() {
   };
 
   const scrollToBottom = () => {
-    messageContainerRef.current.scrollTop =
-      messageContainerRef.current.scrollHeight;
+    if (messageContainerRef.current !== "" && messageContainerRef.current) {
+      messageContainerRef.current.scrollTop =
+        messageContainerRef.current.scrollHeight;
+    }
   };
-  // console.log(messageContainerRef, "STB");
-  // useEffect(() => scrollToBottom(), []);
+  useEffect(() => scrollToBottom(), [filterTheSelectedRoom[0]?.chats]);
 
   const backToAllChats = () => {
     dispatch(
@@ -190,7 +192,7 @@ export default function OneToOneChat() {
                                 >
                                   {time}
                                 </p>
-                                <span className="bg-slate-400 text-white p-2 rounded-lg break-words max-w-[80vw] lg:max-w-[30vw]">
+                                <span className="bg-green-500 text-white p-2 rounded-lg break-words max-w-[80vw] lg:max-w-[30vw]">
                                   {message}
                                 </span>
                               </div>
@@ -201,7 +203,18 @@ export default function OneToOneChat() {
                     );
                   })
                 ) : (
-                  <p className="text-center m-32 lg:m-40 text-lg border text-slate-400 rounded-md shadow-sm p-4">
+                  <p
+                    className="text-center m-32 lg:m-40 text-lg border text-slate-400 rounded-md shadow-sm p-4 cursor-pointer"
+                    onClick={() =>
+                      sendMessage({
+                        senderId,
+                        recipientId: messageWindow._ids.recipientId,
+                        date,
+                        time,
+                        message: "Hi",
+                      })
+                    }
+                  >
                     Say Hi!
                   </p>
                 )}
@@ -230,11 +243,17 @@ export default function OneToOneChat() {
               </div>
             </>
           ) : (
-            <>
-              <p className="text-center m-20 lg:m-40 text-lg border text-slate-400 rounded-md shadow-sm p-4">
+            <div className="Initiate-conversion flex justify-center items-center h-full">
+              <p className="text-center hidden lg:block text-lg border text-slate-400 rounded-md shadow-sm p-4 cursor-pointer">
                 Select a contact to start conversation.
               </p>
-            </>
+              <p
+                className="text-center lg:hidden text-lg border text-slate-400 rounded-md shadow-sm p-4 cursor-pointer"
+                onClick={backToAllChats}
+              >
+                Click me to start conversation.
+              </p>
+            </div>
           )}
         </>
       ) : (

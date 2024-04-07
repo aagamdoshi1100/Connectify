@@ -54,6 +54,7 @@ export const chatSlice = createSlice({
         }
         return room;
       });
+      state.inputs.message = "";
     },
   },
   extraReducers: (builders) => {

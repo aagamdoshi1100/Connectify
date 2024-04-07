@@ -23,7 +23,11 @@ export default function UserProfile() {
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchUserProfile(userId));
-    dispatch(findCurrentRoom({ senderId: loggedUserId, recipientId: userId }));
+    if (loggedUserId !== userId) {
+      dispatch(
+        findCurrentRoom({ senderId: loggedUserId, recipientId: userId })
+      );
+    }
   }, [dispatch, userId]);
   const {
     user,
@@ -121,12 +125,14 @@ export default function UserProfile() {
               ) : (
                 ""
               )}
-              <button
-                className="p-2 bg-purple-500 text-white rounded-xl m-2"
-                onClick={() => navigateToUserChat()}
-              >
-                Message
-              </button>
+              {loggedUserId !== userId && (
+                <button
+                  className="p-2 bg-purple-500 text-white rounded-xl m-2"
+                  onClick={() => navigateToUserChat()}
+                >
+                  Message
+                </button>
+              )}
             </div>
           </div>
         </div>

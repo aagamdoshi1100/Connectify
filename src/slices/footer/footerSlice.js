@@ -10,6 +10,7 @@ const footerSlice = createSlice({
       localStorage.removeItem("username");
       localStorage.removeItem("userId");
       localStorage.removeItem("token");
+      localStorage.removeItem("userProfile");
     },
   },
   extraReducers: (builders) => {},
