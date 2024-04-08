@@ -6,12 +6,20 @@ import {
   removeInterest,
 } from "../slices/userProfile/userProfileSlice";
 import { setEditedData } from "../slices/userProfile/action";
+import { validateProfileData } from "../Utils/utils";
+import { useState } from "react";
 
 export default function EditProfile({ editFlag, profileDetails }) {
   const dispatch = useDispatch();
   const inputdata = useSelector((store) => store.userProfile.userProfileData);
   const loggedUserId = localStorage.getItem("userId");
-
+  const [error, setError] = useState();
+  const validateProfileInputs = () => {
+    const flag = validateProfileData(inputdata, setError);
+    if (flag) {
+      dispatch(setEditedData({ loggedUserId, data: inputdata }));
+    }
+  };
   const inputStyle =
     " p-1 mt-2 mb-2 border-b-2 border-purple-700 focus:outline-none ";
   const margin = " mt-2 mb-2 ";
@@ -40,6 +48,9 @@ export default function EditProfile({ editFlag, profileDetails }) {
         ) : (
           <p className={margin + textColor}>{profileDetails?.dob || "-"}</p>
         )}
+        {error && error.dob !== "" && (
+          <p className="error-text text-sm text-red-500 ">{error.dob}</p>
+        )}
         <p>Bio</p>
         {editFlag ? (
           <input
@@ -53,6 +64,9 @@ export default function EditProfile({ editFlag, profileDetails }) {
           />
         ) : (
           <p className={margin + textColor}>{profileDetails?.bio || "-"}</p>
+        )}
+        {error && error.bio !== "" && (
+          <p className="error-text text-sm text-red-500 ">{error.bio}</p>
         )}
         <p>Email</p>
         {editFlag ? (
@@ -69,6 +83,9 @@ export default function EditProfile({ editFlag, profileDetails }) {
           />
         ) : (
           <p className={margin + textColor}>{profileDetails?.email || "-"}</p>
+        )}
+        {error && error.email !== "" && (
+          <p className="error-text text-sm text-red-500 ">{error.email}</p>
         )}
         <p>Country/Origin</p>
         {editFlag ? (
@@ -88,6 +105,9 @@ export default function EditProfile({ editFlag, profileDetails }) {
           </select>
         ) : (
           <p className={margin + textColor}>{profileDetails?.country || "-"}</p>
+        )}
+        {error && error.country !== "" && (
+          <p className="error-text text-sm text-red-500 ">{error.country}</p>
         )}
       </div>
       <div
@@ -133,11 +153,14 @@ export default function EditProfile({ editFlag, profileDetails }) {
                 </p>
               ))}
             </div>
+            {error && error.interest !== "" && (
+              <p className="error-text text-sm text-red-500 ">
+                {error.interest}
+              </p>
+            )}
             <button
               className="bg-purple-500 p-1 mt-2 mb-2 text-white"
-              onClick={() =>
-                dispatch(setEditedData({ loggedUserId, data: inputdata }))
-              }
+              onClick={validateProfileInputs}
             >
               Save changes
             </button>
@@ -147,7 +170,7 @@ export default function EditProfile({ editFlag, profileDetails }) {
             {profileDetails?.interestArr.length > 0 ? (
               profileDetails?.interestArr.map((int, index) => (
                 <p
-                  className="flex  items-center justify-center p-1 bg-green-500 text-white rounded-xl m-2"
+                  className="flex  items-center justify-center p-2 bg-green-500 text-white rounded-xl m-2"
                   key={index}
                 >
                   {int}

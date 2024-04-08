@@ -11,10 +11,15 @@ import { useEffect } from "react";
 import { SlUser } from "react-icons/sl";
 import { GoLock } from "react-icons/go";
 import { MdOutlineEmail } from "react-icons/md";
+import { validateSignupData } from "../Utils/utils";
+import { useState } from "react";
+import Brand from "../components/Brand";
 
 export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [err, setErr] = useState();
+
   const { inputs, error, password, success } = useSelector(
     (store) => store.auth
   );
@@ -27,17 +32,22 @@ export default function Signup() {
   useEffect(() => {
     success && navigate("/");
   }, [success]);
-  console.log(inputs);
+
+  const validateSignUpInputs = () => {
+    const flag = validateSignupData(inputs, setErr);
+    if (flag) {
+      dispatch(signUpHandler(inputs));
+    }
+  };
   return (
-    <div className="signup-container md:w-[80%] flex md:fixed md:left-[50%] md:top-[45%] md:-translate-x-[50%] md:-translate-y-[50%] bg-white shadow-xl">
+    <div className="signup-container md:w-[80%] md:h-[88%] flex md:fixed md:left-[50%] md:top-[48%] md:-translate-x-[50%] md:-translate-y-[50%] bg-white shadow-xl">
       <div className="signup-left md:w-[50%] h-[100vh] md:h-[70vh]">
-        <div className="pl-4 md:pl-8">
-          <h2 className="text-4xl font-serif text-left m-4 mb-2 mt-16">
-            Create account
-          </h2>
-          <p className="text-slate-400 font-serif ml-4">
-            Sign up to get started
-          </p>
+        <div className="pl-8 md:pl-8">
+          <div className="brand h-12 w-12 mb-4 mt-10 flex items-center">
+            <Brand size={"3xl"} />
+          </div>
+          <h2 className="text-4xl font-serif text-left">Create account</h2>
+          <p className="text-slate-400 font-serif">Sign up to get started</p>
         </div>
         <div className="inputs flex flex-col justify-center items-center mt-5 gap-4">
           <div className="relative w-10/12">
@@ -56,6 +66,11 @@ export default function Signup() {
                 )
               }
             />
+            {err && err.username !== "" && (
+              <p className="error-text text-sm text-red-500 pt-1">
+                {err.username}
+              </p>
+            )}
           </div>
           <div className="relative w-10/12">
             <GoLock size="1.3em" className="absolute left-3 top-3" />
@@ -86,6 +101,11 @@ export default function Signup() {
                 )
               }
             />
+            {err && err.password !== "" && (
+              <p className="error-text text-sm text-red-500 pt-1">
+                {err.password}
+              </p>
+            )}
           </div>
           <div className="flex gap-2 w-10/12">
             <div className=" md:flex-grow">
@@ -103,6 +123,11 @@ export default function Signup() {
                   )
                 }
               />
+              {err && err.firstname !== "" && (
+                <p className="error-text text-sm text-red-500 pt-1">
+                  {err.firstname}
+                </p>
+              )}
             </div>
             <div className=" md:flex-grow">
               <input
@@ -119,6 +144,11 @@ export default function Signup() {
                   )
                 }
               />
+              {err && err.lastname !== "" && (
+                <p className="error-text text-sm text-red-500 pt-1">
+                  {err.lastname}
+                </p>
+              )}
             </div>
           </div>
           <div className="relative w-10/12">
@@ -137,10 +167,15 @@ export default function Signup() {
                 )
               }
             />
+            {err && err.email !== "" && (
+              <p className="error-text text-sm text-red-500 pt-1">
+                {err.email}
+              </p>
+            )}
           </div>
           <button
             className="bg-purple-500 text-white p-2 w-10/12"
-            onClick={() => dispatch(signUpHandler(inputs))}
+            onClick={validateSignUpInputs}
           >
             Signup
           </button>

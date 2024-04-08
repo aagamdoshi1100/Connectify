@@ -275,7 +275,7 @@ export const Posts = ({ data }) => {
             <div className="lg:w-[100%] lg:h-[80vh] flex flex-col justify-center items-center p-10 shadow-none">
               <img
                 src="../../No-post.jpg"
-                className="h-[40vh] lg:h-[40vh] w-[80vw] lg:w-[20vw]"
+                className="h-[40vh] lg:h-[40vh] w-[80vw] lg:w-[20vw] object-cover  mix-blend-multiply"
                 alt="no-posts-img"
               />
             </div>

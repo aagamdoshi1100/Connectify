@@ -10,10 +10,14 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { SlUser } from "react-icons/sl";
 import { GoLock } from "react-icons/go";
+import { validateSignInData } from "../Utils/utils";
+import { useState } from "react";
+import Brand from "../components/Brand";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [err, setErr] = useState();
 
   const {
     inputs: authCredentials,
@@ -32,16 +36,19 @@ export default function Login() {
   }, [success, navigate]);
 
   const login = () => {
-    dispatch(
-      loginHandler({
-        username: authCredentials.username,
-        password: authCredentials.password,
-      })
-    );
+    const validateFlag = validateSignInData(authCredentials, setErr);
+    if (validateFlag) {
+      dispatch(
+        loginHandler({
+          username: authCredentials.username,
+          password: authCredentials.password,
+        })
+      );
+    }
   };
 
   return (
-    <div className="login-container md:w-[80%] flex flex-col md:flex-row md:fixed md:left-[50%] md:top-[45%] md:-translate-x-[50%] md:-translate-y-[50%] bg-white shadow-xl">
+    <div className="login-container md:w-[80%] flex flex-col md:flex-row md:fixed md:left-[50%] md:top-[48%] md:-translate-x-[50%] md:-translate-y-[50%] bg-white shadow-xl">
       <div className="login-left hidden md:w-[50%]  md:flex md:justify-center md:items-center md:flex-col md:bg-gradient-to-r md:from-indigo-500 md:via-purple-500 md:to-pink-500">
         <p className="text-4xl font-serif text-center m-4 mb-2 text-white">
           Hello, Friend!
@@ -56,9 +63,12 @@ export default function Login() {
           Don't have an account? Sign up
         </button>
       </div>
-      <div className="login-right md:w-[50%] h-[100vh] md:h-[70vh]">
+      <div className="login-right md:w-[50%] h-[100vh] md:h-[88vh]">
         <div className=" m-8 mt-20">
-          <h2 className="text-4xl font-serif text-left mt-16 md:my-2">
+          <div className="brand h-12 w-12 mb-4 mt-10 flex items-center">
+            <Brand size={"3xl"} />
+          </div>
+          <h2 className="text-4xl font-serif text-left mt-5 md:my-2">
             Welcome Back
           </h2>
           <p className="text-slate-400 font-serif mb-8">
@@ -78,6 +88,11 @@ export default function Login() {
                   )
                 }
               />
+              {err && err.username !== "" && (
+                <p className="error-text text-sm text-red-500 pt-1">
+                  {err.username}
+                </p>
+              )}
             </div>
             <div className="password relative w-full">
               <GoLock size="1.3em" className="absolute left-3 top-3" />
@@ -92,6 +107,11 @@ export default function Login() {
                   )
                 }
               />
+              {err && err.password !== "" && (
+                <p className="error-text text-sm text-red-500 pt-1">
+                  {err.password}
+                </p>
+              )}
               {hidePass ? (
                 <FaEyeSlash
                   size="1.3em"
