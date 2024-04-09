@@ -64,6 +64,7 @@ export const authSlice = createSlice({
       .addCase(loginHandler.rejected, (state, action) => {
         console.error(action.error.message);
         state.error.enabled = true;
+        state.loading = false;
         state.error.message = action.error.message;
       })
       //signup

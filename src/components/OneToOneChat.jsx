@@ -257,7 +257,9 @@ export default function OneToOneChat() {
           )}
         </>
       ) : (
-        <ReactLoader />
+        <div className="react-loader-signup fixed left-[50%] top-[48%] -translate-x-[50%] -translate-y-[50%] ">
+          <ReactLoader size="50" />
+        </div>
       )}
     </div>
   );

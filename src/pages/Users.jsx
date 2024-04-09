@@ -37,8 +37,8 @@ export default function Users() {
   return (
     <div className="users-secondary-container overflow-auto flex md:flex-col pt-3 md:pb-20 md:overflow-auto md:h-[100vh] cursor-pointer no-scrollbar">
       {loadingUsers ? (
-        <div className="relative flex justify-center items-center w-[100vw] md:w-[28vw] md:h-[100vh]">
-          <ReactLoader className="absolute" />
+        <div className="relative flex justify-center items-center w-[100vw] h-[20vh] md:w-[28vw] md:h-[80vh]">
+          <ReactLoader className="absolute" size="40" />
         </div>
       ) : (
         <>

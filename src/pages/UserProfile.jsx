@@ -15,6 +15,7 @@ import {
 import EditProfile from "./EditProfile";
 import { setSenderRecipientDetails } from "../slices/Chat/chatSlice";
 import { findCurrentRoom } from "../slices/Chat/actions";
+import ReactLoader from "../components/ReactLoader";
 
 export default function UserProfile() {
   const { userId } = useParams();
@@ -35,6 +36,7 @@ export default function UserProfile() {
     uploadProfileImageStates,
     editUserProfile,
     isUserDetailsSelected,
+    loading,
   } = useSelector((store) => store.userProfile);
   const { allPosts } = useSelector((store) => store.userfeed);
 
@@ -58,6 +60,11 @@ export default function UserProfile() {
         <Footer />
       </div>
       <div className="user-profile&user-bio flex justify-center">
+        {loading && (
+          <div className="react-loader-signup fixed left-[50%] top-[48%] -translate-x-[50%] -translate-y-[50%] z-30">
+            <ReactLoader size="50" />
+          </div>
+        )}
         <div className="profileImage-backgroundImage absolute top-10 md:top-20 md:left-[26%] lg:left-[27%] w-full md:w-[36%] h-[70%] bg-white border border-white rounded-xl overflow-hidden  shadow-xl">
           <img
             src="https://images.pexels.com/photos/13721769/pexels-photo-13721769.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load"
@@ -118,8 +125,9 @@ export default function UserProfile() {
                   <button
                     className="p-2 bg-purple-500 text-white rounded-xl m-2"
                     onClick={() => dispatch(enableProfileForEditing())}
+                    disabled={loading}
                   >
-                    Edit Profile
+                    {loading ? "Loading..." : "Edit Profile"}
                   </button>
                 )
               ) : (

@@ -14,13 +14,14 @@ import { MdOutlineEmail } from "react-icons/md";
 import { validateSignupData } from "../Utils/utils";
 import { useState } from "react";
 import Brand from "../components/Brand";
+import ReactLoader from "../components/ReactLoader";
 
 export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [err, setErr] = useState();
 
-  const { inputs, error, password, success } = useSelector(
+  const { inputs, error, password, success, loading } = useSelector(
     (store) => store.auth
   );
   useEffect(() => {
@@ -176,6 +177,7 @@ export default function Signup() {
           <button
             className="bg-purple-500 text-white p-2 w-10/12"
             onClick={validateSignUpInputs}
+            disabled={loading}
           >
             Signup
           </button>
@@ -200,6 +202,11 @@ export default function Signup() {
             )}
           </div>
         </div>
+        {loading && (
+          <div className="react-loader-signup fixed left-[50%] top-[48%] -translate-x-[50%] -translate-y-[50%] ">
+            <ReactLoader size="50" />
+          </div>
+        )}
       </div>
       <div className="signup-right hidden md:w-[50%]  md:flex md:justify-center md:items-center md:flex-col md:bg-gradient-to-r md:from-indigo-500 md:via-purple-500 md:to-pink-500">
         <p className="text-4xl font-serif text-center m-4 mb-2 text-white">

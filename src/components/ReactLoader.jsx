@@ -1,15 +1,15 @@
 import Loader from "react-js-loader";
 
-export default function ReactLoader() {
+export default function ReactLoader({ title, size }) {
   return (
     <div className={"row"}>
       <div className={"item"}>
         <Loader
-          type="box-up"
-          bgColor="purple"
+          type="default"
+          bgColor="gray"
           color="white"
-          title={""}
-          size={100}
+          title={title || ""}
+          size={size || 100}
         />
       </div>
     </div>

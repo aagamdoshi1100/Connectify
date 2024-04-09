@@ -13,6 +13,7 @@ import { GoLock } from "react-icons/go";
 import { validateSignInData } from "../Utils/utils";
 import { useState } from "react";
 import Brand from "../components/Brand";
+import ReactLoader from "../components/ReactLoader";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ export default function Login() {
     password: { hide: hidePass },
     error,
     success,
+    loading,
   } = useSelector((state) => state.auth);
   useEffect(() => {
     setTimeout(() => {
@@ -129,6 +131,7 @@ export default function Login() {
             <button
               className="bg-purple-500 text-white w-full p-2"
               onClick={login}
+              disabled={loading}
             >
               Login
             </button>
@@ -142,6 +145,7 @@ export default function Login() {
                   })
                 )
               }
+              disabled={loading}
             >
               Guest Login
             </button>
@@ -169,6 +173,11 @@ export default function Login() {
           </div>
         </div>
       </div>
+      {loading && (
+        <div className="react-loader-signup fixed left-[50%] top-[48%] -translate-x-[50%] -translate-y-[50%] ">
+          <ReactLoader size="50" />
+        </div>
+      )}
     </div>
   );
 }

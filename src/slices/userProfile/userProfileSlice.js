@@ -109,7 +109,9 @@ const userProfileSlice = createSlice({
       })
 
       //Set edited data
-      .addCase(setEditedData.pending, (state, action) => {})
+      .addCase(setEditedData.pending, (state, action) => {
+        state.loading = true;
+      })
       .addCase(setEditedData.fulfilled, (state, action) => {
         state.user = [action.payload.profile];
         state.userProfileData = {
@@ -121,9 +123,11 @@ const userProfileSlice = createSlice({
           interestArr: action.payload.profile.interestArr,
         };
         state.editUserProfile.isEnabled = false;
+        state.loading = false;
       })
       .addCase(setEditedData.rejected, (state, action) => {
         state.error_Message = action.error.message;
+        state.loading = false;
       });
   },
 });

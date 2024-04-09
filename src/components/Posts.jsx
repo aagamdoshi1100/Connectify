@@ -40,7 +40,9 @@ export const Posts = ({ data }) => {
   return (
     <>
       {loadingPosts ? (
-        <ReactLoader />
+        <div className="flex justify-center items-center w-[100vw] h-[40vh] md:w-[40vw] md:h-[80vh]">
+          <ReactLoader size="40" />
+        </div>
       ) : (
         <>
           {Array.isArray(data) && data.length > 0 ? (
