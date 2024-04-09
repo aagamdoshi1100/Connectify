@@ -20,15 +20,13 @@ export default function AllChats() {
           rooms?.map((room) => {
             if (room.recipient._id !== loggedUserId) {
               return (
-                <>
-                  <ChatIdentityMapper
-                    user={{
-                      recipientDetails: room.recipient,
-                      userChats: room.chats,
-                    }}
-                    key={room._id}
-                  />
-                </>
+                <ChatIdentityMapper
+                  user={{
+                    recipientDetails: room.recipient,
+                    userChats: room.chats,
+                  }}
+                  key={room._id}
+                />
               );
             }
           })

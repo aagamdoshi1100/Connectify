@@ -24,7 +24,7 @@ export default function Header() {
       <div className="secondary-header-container border-2 border-white shadow-lg flex justify-between items-center">
         <div
           className="brand-logo pl-2 md:pl-4 p-2 flex items-center cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/userfeed")}
         >
           <img
             src="../../connectify_logo.png"

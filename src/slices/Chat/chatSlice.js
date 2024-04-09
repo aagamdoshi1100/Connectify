@@ -63,11 +63,6 @@ export const chatSlice = createSlice({
       //find current message room
       .addCase(findCurrentRoom.pending, (state, action) => {})
       .addCase(findCurrentRoom.fulfilled, (state, action) => {
-        console.log(
-          action.payload,
-          "Room accessed via user profile",
-          state.rooms.find((room) => room._id === action.payload.data._id)
-        );
         if (!state.rooms.find((room) => room._id === action.payload.data._id)) {
           state.rooms = [...state.rooms, action.payload.data];
         }
@@ -81,7 +76,6 @@ export const chatSlice = createSlice({
         state.loading = true;
       })
       .addCase(fetchAllRooms.fulfilled, (state, action) => {
-        console.log(action.payload, "fetch all mess room,user chat profiles");
         state.rooms = action.payload.data;
         state.loading = false;
       })

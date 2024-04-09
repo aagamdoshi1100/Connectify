@@ -1,6 +1,5 @@
 import "./App.css";
 import PageNotFound from "./pages/PageNotFound";
-import { Routes, Route } from "react-router";
 import Userfeed from "./pages/Userfeed";
 import Login from "./pages/Login";
 import UserProfile from "./pages/UserProfile";
@@ -19,6 +18,8 @@ import MessageView from "./pages/MessageView";
 import Comments from "./pages/Comments";
 import DeleteAccount from "./pages/DeleteAccount";
 import Feedback from "./pages/Feedback";
+import RequireAuth from "./components/RequireAuth";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   const showCompomse = useSelector(
@@ -31,27 +32,108 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Userfeed />} />
+        <Route
+          path="/userfeed"
+          element={
+            <RequireAuth>
+              <Userfeed />
+            </RequireAuth>
+          }
+        />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/users" element={<Users />} />
-        <Route path="/users/:userId/profile" element={<UserProfile />} />
+        <Route
+          path="/users/:userId/profile"
+          element={
+            <RequireAuth>
+              <UserProfile />
+            </RequireAuth>
+          }
+        />
         <Route path="/search" element={<Search />} />
-        <Route path="/bookmarks" element={<Bookmark />} />
-        <Route path="/user-chat" element={<OneToOneChat />} />
-        <Route path="/chats" element={<AllChats />} />
-        <Route path="/chat-view" element={<ChatView />} />
-        <Route path="/message-view" element={<MessageView />} />
+        <Route
+          path="/bookmarks"
+          element={
+            <RequireAuth>
+              <Bookmark />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/user-chat"
+          element={
+            <RequireAuth>
+              <OneToOneChat />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/chats"
+          element={
+            <RequireAuth>
+              <AllChats />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/chat-view"
+          element={
+            <RequireAuth>
+              <ChatView />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/message-view"
+          element={
+            <RequireAuth>
+              <MessageView />
+            </RequireAuth>
+          }
+        />
         <Route
           path="/message-view/:receiverUserId/"
-          element={<MessageView />}
+          element={
+            <RequireAuth>
+              <MessageView />
+            </RequireAuth>
+          }
         />
         <Route path="/header" element={<Header />} />
         <Route path="/footer" element={<Footer />} />
-        <Route path="/compose-post" element={<PostComposer />} />
-        <Route path="/comments" element={<Comments />} />
-        <Route path="/delete-account" element={<DeleteAccount />} />
-        <Route path="/feedback" element={<Feedback />} />
+        <Route
+          path="/compose-post"
+          element={
+            <RequireAuth>
+              <PostComposer />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/comments"
+          element={
+            <RequireAuth>
+              <Comments />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/delete-account"
+          element={
+            <RequireAuth>
+              <DeleteAccount />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/feedback"
+          element={
+            <RequireAuth>
+              <Feedback />
+            </RequireAuth>
+          }
+        />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       {showCompomse && <PostComposer />}

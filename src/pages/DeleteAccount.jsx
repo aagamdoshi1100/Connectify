@@ -15,7 +15,7 @@ function DeleteAccount() {
     localStorage.removeItem("token");
     localStorage.removeItem("userProfile");
     dispatch(manageConfirmationPage());
-    navigate("/login");
+    navigate("/");
   };
   return (
     <div className="delete-container-background fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-40">

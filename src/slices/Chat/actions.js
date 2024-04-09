@@ -12,7 +12,6 @@ export const findCurrentRoom = createAsyncThunk(
       if (!response.ok) {
         throw responseData;
       }
-      console.log(response);
       return responseData;
     } catch (e) {
       console.error(e);

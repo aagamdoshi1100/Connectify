@@ -31,7 +31,7 @@ export default function Signup() {
   }, [dispatch, error.message]);
 
   useEffect(() => {
-    success && navigate("/");
+    success && navigate("/userfeed");
   }, [success]);
 
   const validateSignUpInputs = () => {
@@ -188,7 +188,7 @@ export default function Signup() {
           </div>
           <button
             className="bg-black text-white w-10/12 p-2 md:hidden"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/")}
           >
             Already have an account? login
           </button>
@@ -217,7 +217,7 @@ export default function Signup() {
         </p>
         <button
           className="bg-transparent border border-white text-white w-10/12 p-2"
-          onClick={() => navigate("/login")}
+          onClick={() => navigate("/")}
         >
           Already have an account? login
         </button>

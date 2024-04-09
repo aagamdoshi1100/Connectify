@@ -16,7 +16,7 @@ export default function Footer() {
   const location = useLocation();
   const logoutHandler = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
   };
   const navigateToChats = () => {
     dispatch(
@@ -34,14 +34,14 @@ export default function Footer() {
         {/* Home */}
         <div
           className={
-            location.pathname === "/"
+            location.pathname === "/userfeed"
               ? "border-b-4 md:border-b-0 md:border-l-8 border-purple-500 bg-slate-100"
               : "" + " md:border-l-8 md:border-white  hover:border-purple-500"
           }
         >
           <div
             className="icon-block flex cursor-pointer p-3 md:border md:border-white md:p-3 hover:bg-slate-100 md:hover:shadow-md"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/userfeed")}
           >
             <AiOutlineHome size="2em" className="md:text-slate-500" />
             <span className="icon-name hidden ml-4 md:inline-flex md:text-xl font-serif">

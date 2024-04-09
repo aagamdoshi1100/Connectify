@@ -34,7 +34,7 @@ export default function Login() {
   }, [dispatch, error.message]);
 
   useEffect(() => {
-    success && navigate("/");
+    success && navigate("/userfeed");
   }, [success, navigate]);
 
   const login = () => {
