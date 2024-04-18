@@ -9,6 +9,7 @@ import {
   enablePostMenu,
   enableEdit,
   enableCommentComponent,
+  likeViewHandler,
 } from "../slices/userfeed/userfeedSlice";
 import {
   deletePost,
@@ -36,7 +37,20 @@ export const Posts = ({ data }) => {
   const { users } = useSelector((store) => store.users);
 
   const loggedInUser = localStorage.getItem("username");
-  //console.log(data, users);
+  const likeHandler = (postId) => {
+    dispatch(
+      likeViewHandler({
+        postId,
+        likedBy: loggedInUser,
+      })
+    );
+    dispatch(
+      postLikeHandler({
+        postId,
+        likedBy: loggedInUser,
+      })
+    );
+  };
   return (
     <>
       {loadingPosts ? (
@@ -125,26 +139,12 @@ export const Posts = ({ data }) => {
                         <FaHeart
                           size="1.7em"
                           color={"red"}
-                          onClick={() =>
-                            dispatch(
-                              postLikeHandler({
-                                postId: post._id,
-                                likedBy: loggedInUser,
-                              })
-                            )
-                          }
+                          onClick={() => likeHandler(post._id)}
                         />
                       ) : (
                         <FaRegHeart
                           size="1.7em"
-                          onClick={() =>
-                            dispatch(
-                              postLikeHandler({
-                                postId: post._id,
-                                likedBy: loggedInUser,
-                              })
-                            )
-                          }
+                          onClick={() => likeHandler(post._id)}
                         />
                       )}
                       <span className="hidden">Like</span>

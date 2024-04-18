@@ -100,6 +100,27 @@ export const userfeedSlice = createSlice({
       state.createComment.data.content = action.payload.content;
       state.createComment.data.user = action.payload.user;
     },
+    //like/dislike updating frontend
+    likeViewHandler: (state, action) => {
+      state.allPosts = state.allPosts.map((post) => {
+        if (post._id === action.payload.postId) {
+          if (post.likedBy.includes(action.payload.likedBy)) {
+            return {
+              ...post,
+              likedBy: post.likedBy.filter(
+                (user) => user !== action.payload.likedBy
+              ),
+            };
+          } else {
+            return {
+              ...post,
+              likedBy: [...post.likedBy, action.payload.likedBy],
+            };
+          }
+        }
+        return post;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -160,24 +181,24 @@ export const userfeedSlice = createSlice({
       //like/dislike
       .addCase(postLikeHandler.pending, (state) => {})
       .addCase(postLikeHandler.fulfilled, (state, action) => {
-        state.allPosts = state.allPosts.map((post) => {
-          if (post._id === action.payload.postId) {
-            if (post.likedBy.includes(action.payload.likedBy)) {
-              return {
-                ...post,
-                likedBy: post.likedBy.filter(
-                  (user) => user !== action.payload.likedBy
-                ),
-              };
-            } else {
-              return {
-                ...post,
-                likedBy: [...post.likedBy, action.payload.likedBy],
-              };
-            }
-          }
-          return post;
-        });
+        // state.allPosts = state.allPosts.map((post) => {
+        //   if (post._id === action.payload.postId) {
+        //     if (post.likedBy.includes(action.payload.likedBy)) {
+        //       return {
+        //         ...post,
+        //         likedBy: post.likedBy.filter(
+        //           (user) => user !== action.payload.likedBy
+        //         ),
+        //       };
+        //     } else {
+        //       return {
+        //         ...post,
+        //         likedBy: [...post.likedBy, action.payload.likedBy],
+        //       };
+        //     }
+        //   }
+        //   return post;
+        // });
       })
       .addCase(postLikeHandler.rejected, (state, action) => {
         console.log("aa");
@@ -236,4 +257,5 @@ export const {
   enableCommentComponent,
   disableCommentContainer,
   commentInputHandler,
+  likeViewHandler,
 } = userfeedSlice.actions;
