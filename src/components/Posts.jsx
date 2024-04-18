@@ -10,6 +10,7 @@ import {
   enableEdit,
   enableCommentComponent,
   likeViewHandler,
+  bookmarksViewHandler,
 } from "../slices/userfeed/userfeedSlice";
 import {
   deletePost,
@@ -50,6 +51,15 @@ export const Posts = ({ data }) => {
         likedBy: loggedInUser,
       })
     );
+  };
+  const bookmarkHander = (post) => {
+    dispatch(
+      bookmarksViewHandler({
+        postId: post._id,
+        post,
+      })
+    );
+    dispatch(postBookMarkHandler(post._id));
   };
   return (
     <>
@@ -168,9 +178,7 @@ export const Posts = ({ data }) => {
                               ? "blueviolet"
                               : "black"
                           }
-                          onClick={() =>
-                            dispatch(postBookMarkHandler(post._id))
-                          }
+                          onClick={() => bookmarkHander(post)}
                         />
                       ) : (
                         <MdOutlineBookmarks
@@ -180,9 +188,7 @@ export const Posts = ({ data }) => {
                               ? "blueviolet"
                               : "black"
                           }
-                          onClick={() =>
-                            dispatch(postBookMarkHandler(post._id))
-                          }
+                          onClick={() => bookmarkHander(post)}
                         />
                       )}
                       <span className="hidden">Bookmark</span>

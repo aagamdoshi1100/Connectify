@@ -121,6 +121,16 @@ export const userfeedSlice = createSlice({
         return post;
       });
     },
+    // bookmark view
+    bookmarksViewHandler: (state, action) => {
+      if (state.bookmarks.find((post) => post._id === action.payload.postId)) {
+        state.bookmarks = state.bookmarks.filter(
+          (post) => post._id !== action.payload.postId
+        );
+      } else {
+        state.bookmarks = [...state.bookmarks, action.payload.post];
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -180,37 +190,13 @@ export const userfeedSlice = createSlice({
       })
       //like/dislike
       .addCase(postLikeHandler.pending, (state) => {})
-      .addCase(postLikeHandler.fulfilled, (state, action) => {
-        // state.allPosts = state.allPosts.map((post) => {
-        //   if (post._id === action.payload.postId) {
-        //     if (post.likedBy.includes(action.payload.likedBy)) {
-        //       return {
-        //         ...post,
-        //         likedBy: post.likedBy.filter(
-        //           (user) => user !== action.payload.likedBy
-        //         ),
-        //       };
-        //     } else {
-        //       return {
-        //         ...post,
-        //         likedBy: [...post.likedBy, action.payload.likedBy],
-        //       };
-        //     }
-        //   }
-        //   return post;
-        // });
-      })
+      .addCase(postLikeHandler.fulfilled, (state, action) => {})
       .addCase(postLikeHandler.rejected, (state, action) => {
-        console.log("aa");
         state.error_Message = action.error.message;
       })
       //Add/Remove bookmark
       .addCase(postBookMarkHandler.pending, (state) => {})
-      .addCase(postBookMarkHandler.fulfilled, (state, action) => {
-        state.bookmarks = state.allPosts.filter((post) =>
-          action.payload?.includes(post._id)
-        );
-      })
+      .addCase(postBookMarkHandler.fulfilled, (state, action) => {})
       .addCase(postBookMarkHandler.rejected, (state, action) => {
         state.error_Message = action.error.message;
       })
@@ -258,4 +244,5 @@ export const {
   disableCommentContainer,
   commentInputHandler,
   likeViewHandler,
+  bookmarksViewHandler,
 } = userfeedSlice.actions;
