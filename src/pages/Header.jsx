@@ -79,6 +79,13 @@ export default function Header() {
                   <button
                     className="block p-2 border-b border-slate-200 w-full text-left cursor-pointer  hover:bg-slate-200"
                     onClick={() => dispatch(manageConfirmationPage())}
+                    style={{
+                      backgroundColor:
+                        userId === "6611014da65262346a0ddf89"
+                          ? "rgb(229 231 235)"
+                          : "white",
+                    }}
+                    disabled={userId === "6611014da65262346a0ddf89"}
                   >
                     Delete account
                   </button>
