@@ -1,5 +1,23 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { API_URL } from "../../constants";
+import { API_URL, CHAT_API_URL } from "../../constants";
+
+export const wakeUpRenderServer = createAsyncThunk(
+  "auth/wakeUpRenderServer",
+  async () => {
+    try {
+      const response = await fetch(`${CHAT_API_URL}`);
+      const serverResponse = await response.json();
+      if (!response.ok) {
+        throw serverResponse;
+      }
+      console.log(serverResponse, "success");
+      return serverResponse;
+    } catch (e) {
+      console.error(e);
+      throw e;
+    }
+  }
+);
 
 export const loginHandler = createAsyncThunk(
   "auth/loginHandler",

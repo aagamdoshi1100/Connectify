@@ -9,7 +9,7 @@ import {
   receivedMessageEventHandler,
   sentMessageEventHandler,
 } from "../slices/Chat/chatSlice";
-import { API_URL } from "../constants";
+import { CHAT_API_URL } from "../constants";
 import io from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import ReactLoader from "./ReactLoader";
@@ -37,7 +37,7 @@ export default function OneToOneChat() {
   let time = `${formattedHours}:${formattedMinutes}`;
 
   useEffect(() => {
-    const socket = io.connect(`${API_URL}`);
+    const socket = io.connect(`${CHAT_API_URL}`);
     socket.emit("Join_Room", {
       senderId: senderId,
       roomId: "ThisIsCommonRoomForEveryOne",
@@ -56,7 +56,7 @@ export default function OneToOneChat() {
   );
 
   const sendMessage = (data) => {
-    const socket = io.connect(`${API_URL}/`);
+    const socket = io.connect(`${CHAT_API_URL}/`);
     socket.emit("Send_Message", data);
     dispatch(
       sentMessageEventHandler({

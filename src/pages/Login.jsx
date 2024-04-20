@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { loginHandler } from "../slices/authentication/actions";
+import {
+  loginHandler,
+  wakeUpRenderServer,
+} from "../slices/authentication/actions";
 import {
   inputsHandler,
   passwordManager,
@@ -27,6 +30,11 @@ export default function Login() {
     success,
     loading,
   } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(wakeUpRenderServer());
+  }, []);
+
   useEffect(() => {
     setTimeout(() => {
       dispatch(disableError());

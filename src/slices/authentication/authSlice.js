@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginHandler, signUpHandler } from "./actions";
+import { loginHandler, signUpHandler, wakeUpRenderServer } from "./actions";
 
 const resetAuthState = {
   inputs: {
@@ -86,6 +86,12 @@ export const authSlice = createSlice({
         state.error.enabled = true;
         state.loading = false;
         state.error.message = action.error.message;
+      })
+      //Wake up the server
+      .addCase(wakeUpRenderServer.pending, (state, action) => {})
+      .addCase(wakeUpRenderServer.fulfilled, (state, action) => {})
+      .addCase(wakeUpRenderServer.rejected, (state, action) => {
+        console.log(action.error.message);
       });
   },
 });
