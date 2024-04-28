@@ -18,3 +18,6 @@ This is a full-stack social media application built with MongoDB, Express, React
 Client: React frontend code.
 Server: Node.js and Express backend code.
 Database: MongoDB database.
+
+Backend Repo: https://github.com/aagamdoshi1100/Connectify-Backend/
+API documentation: https://documenter.getpostman.com/view/23649133/2sA3BuW8rM
