@@ -79,7 +79,7 @@ export const Posts = ({ data }) => {
                   <div className="post-header">
                     <div className="header-row flex  justify-between items-center py-1">
                       <div className="flex">
-                        <Identity user={post.user} />
+                        {post.user && <Identity user={post.user} />}
                         <p className="p-1 pt-2 pl-2 text-slate-400 text-xs">
                           {post.createdAt.slice(0, 10)}
                         </p>

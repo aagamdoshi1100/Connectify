@@ -82,9 +82,10 @@ export const deleteUserAccount = createAsyncThunk(
   "users/deleteUserAccount",
   async (userId) => {
     const getToken = localStorage.getItem("token");
+    const username = localStorage.getItem("username");
     try {
       const deleteUserAccountResponse = await fetch(
-        `${API_URL}/users/${userId}/delete`,
+        `${API_URL}/users/${userId}/${username}/delete`,
         {
           method: "DELETE",
           headers: {

@@ -42,11 +42,12 @@ export default function Comments() {
           commentsOn.comment.length > 0 ? (
             commentsOn.comment.map((com) => {
               return (
-                <div className="comments flex w-full pt-2">
+                <div className="comments flex w-full pt-2" key={com.user}>
                   <div className="user-identity w-10 h-10 m-1 rounded-full overflow-hidden ">
                     <img
                       src={
-                        users.find((user) => user._id === com.user)?.profileIcon
+                        users.find((user) => user._id === com.user)
+                          ?.profileIcon || "../../Profile-Image-Default.jpg"
                       }
                       className="w-full h-full"
                       alt="profileImg"

@@ -81,11 +81,11 @@ export default function Header() {
                     onClick={() => dispatch(manageConfirmationPage())}
                     style={{
                       backgroundColor:
-                        userId === "6611014da65262346a0ddf89"
+                        userId === "662d44ae26036f4c1386cb4c"
                           ? "rgb(229 231 235)"
                           : "white",
                     }}
-                    disabled={userId === "6611014da65262346a0ddf89"}
+                    disabled={userId === "662d44ae26036f4c1386cb4c"}
                   >
                     Delete account
                   </button>

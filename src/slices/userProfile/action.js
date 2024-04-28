@@ -75,7 +75,6 @@ export const setEditedData = createAsyncThunk(
         }
       );
       const responseData = await editProfileResponse.json();
-      console.log(editProfileResponse, responseData, data, "76");
       if (!editProfileResponse.ok) {
         throw responseData;
       }
